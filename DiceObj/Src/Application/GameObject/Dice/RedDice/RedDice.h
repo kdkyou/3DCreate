@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#define HALF 0.5
-
 #include"../DiceBase.h"
 
 class RedDice :public DiceBase
@@ -14,7 +12,7 @@ public:
 	void Update()override;
 	void PostUpdate()override;
 	
-	void Shake(const int _number)override;
+	void Shake(const int _number, const Math::Vector3 _pos, const Math::Vector3 _moveDir, const float _speed, const Math::Vector3 _rotDir)override;
 
 private:
 

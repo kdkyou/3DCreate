@@ -21,32 +21,6 @@
 				0.16317589581012726,
 				-0.33682405948638916,
 				0.9254166483879089
-			],
-			"translation":[
-				0,
-				5,
-				0
-			]
-		}
-	],
-	"animations":[
-		{
-			"channels":[
-				{
-					"sampler":0,
-					"target":{
-						"node":0,
-						"path":"translation"
-					}
-				}
-			],
-			"name":"Drop",
-			"samplers":[
-				{
-					"input":10,
-					"interpolation":"LINEAR",
-					"output":11
-				}
 			]
 		}
 	],
@@ -187,24 +161,6 @@
 			"componentType":5123,
 			"count":5469,
 			"type":"SCALAR"
-		},
-		{
-			"bufferView":10,
-			"componentType":5126,
-			"count":20,
-			"max":[
-				0.8333333333333334
-			],
-			"min":[
-				0.041666666666666664
-			],
-			"type":"SCALAR"
-		},
-		{
-			"bufferView":11,
-			"componentType":5126,
-			"count":20,
-			"type":"VEC3"
 		}
 	],
 	"bufferViews":[
@@ -267,21 +223,11 @@
 			"byteLength":10938,
 			"byteOffset":496252,
 			"target":34963
-		},
-		{
-			"buffer":0,
-			"byteLength":80,
-			"byteOffset":507192
-		},
-		{
-			"buffer":0,
-			"byteLength":240,
-			"byteOffset":507272
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":507512,
+			"byteLength":507192,
 			"uri":"redDice.bin"
 		}
 	]

@@ -2,6 +2,8 @@
 
 #include "../../main.h"
 #include "../Camera/CameraBase.h"
+#include"../Dice/BlueDice/BlueDice.h"
+#include"../Dice/RedDice/RedDice.h"
 
 void Character::Init()
 {
@@ -15,6 +17,8 @@ void Character::Init()
 		m_spAnimetor = std::make_shared<KdAnimator>();
 		m_spAnimetor->SetAnimation(m_spModel->GetAnimation("Walk"));
 	}
+
+	m_diceFlg = false;
 }
 
 void Character::Update()
@@ -28,6 +32,34 @@ void Character::Update()
 	if (GetAsyncKeyState('A')) { _moveVec.x = -1.0f; }
 	if (GetAsyncKeyState('W')) { _moveVec.z =  1.0f; }
 	if (GetAsyncKeyState('S')) { _moveVec.z = -1.0f; }
+
+	if (GetAsyncKeyState(VK_TAB) & 0x8000)
+	{
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			if (!m_diceFlg)
+			{
+				m_diceFlg = true;
+				if (!m_wpRDice.expired())
+				{
+					m_wpRDice.lock()->Shake(0, { 0.8f,-0.8f,1.0f }, { -1,1,0 }, 0.025f, { 100,100,100 });
+				}
+				if (!m_wpBDice.expired())
+				{
+					m_wpBDice.lock()->Shake(0, { 1.f,-0.8f,1.0f }, { -1,1,0 }, 0.02f, { 100,100,100 });
+				}
+			}
+		}
+		else
+		{
+			m_diceFlg = false;
+		}
+	}
+	else
+	{
+		m_diceFlg = false;
+	}
+
 
 	const std::shared_ptr<const CameraBase> _spCamera = m_wpCamera.lock();
 	if (_spCamera)

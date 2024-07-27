@@ -67,6 +67,11 @@ void GameScene::Init()
 	_camera->RegistHitObject(_terrain);
 	_character->SetCamera(_camera);
 	AddObject(_camera);
+
+	_blueDice->SetCamera(_camera);
+	_redDice->SetCamera(_camera);
+
+	_character->SetDice(_redDice, _blueDice);
 }
 
 void GameScene::Event()

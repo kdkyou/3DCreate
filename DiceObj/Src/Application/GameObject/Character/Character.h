@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 class CameraBase;
+
+class DiceBase;
+
 class Character : public KdGameObject
 {
 public:
@@ -17,6 +20,12 @@ public:
 		m_wpCamera = camera;
 	}
 
+	void SetDice(const std::shared_ptr<DiceBase>& _red, const std::shared_ptr<DiceBase>& _blue)
+	{
+		m_wpRDice = _red;
+		m_wpBDice = _blue;
+	}
+
 private:
 
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
@@ -26,5 +35,10 @@ private:
 
 	std::weak_ptr<CameraBase>			m_wpCamera;
 
+	std::weak_ptr<DiceBase>				m_wpRDice;
+	std::weak_ptr<DiceBase>				m_wpBDice;
+
 	Math::Vector3						m_worldRot;
+
+	bool								m_diceFlg;
 };
