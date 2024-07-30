@@ -10,31 +10,31 @@ void DiceBase::Update()
 	m_rotDir-={1,1,1};
 
 
-	if (m_rot.x > 360)
+	if (m_rot.x > ONE_AROUND)
 	{
-		m_rot.x -= 360;
+		m_rot.x -= ONE_AROUND;
 	}
 	else if (m_rot.x < 0)
 	{
-		m_rot.x += 360;
+		m_rot.x += ONE_AROUND;
 	}
 
-	if (m_rot.y > 360)
+	if (m_rot.y > ONE_AROUND)
 	{
-		m_rot.y -= 360;
+		m_rot.y -= ONE_AROUND;
 	}
 	else if (m_rot.y < 0)
 	{
-		m_rot.y += 360;
+		m_rot.y += ONE_AROUND;
 	}
 
-	if (m_rot.z > 360)
+	if (m_rot.z > ONE_AROUND)
 	{
-		m_rot.z -= 360;
+		m_rot.z -= ONE_AROUND;
 	}
 	else if (m_rot.z < 0)
 	{
-		m_rot.z += 360;
+		m_rot.z += ONE_AROUND;
 	}
 
 	m_pos += m_moveDir * m_moveSpeed;
@@ -45,9 +45,16 @@ void DiceBase::Update()
 	}
 	else
 	{
+		//m_showFrame--;
+
 		m_rotDir = {};
 		m_moveDir = {};
 	}
+
+	/*if (m_showFrame < 0)
+	{
+		m_isExpired = true;
+	}*/
 }
 
 void DiceBase::PostUpdate()
@@ -66,32 +73,16 @@ void DiceBase::PostUpdate()
 
 void DiceBase::DrawBright()
 {
-	/*if (!m_wpModel.expired())
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModel.lock(), m_mWorld);
-	}
+	/*if (m_wpModel.expired())return;
 
-	if (!m_wpModelWork.expired())
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModelWork.lock(), m_mWorld);
-	}*/
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModel.lock(), m_mWorld);*/
 }
 
 void DiceBase::DrawUnLit()
 {
-	/*if (m_wpModel.expired())return;
+	if (m_wpModel.expired())return;
 
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModel.lock(), m_mWorld);*/
-	
-	if (!m_wpModel.expired())
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModel.lock(), m_mWorld);
-	}
-
-	if (!m_wpModelWork.expired())
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModelWork.lock(), m_mWorld);
-	}
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModel.lock(), m_mWorld);
 	
 }
 

@@ -1,8 +1,11 @@
 ﻿#include "RedDice.h"
 
+#include"../../../main.h"
+
 void RedDice::Init()
 {
-	m_pos = { 0.2,-0.5f,1.0f };
+	//m_pos = { 0.2,-0.5f,1.0f };
+	m_pos = { 0.f,0.f,1.0f };
 	m_moveDir = {};
 	m_rotDir = {};
 	Math::Matrix _transMat = Math::Matrix::CreateTranslation(m_pos);
@@ -20,6 +23,9 @@ void RedDice::Init()
 void RedDice::Update()
 {
 	DiceBase::Update();
+
+	//Application::Instance().m_log.AddLog("Rrot={%.1f,%.1f,%.1f}\n", m_rot.x, m_rot.y, m_rot.z);
+
 }
 
 void RedDice::PostUpdate()
@@ -37,4 +43,5 @@ void RedDice::Shake(const int _number, const Math::Vector3 _pos, const Math::Vec
 	m_moveDir.Normalize();
 	m_moveSpeed = _speed;
 	m_rotDir = _rotDir;
+	m_showFrame = 60;
 }

@@ -4,6 +4,8 @@ class CameraBase;
 
 class DiceBase;
 
+#define TEN	10
+
 class Character : public KdGameObject
 {
 public:
@@ -14,6 +16,7 @@ public:
 	void Update()			override;
 	void PostUpdate()		override;
 	void DrawLit()			override;
+	void DrawSprite()		override;
 
 	void SetCamera(const std::shared_ptr<CameraBase>& camera)
 	{
@@ -28,7 +31,17 @@ public:
 
 private:
 
+	enum DiceJudge
+	{
+		None,
+		Success,
+		Fail,
+		Max,
+	};
+
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
+
+	void Dice();
 
 	std::shared_ptr<KdModelWork>		m_spModel		= nullptr;
 	std::shared_ptr<KdAnimator>			m_spAnimetor	= nullptr;
@@ -40,5 +53,10 @@ private:
 
 	Math::Vector3						m_worldRot;
 
+	//ダイス関係
 	bool								m_diceFlg;
+	int									m_skillParam;
+	DiceJudge							m_judge;
+
+	KdRandomGenerator					m_randGen;
 };

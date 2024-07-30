@@ -22,8 +22,8 @@ void round_n(float& number, int n)
 
 void GameScene::Init()
 {
-	m_spRDiceModel = std::make_shared<KdModelWork>();
-	m_spRDiceModel->SetModelData("Asset/Models/Dice/RedDice/redDice.gltf");
+	m_spRDiceModel = std::make_shared<KdModelData>();
+	m_spRDiceModel->Load("Asset/Models/Dice/RedDice/redDice.gltf");
 	m_spBDiceModel = std::make_shared<KdModelData>();
 	m_spBDiceModel->Load("Asset/Models/Dice/BlueDice/blueDice.gltf");
 
@@ -51,7 +51,7 @@ void GameScene::Init()
 	AddObject(_blueDice);
 
 	std::shared_ptr<RedDice> _redDice = std::make_shared<RedDice>();
-	_redDice->SetModelWork(m_spRDiceModel);
+	_redDice->SetModel(m_spRDiceModel);
 	_redDice->Init();
 	AddObject(_redDice);
 

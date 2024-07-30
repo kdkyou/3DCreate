@@ -1,10 +1,10 @@
 ﻿#pragma once
 
-#define HALF 0.5
-#define RFTWO 0.2 
-#define RFONE 0.1 
-#define RFZFIVE 0.05
-#define MOVE_DECREASE 0.0002
+#define HALF			0.5
+#define RFTWO			0.2 
+#define RFONE			0.1 
+#define MOVE_DECREASE	0.0002
+#define ONE_AROUND		360
 
 class TPSCamera;
 
@@ -19,11 +19,6 @@ public:
 	void PostUpdate()override;
 	void DrawBright()override;
 	void DrawUnLit()override;
-
-	void SetModelWork(const std::shared_ptr<KdModelWork> _spModel)
-	{
-		m_wpModelWork = _spModel;
-	}
 	
 	void SetModel(const std::shared_ptr<KdModelData> _spModel)
 	{
@@ -41,30 +36,31 @@ protected:
 
 	void Release();
 
-	std::weak_ptr<KdModelWork> m_wpModelWork;
-	std::weak_ptr<KdModelData> m_wpModel;
+	std::weak_ptr<KdModelData>	m_wpModel;
 	
 	std::shared_ptr<KdAnimator> m_spAnimetor;
 
-	std::weak_ptr<TPSCamera> m_wpCamera;
+	std::weak_ptr<TPSCamera>	m_wpCamera;
 
 	//座標
-	Math::Vector3			   m_pos;
+	Math::Vector3				m_pos;
 	
 	//移動方向
-	Math::Vector3			   m_moveDir;
-	float					   m_moveSpeed;
+	Math::Vector3				m_moveDir;
+	float						m_moveSpeed;
 	
 	//回転量
-	Math::Vector3			   m_rotDir;
-	Math::Vector3			   m_rot;
+	Math::Vector3				m_rotDir;
+	Math::Vector3				m_rot;
 	
 	//数字表記用
-	Math::Vector3			   m_DecidedRot;
+	Math::Vector3				m_DecidedRot;
 
 	//行列関係
-	Math::Matrix			   m_mRotMat;
-	Math::Matrix			   m_mScaleMat;
-	Math::Matrix			   m_mTransMat;
+	Math::Matrix				m_mRotMat;
+	Math::Matrix				m_mScaleMat;
+	Math::Matrix				m_mTransMat;
 
+	//残存時間
+	int							m_showFrame;
 };

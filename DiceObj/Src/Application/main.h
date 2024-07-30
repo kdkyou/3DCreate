@@ -109,6 +109,13 @@ struct ImGuiAppLog
 	}
 };
 
+struct ImGuiDebug
+{
+	ImGuiTextBuffer     Buf;
+
+};
+
+
 //============================================================
 // アプリケーションクラス
 //	APP.～ でどこからでもアクセス可能

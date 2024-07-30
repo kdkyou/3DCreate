@@ -33,33 +33,7 @@ void Character::Update()
 	if (GetAsyncKeyState('W')) { _moveVec.z =  1.0f; }
 	if (GetAsyncKeyState('S')) { _moveVec.z = -1.0f; }
 
-	if (GetAsyncKeyState(VK_TAB) & 0x8000)
-	{
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
-		{
-			if (!m_diceFlg)
-			{
-				m_diceFlg = true;
-				if (!m_wpRDice.expired())
-				{
-					m_wpRDice.lock()->Shake(0, { 0.8f,-0.8f,1.0f }, { -1,1,0 }, 0.025f, { 100,100,100 });
-				}
-				if (!m_wpBDice.expired())
-				{
-					m_wpBDice.lock()->Shake(0, { 1.f,-0.8f,1.0f }, { -1,1,0 }, 0.02f, { 100,100,100 });
-				}
-			}
-		}
-		else
-		{
-			m_diceFlg = false;
-		}
-	}
-	else
-	{
-		m_diceFlg = false;
-	}
-
+	Dice();
 
 	const std::shared_ptr<const CameraBase> _spCamera = m_wpCamera.lock();
 	if (_spCamera)
@@ -90,6 +64,11 @@ void Character::DrawLit()
 	if (!m_spModel) return;
 
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);
+}
+
+void Character::DrawSprite()
+{
+
 }
 
 void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
@@ -125,4 +104,40 @@ void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
 
 	float rotateAng = std::clamp(_betweenAng, -8.0f, 8.0f);
 	m_worldRot.y += rotateAng;
+}
+
+void Character::Dice()
+{
+	if (GetAsyncKeyState(VK_TAB) & 0x8000)
+	{
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			int l_num = m_randGen.GetInt(1, 100);
+
+
+
+			if (!m_diceFlg)
+			{
+				m_diceFlg = true;
+				int l_tens = l_num / TEN;
+				if (!m_wpRDice.expired())
+				{
+					m_wpRDice.lock()->Shake(l_tens, { 0.8f,-0.8f,1.0f }, { -1,1,0 }, 0.025f, { 21,19,62 });
+				}
+				int l_ones = l_num % TEN;
+				if (!m_wpBDice.expired())
+				{
+					m_wpBDice.lock()->Shake(l_ones, { 1.f,-0.8f,1.0f }, { -1,1,0 }, 0.02f, { 28,74,8 });
+				}
+			}
+		}
+		else
+		{
+			m_diceFlg = false;
+		}
+	}
+	else
+	{
+		m_diceFlg = false;
+	}
 }
