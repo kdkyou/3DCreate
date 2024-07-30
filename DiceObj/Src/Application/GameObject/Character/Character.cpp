@@ -4,6 +4,10 @@
 #include "../Camera/CameraBase.h"
 #include"../Dice/BlueDice/BlueDice.h"
 #include"../Dice/RedDice/RedDice.h"
+#include"../Cutin/Cutin.h"
+
+#include"../../Scene/SceneManager.h"
+
 
 void Character::Init()
 {
@@ -19,6 +23,7 @@ void Character::Init()
 	}
 
 	m_diceFlg = false;
+	m_skillParam = 60;
 }
 
 void Character::Update()
@@ -66,10 +71,7 @@ void Character::DrawLit()
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);
 }
 
-void Character::DrawSprite()
-{
 
-}
 
 void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
 {
@@ -112,12 +114,24 @@ void Character::Dice()
 	{
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 		{
-			int l_num = m_randGen.GetInt(1, 100);
-
-
-
 			if (!m_diceFlg)
 			{
+
+				int l_num = m_randGen.GetInt(1, 100);
+
+				std::shared_ptr<Cutin> _cut = std::make_shared<Cutin>();
+
+				if (l_num <= m_skillParam)
+				{
+					_cut->Set(TEXTUREPASS "Critical.png", SOUNDPASS"Success.wav");
+					SceneManager::Instance().AddObject(_cut);
+				}
+				else
+				{
+					_cut->Set(TEXTUREPASS "Fumble.png", SOUNDPASS"Fail.wav");
+					SceneManager::Instance().AddObject(_cut);
+				}
+
 				m_diceFlg = true;
 				int l_tens = l_num / TEN;
 				if (!m_wpRDice.expired())

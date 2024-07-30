@@ -100,6 +100,9 @@
     <Filter Include="Src\Application\GameObject\Dice\RedDice">
       <UniqueIdentifier>{0415820d-693b-4958-9744-f1c870141a50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Cutin">
+      <UniqueIdentifier>{8c5f6a65-e013-4edc-b4e3-272ddd9de60d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -297,6 +300,9 @@
     <ClInclude Include="Src\Application\GameObject\Dice\DiceBase.h">
       <Filter>Src\Application\GameObject\Dice</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Cutin\Cutin.h">
+      <Filter>Src\Application\GameObject\Cutin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -466,6 +472,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Dice\DiceBase.cpp">
       <Filter>Src\Application\GameObject\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Cutin\Cutin.cpp">
+      <Filter>Src\Application\GameObject\Cutin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

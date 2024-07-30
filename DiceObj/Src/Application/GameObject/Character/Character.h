@@ -6,6 +6,9 @@ class DiceBase;
 
 #define TEN	10
 
+#define CRITICA_LRANGE	5
+#define FUMBLE_RANGE	96
+
 class Character : public KdGameObject
 {
 public:
@@ -16,7 +19,6 @@ public:
 	void Update()			override;
 	void PostUpdate()		override;
 	void DrawLit()			override;
-	void DrawSprite()		override;
 
 	void SetCamera(const std::shared_ptr<CameraBase>& camera)
 	{
@@ -55,8 +57,11 @@ private:
 
 	//ダイス関係
 	bool								m_diceFlg;
-	int									m_skillParam;
-	DiceJudge							m_judge;
+	int									m_skillParam	= 0;
+	DiceJudge							m_judge			= DiceJudge::None;
 
 	KdRandomGenerator					m_randGen;
 };
+
+#define	TEXTUREPASS "Asset/Textures/GameObject/CutIn/"
+#define SOUNDPASS	"Asset/Sounds/"
