@@ -45,16 +45,17 @@ void DiceBase::Update()
 	}
 	else
 	{
-		//m_showFrame--;
-
 		m_rotDir = {};
 		m_moveDir = {};
+		m_rot = m_DecidedRot;
+
+		m_showFrame--;
 	}
 
-	/*if (m_showFrame < 0)
+	if (m_showFrame < 0)
 	{
 		m_isExpired = true;
-	}*/
+	}
 }
 
 void DiceBase::PostUpdate()
@@ -73,9 +74,9 @@ void DiceBase::PostUpdate()
 
 void DiceBase::DrawBright()
 {
-	/*if (m_wpModel.expired())return;
+	if (m_wpModel.expired())return;
 
-	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModel.lock(), m_mWorld);*/
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_wpModel.lock(), m_mWorld);
 }
 
 void DiceBase::DrawUnLit()

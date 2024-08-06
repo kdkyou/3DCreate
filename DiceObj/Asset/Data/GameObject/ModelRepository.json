@@ -1,0 +1,10 @@
+[
+    {
+        "Name":"RedDice",
+        "Path":"Asset/Models/Dice/RedDice/redDice.gltf"
+    },
+    {
+        "Name":"BlueDice",
+        "Path":"Asset/Models/Dice/BlueDice/blueDice.gltf"
+    }
+]

@@ -11,6 +11,8 @@
 #include "../../GameObject/Camera/TPSCamera/TPSCamera.h"
 #include "../../GameObject/Camera/CCTVCamera/CCTVCamera.h"
 
+#include"../../GameObject/Test.h"
+
 
 // 少数第n位で四捨五入する
 void round_n(float& number, int n)
@@ -22,11 +24,7 @@ void round_n(float& number, int n)
 
 void GameScene::Init()
 {
-	m_spRDiceModel = std::make_shared<KdModelData>();
-	m_spRDiceModel->Load("Asset/Models/Dice/RedDice/redDice.gltf");
-	m_spBDiceModel = std::make_shared<KdModelData>();
-	m_spBDiceModel->Load("Asset/Models/Dice/BlueDice/blueDice.gltf");
-
+	
 
 	//===================================================================
 	// ステージ初期化
@@ -43,17 +41,11 @@ void GameScene::Init()
 	AddObject(_character);
 
 	//===================================================================
-	// ダイス初期化
+	// ボックス判定初期化
 	//===================================================================
-	std::shared_ptr<BlueDice> _blueDice = std::make_shared<BlueDice>();
-	_blueDice->SetModel(m_spBDiceModel);
-	_blueDice->Init();
-	AddObject(_blueDice);
-
-	std::shared_ptr<RedDice> _redDice = std::make_shared<RedDice>();
-	_redDice->SetModel(m_spRDiceModel);
-	_redDice->Init();
-	AddObject(_redDice);
+	std::shared_ptr<Test> _test = std::make_shared<Test>();
+	_test->Init();
+	AddObject(_test);
 
 
 	//===================================================================
@@ -68,10 +60,7 @@ void GameScene::Init()
 	_character->SetCamera(_camera);
 	AddObject(_camera);
 
-	_blueDice->SetCamera(_camera);
-	_redDice->SetCamera(_camera);
-
-	_character->SetDice(_redDice, _blueDice);
+	
 }
 
 void GameScene::Event()

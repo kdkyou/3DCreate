@@ -156,6 +156,7 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="Src\Application\AssetRepository\AssetRepository.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\CameraBase.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\CCTVCamera\CCTVCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Src\Application\GameObject\Dice\DiceBase.h" />
     <ClInclude Include="Src\Application\GameObject\Dice\RedDice\RedDice.h" />
     <ClInclude Include="Src\Application\GameObject\Terrain\Terrain.h" />
+    <ClInclude Include="Src\Application\GameObject\Test.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h" />
     <ClInclude Include="Src\Application\Scene\GameScene\GameScene.h" />
@@ -217,6 +219,7 @@
     <ClCompile Include="..\Library\imgui\imgui_stdlib.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Src\Application\AssetRepository\AssetRepository.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\CameraBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\CCTVCamera\CCTVCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.cpp" />
@@ -227,6 +230,7 @@
     <ClCompile Include="Src\Application\GameObject\Dice\DiceBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Dice\RedDice\RedDice.cpp" />
     <ClCompile Include="Src\Application\GameObject\Terrain\Terrain.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Test.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\Scene\BaseScene\BaseScene.cpp" />
     <ClCompile Include="Src\Application\Scene\GameScene\GameScene.cpp" />

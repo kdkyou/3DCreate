@@ -6,7 +6,7 @@
 #define MOVE_DECREASE	0.0002
 #define ONE_AROUND		360
 
-class TPSCamera;
+class CameraBase;
 
 class DiceBase : public KdGameObject
 {
@@ -25,7 +25,7 @@ public:
 		m_wpModel = _spModel;
 	}
 
-	void SetCamera(const std::shared_ptr<TPSCamera> _camera)
+	void SetCamera(const std::shared_ptr<CameraBase> _camera)
 	{
 		m_wpCamera = _camera;
 	}
@@ -40,7 +40,7 @@ protected:
 	
 	std::shared_ptr<KdAnimator> m_spAnimetor;
 
-	std::weak_ptr<TPSCamera>	m_wpCamera;
+	std::weak_ptr<CameraBase>	m_wpCamera;
 
 	//座標
 	Math::Vector3				m_pos;

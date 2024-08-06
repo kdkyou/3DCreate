@@ -17,7 +17,5 @@ private:
 	// 乱数生成器
 	std::shared_ptr<KdRandomGenerator> m_RandomGen;
 
-	std::shared_ptr<KdModelData> m_spRDiceModel = nullptr;
-	std::shared_ptr<KdModelData> m_spBDiceModel = nullptr;
 
 };

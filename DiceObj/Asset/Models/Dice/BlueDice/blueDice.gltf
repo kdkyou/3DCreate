@@ -15,19 +15,13 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"\u5186\u67f1",
-			"rotation":[
-				-0.0020919519010931253,
-				0.0009618564508855343,
-				-0.0012352115008980036,
-				0.9999966025352478
-			]
+			"name":"\u5186\u67f1"
 		}
 	],
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"\u30de\u30c6\u30ea\u30a2\u30eb",
+			"name":"\u30de\u30c6\u30ea\u30a2\u30eb.002",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
 					0.012187434360384941,
@@ -41,7 +35,7 @@
 		},
 		{
 			"doubleSided":true,
-			"name":"\u30de\u30c6\u30ea\u30a2\u30eb.001",
+			"name":"\u30de\u30c6\u30ea\u30a2\u30eb.003",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
 					0.753566324710846,
@@ -56,7 +50,7 @@
 	],
 	"meshes":[
 		{
-			"name":"\u5186\u67f1.001",
+			"name":"\u5186\u67f1.002",
 			"primitives":[
 				{
 					"attributes":{
@@ -83,7 +77,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":4529,
+			"count":4977,
 			"max":[
 				0.9510565400123596,
 				1,
@@ -99,25 +93,25 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":4529,
+			"count":4977,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":4529,
+			"count":4977,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":8199,
+			"count":8196,
 			"type":"SCALAR"
 		},
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":1124,
+			"count":1130,
 			"max":[
 				0.6914650201797485,
 				0.7363495230674744,
@@ -133,75 +127,75 @@
 		{
 			"bufferView":5,
 			"componentType":5126,
-			"count":1124,
+			"count":1130,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":1124,
+			"count":1130,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":7,
 			"componentType":5123,
-			"count":2607,
+			"count":2610,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":54348,
+			"byteLength":59724,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":54348,
-			"byteOffset":54348,
+			"byteLength":59724,
+			"byteOffset":59724,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":36232,
-			"byteOffset":108696,
+			"byteLength":39816,
+			"byteOffset":119448,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":16398,
-			"byteOffset":144928,
+			"byteLength":16392,
+			"byteOffset":159264,
 			"target":34963
 		},
 		{
 			"buffer":0,
-			"byteLength":13488,
-			"byteOffset":161328,
+			"byteLength":13560,
+			"byteOffset":175656,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":13488,
-			"byteOffset":174816,
+			"byteLength":13560,
+			"byteOffset":189216,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":8992,
-			"byteOffset":188304,
+			"byteLength":9040,
+			"byteOffset":202776,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":5214,
-			"byteOffset":197296,
+			"byteLength":5220,
+			"byteOffset":211816,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":202512,
+			"byteLength":217036,
 			"uri":"blueDice.bin"
 		}
 	]

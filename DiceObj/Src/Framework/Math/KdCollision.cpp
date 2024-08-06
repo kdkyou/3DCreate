@@ -395,6 +395,66 @@ bool MeshIntersect(const KdMesh& mesh, const DirectX::BoundingSphere& sphere,
 	return isHit;
 }
 
+bool PolygonsIntersect(const KdPolygon& poly, const DirectX::BoundingBox& box, const DirectX::XMMATRIX& matrix, CollisionMeshResult* pResult)
+{
+	//------------------------------------------
+	// ボックスとポリゴンとの詳細判定
+	//------------------------------------------
+	// １つでもヒットしたらtrue
+	bool isHit = false;
+
+	// 頂点リスト取得
+	std::vector<Math::Vector3> positions;
+	poly.GetPositions(positions);
+	size_t faceNum = positions.size() - 2;
+
+	DirectX::XMVECTOR finalHitPos = {};	// 当たった座標の中でも最後の座標
+	DirectX::XMVECTOR finalPos = {};	// 各面に押されて最終的に到達する座標：判定するボックスの中心
+	DirectX::XMVECTOR objScale = {};	// ターゲットオブジェクトの各軸の拡大率
+	float radiusSqr = 0.0f;
+	//InvertBoxInfo(finalPos, objScale, radiusSqr, matrix, box);
+
+	// 全ての面と判定
+	// ※判定はポリゴンのローカル空間で行われる
+	for (UINT faceIndx = 0; faceIndx < faceNum; faceIndx++)
+	{
+		DirectX::XMVECTOR nearPoint;
+
+		// 点 と 三角形 の最近接点を求める
+		KdPointToTriangle(finalPos,
+			positions[faceIndx],
+			positions[faceIndx + 1],
+			positions[faceIndx + 2],
+			nearPoint);
+
+		// 当たっているかどうかの判定と最終座標の更新
+		//isHit |= HitCheckAndPosUpdate(finalPos, finalHitPos, nearPoint, objScale, radiusSqr, sphere.Radius);
+
+		// CollisionResult無しなら結果は関係ないので当たった時点で返る
+		if (!pResult && isHit) { return isHit; }
+	}
+	return false;
+}
+
+bool MeshIntersect(const KdMesh& mesh, const DirectX::BoundingBox& box, const DirectX::XMMATRIX& matrix, CollisionMeshResult* pResult)
+{
+	//------------------------------------------
+// ブロードフェイズ
+// 　高速化のため、まずは境界ボックス(AABB)で判定
+// 　この段階でヒットしていないなら、詳細な判定をする必要なし
+//------------------------------------------
+	{
+		// メッシュのAABBを元に、行列で変換したAABBを作成
+		DirectX::BoundingBox aabb;
+		mesh.GetBoundingBox().Transform(aabb, matrix);
+
+		if (aabb.Intersects(box) == false) { return false; }
+		else { return true; }
+	}
+
+	
+}
+
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 // 点 vs 面を形成する三角形との最近接点を求める
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////

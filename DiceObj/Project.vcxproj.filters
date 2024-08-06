@@ -103,6 +103,12 @@
     <Filter Include="Src\Application\GameObject\Cutin">
       <UniqueIdentifier>{8c5f6a65-e013-4edc-b4e3-272ddd9de60d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\AssetRepository">
+      <UniqueIdentifier>{9d201526-96a9-48ce-ae8c-a39c107e2705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Test">
+      <UniqueIdentifier>{2b8978a4-2269-4123-9cce-6652caf5b3b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -303,6 +309,12 @@
     <ClInclude Include="Src\Application\GameObject\Cutin\Cutin.h">
       <Filter>Src\Application\GameObject\Cutin</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\AssetRepository\AssetRepository.h">
+      <Filter>Src\Application\AssetRepository</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Test.h">
+      <Filter>Src\Application\GameObject\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -475,6 +487,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Cutin\Cutin.cpp">
       <Filter>Src\Application\GameObject\Cutin</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\AssetRepository\AssetRepository.cpp">
+      <Filter>Src\Application\AssetRepository</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Test.cpp">
+      <Filter>Src\Application\GameObject\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

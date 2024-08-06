@@ -6,7 +6,7 @@ class DiceBase;
 
 #define TEN	10
 
-#define CRITICA_LRANGE	5
+#define CRITICAL_RANGE	5
 #define FUMBLE_RANGE	96
 
 class Character : public KdGameObject
@@ -25,19 +25,13 @@ public:
 		m_wpCamera = camera;
 	}
 
-	void SetDice(const std::shared_ptr<DiceBase>& _red, const std::shared_ptr<DiceBase>& _blue)
-	{
-		m_wpRDice = _red;
-		m_wpBDice = _blue;
-	}
-
 private:
 
-	enum DiceJudge
+	enum Skill
 	{
 		None,
-		Success,
-		Fail,
+		Search,
+		Listeing,
 		Max,
 	};
 
@@ -50,16 +44,17 @@ private:
 
 	std::weak_ptr<CameraBase>			m_wpCamera;
 
-	std::weak_ptr<DiceBase>				m_wpRDice;
-	std::weak_ptr<DiceBase>				m_wpBDice;
-
 	Math::Vector3						m_worldRot;
 
 	//ダイス関係
 	bool								m_diceFlg;
+	
+	//技能関係
 	int									m_skillParam	= 0;
-	DiceJudge							m_judge			= DiceJudge::None;
-
+	Skill								m_skill			= Skill::None;
+	float								m_sphereRadius	= 0;
+	Math::Vector3						m_boxExtents	= {};
+	
 	KdRandomGenerator					m_randGen;
 };
 

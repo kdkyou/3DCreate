@@ -20,5 +20,7 @@ void Cutin::Update()
 
 void Cutin::DrawSprite()
 {
+	if (m_tex == nullptr) return;
+
 	KdShaderManager::Instance().m_spriteShader.DrawTex(m_tex, 0, 0);
 }
