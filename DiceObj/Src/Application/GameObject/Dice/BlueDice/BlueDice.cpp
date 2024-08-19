@@ -12,12 +12,10 @@ void BlueDice::Init()
 	m_mRotMat = Math::Matrix::CreateFromYawPitchRoll(m_rot);
 	m_mWorld = m_mScaleMat * m_mRotMat * _transMat;
 
-	m_pCollider = std::make_unique<KdCollider>();
 	KdCollider::BoxInfo m_box;
 	m_box.m_Abox.Center = m_pos;
 	m_box.m_Abox.Extents = { 1,1,1 };
-	m_pCollider->RegisterCollisionShape("Dice", m_wpModel.lock(), m_pCollider->TypeGround);
-
+	
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 	m_pDebugWire->AddDebugBox(m_mWorld, m_box.m_Abox.Extents,{},false,kBlueColor);
 }

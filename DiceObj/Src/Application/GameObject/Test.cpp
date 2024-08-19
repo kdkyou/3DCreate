@@ -20,13 +20,15 @@ void Test::Init()
 	m_mWorld = Math::Matrix::CreateTranslation(box.Center);
 
 	m_model = std::make_shared<KdModelData>();
-	m_model->Load("Asset/Models/Dice/BlueDice/blueDice.gltf");
-
+	//m_model->Load("Asset/Models/Terrains/R'lyeh/Bridge/Bridge.gltf");
+	//m_model->Load("Asset/Models/Terrains/R'lyeh/Cathedral/Arch/Arch.gltf");
+	m_model->Load("Asset/Models/Terrains/R'lyeh/R'lyeh.gltf");
 	m_pCollider = std::make_unique<KdCollider>();
 
 	//m_pCollider->RegisterCollisionShape("Test",box, KdCollider::TypeDamage);
 	//m_pCollider->RegisterCollisionShape("Test",sphere, KdCollider::TypeDamage);
 	m_pCollider->RegisterCollisionShape("Test",m_model, KdCollider::TypeDamage);
+	//m_pCollider->RegisterCollisionShape("Test", { 0,0.5f,0 }, 1, KdCollider::TypeDamage);
 }
 
 void Test::Update()
@@ -38,8 +40,8 @@ void Test::Update()
 
 void Test::PostUpdate()
 {
-	m_pDebugWire->AddDebugBox(m_mWorld, extents, {}, false, color);
-	//m_pDebugWire->AddDebugSphere(m_mWorld.Translation(), 1.0f, color);
+	//m_pDebugWire->AddDebugBox(m_mWorld, extents, {}, false, color);
+	m_pDebugWire->AddDebugSphere(m_mWorld.Translation(), 1.0f, color);
 }
 
 void Test::DrawLit()

@@ -27,7 +27,7 @@ void Character::Init()
 	m_diceFlg = false;
 	m_skillParam = 60;
 
-	m_sphereRadius = 4.0f;
+	m_sphereRadius = 5.0f;
 
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 }
@@ -127,7 +127,7 @@ void Character::PostUpdate()
 			//範囲内オブジェクトの角度を算出
 			float target_angle = nowDir.Dot(posDelta);
 
-			static float angle = 25;
+			static float angle = 40;
 
 			if (target_angle < angle)
 			{
@@ -244,10 +244,12 @@ void Character::Dice()
 					if (l_num <= CRITICAL_RANGE)
 					{
 						_cut->Set(TEXTUREPASS "Critical.png", SOUNDPASS"Critical.wav");
+						m_sphereRadius = 10.0f;
 					}
 					else
 					{
 						_cut->Set(TEXTUREPASS "", SOUNDPASS"Success.wav");
+						m_sphereRadius = 5.0f;
 					}
 				}
 				else
@@ -259,6 +261,7 @@ void Character::Dice()
 					else
 					{
 						_cut->Set(TEXTUREPASS "", SOUNDPASS"Fail.wav");
+						m_sphereRadius = 0.0f;
 					}
 				}
 				SceneManager::Instance().AddObject(_cut);
