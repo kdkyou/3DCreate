@@ -13,26 +13,9 @@ void RedDice::Init()
 	m_mRotMat = Math::Matrix::CreateFromYawPitchRoll(m_rot);
 	m_mWorld = m_mScaleMat*m_mRotMat * _transMat;
 
-	//初期のアニメーションをセットする
-	/*m_spAnimetor = std::make_shared<KdAnimator>();
-	if (!m_wpModelWork.expired())
-	{
-		m_spAnimetor->SetAnimation(m_wpModelWork.lock()->GetAnimation("Drop"));
-	}*/
+	
 }
 
-void RedDice::Update()
-{
-	DiceBase::Update();
-}
-
-void RedDice::PostUpdate()
-{
-	DiceBase::PostUpdate();
-	//アニメーションの更新
-	/*m_spAnimetor->AdvanceTime(m_wpModelWork.lock()->WorkNodes());
-	m_wpModelWork.lock()->CalcNodeMatrices();*/
-}
 
 void RedDice::Shake(const int _number, const Math::Vector3 _pos, const Math::Vector3 _moveDir, const float _speed, const Math::Vector3 _rotDir)
 {

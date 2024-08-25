@@ -11,6 +11,10 @@
 #include"../GameObject/Test.h"
 #include"../AssetRepository/AssetRepository.h"
 
+#include"json.hpp"
+#include<fstream>
+#include<iostream>
+
 void SceneManager::PreUpdate()
 {
 	// シーン切替
@@ -66,16 +70,19 @@ void SceneManager::Imgui()
 {
 	//＝＝＝＝＝＝＝＝始まり＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 	ImGui::Begin("Debug");
-	
 
-	if (ImGui::BeginMenuBar()) {
-		if (ImGui::BeginMenu("File")) {
-			if (ImGui::Button("Save"))	{
-				SaveMap();
-			}
-			ImGui::EndMenu();
+
+	if (ImGui::BeginMenu("File")) {
+		if (ImGui::Button("Save")) {
+			SaveMap();
 		}
-			ImGui::EndMenuBar();
+		if (ImGui::Button("Load")) {
+			LoadMap();
+		}
+		if (ImGui::Button("SaveGimic")) {
+			SaveGimic();
+		}
+		ImGui::EndMenu();
 	}
 
 	//オブジェクト追加
@@ -107,7 +114,7 @@ void SceneManager::Imgui()
 			CreateObject(SceneManager::ObjectName::Bridge);
 		}
 		ImGui::Text("Fence");
-		if (ImGui::Button("Normal"))
+		if (ImGui::Button("FNormal"))
 		{
 			CreateObject(SceneManager::ObjectName::FenceNormal);
 		}
@@ -139,21 +146,30 @@ void SceneManager::Imgui()
 		{
 			CreateObject(SceneManager::ObjectName::Temple);
 		}
+
+		ImGui::Text("Gimmick");
+		if (ImGui::Button("Nidle"))
+		{
+			CreateGimmick();
+		}
 	}
-	
+
 	ImGui::Text("pos");
 	if (ImGui::Button("PosReset"))
 	{
 		m_pos = {};
 	}
-	ImGui::SliderFloat("pos.x", &m_pos.x, -300, 300);
-	ImGui::SliderFloat("pos.y", &m_pos.y, -300, 300);
-	ImGui::SliderFloat("pos.z", &m_pos.z, -300, 300);
+	ImGui::SliderFloat("pos.x", &m_pos.x, -100, 400);
+	//ImGui::InputFloat("pos.x", &m_pos.x, 0.1f);
+	ImGui::SliderFloat("pos.y", &m_pos.y, -100, 100);
+	//ImGui::InputFloat("pos.y", &m_pos.x, 0.1f);
+	ImGui::SliderFloat("pos.z", &m_pos.z, -100, 100);
+	//ImGui::InputFloat("pos.z", &m_pos.x, 0.1f);
 
 	ImGui::Text("scale");
 	if (ImGui::Button("ScaleReset"))
 	{
-		m_scale = {1,1,1};
+		m_scale = { 1,1,1 };
 	}
 	ImGui::SliderFloat("scale.x", &m_scale.x, 0.1f, 10.0f);
 	ImGui::SliderFloat("scale.y", &m_scale.y, 0.1f, 10.0f);
@@ -164,9 +180,9 @@ void SceneManager::Imgui()
 	{
 		m_rot = {};
 	}
-	ImGui::SliderAngle("rotate.x", &m_rot.x);
-	ImGui::SliderAngle("rotate.y", &m_rot.y);
-	ImGui::SliderAngle("rotate.z", &m_rot.z);
+	ImGui::SliderAngle("rotate.x", &m_rot.x,0);
+	ImGui::SliderAngle("rotate.y", &m_rot.y, 0);
+	ImGui::SliderAngle("rotate.z", &m_rot.z, 0);
 
 	if (m_spNow != nullptr)
 	{
@@ -175,11 +191,15 @@ void SceneManager::Imgui()
 		Math::Matrix _rotX = Math::Matrix::CreateRotationX(m_rot.x);
 		Math::Matrix _rotY = Math::Matrix::CreateRotationY(m_rot.y);
 		Math::Matrix _rotZ = Math::Matrix::CreateRotationZ(m_rot.z);
-		Math::Matrix _mat = _scale * _rotX*_rotY*_rotZ * _trans;
+		Math::Matrix _mat = _scale * _rotX * _rotY * _rotZ * _trans;
 		m_spNow->SetMatrix(_mat);
+		m_spNow->SetRot(m_rot);
 	}
 
+	auto it = m_mapList.begin();
+	int cont = m_mapList.size();
 	
+	//ImGui::ListBox("objList", num, (*it)->m_name, cont);
 
 	
 
@@ -282,4 +302,136 @@ void SceneManager::CreateObject(SceneManager::ObjectName name)
 	m_mapList.push_back(_map);
 	m_scale = { 1,1,1 };
 	
+}
+
+void SceneManager::CreateGimmick()
+{
+
+	std::shared_ptr<Test> test;
+	test = std::make_shared<Test>();
+	test->Init();
+	std::shared_ptr<KdModelData> model;
+	model = std::make_shared<KdModelData>();
+
+	model = AssetRepository::Instance().GetModel("Nidle");
+	std::shared_ptr<MapObject> _gim;
+	_gim = std::make_shared<MapObject>();
+	_gim->m_name = "Nidle";
+	test->SetModel(model);
+	AddObject(test);
+	m_spNow = test;
+	_gim->m_obj = test;
+	m_gimmickList.push_back(_gim);
+	m_scale = { 1,1,1 };
+}
+
+void SceneManager::SaveMap()
+{
+	nlohmann::json j;
+	std::ofstream outFile("map.json");
+	if (outFile.is_open()) {
+		auto it = m_mapList.begin();
+		outFile << "[";
+		while (it != m_mapList.end())
+		{
+			j["name"] = (*it)->m_name;
+			j[ "posX"] = (*it)->m_obj->GetPos().x;
+			j[ "posY"] = (*it)->m_obj->GetPos().y;
+			j[ "posZ"] = (*it)->m_obj->GetPos().z;
+			j["scaleX"] = (*it)->m_obj->GetScale().x;
+			j["scaleY"] = (*it)->m_obj->GetScale().y;
+			j["scaleZ"] = (*it)->m_obj->GetScale().z;
+			j["rotX"] = (*it)->m_obj->GetRotate().x;
+			j["rotY"] = (*it)->m_obj->GetRotate().y;
+			j["rotZ"] = (*it)->m_obj->GetRotate().z;
+		outFile << j.dump(4);
+			it++;
+			outFile << ",";
+		}
+		outFile << "]";
+		outFile.close();
+		Application::Instance().m_log.AddLog("Save\n");
+	}
+}
+
+void SceneManager::LoadMap()
+{
+	/*auto it = m_mapList.begin();
+	while(it!=m_mapList.end()) {
+		(*it)->m_obj->Expired();
+	}*/
+
+	nlohmann::json j;
+	std::ifstream inFile("map.json");
+	inFile >> j;
+
+	std::shared_ptr<Test> test;
+	std::shared_ptr<KdModelData> model;
+	std::shared_ptr<MapObject> _map;
+	for (auto& item : j)
+	{
+		test = std::make_shared<Test>();
+		test->Init();
+		model = std::make_shared<KdModelData>();
+		_map = std::make_shared<MapObject>();
+
+		Math::Vector3 rot = { item["rotX"],item["rotY"],item["rotZ"] };
+
+		model = AssetRepository::Instance().GetModel(item["name"]);
+		Math::Matrix transMat = Math::Matrix::CreateTranslation({ item["posX"],item["posY"] ,item["posZ"] });
+		Math::Matrix scaleMat = Math::Matrix::CreateScale({ item["scaleX"],item["scaleY"] ,item["scaleZ"] });
+		Math::Matrix rotMat = Math::Matrix::CreateFromYawPitchRoll(rot);
+
+		_map->m_name = item["name"];
+
+		Math::Matrix mat = scaleMat * rotMat * transMat;
+		test->SetMatrix(mat);
+		
+		test->SetModel(model);
+		test->SetRot(rot);
+		AddObject(test);
+		m_spNow = test;
+		_map->m_obj = test;
+		m_mapList.push_back(_map);
+	}
+	Application::Instance().m_log.AddLog("Load\n");
+}
+
+void SceneManager::ClearMap()
+{
+	auto it = m_mapList.begin();
+	while (it != m_mapList.end()) {
+		(*it)->m_obj->Expired();
+	}
+	m_mapList.clear();
+}
+
+void SceneManager::SaveGimic()
+{
+	nlohmann::json j;
+	std::ofstream outFile("gimmick.json");
+	if (outFile.is_open()) {
+		auto it = m_gimmickList.begin();
+		outFile << "[";
+		while (it != m_gimmickList.end())
+		{
+			j["name"] = (*it)->m_name;
+			j["posX"] = (*it)->m_obj->GetPos().x;
+			j["posY"] = (*it)->m_obj->GetPos().y;
+			j["posZ"] = (*it)->m_obj->GetPos().z;
+			j["scaleX"] = (*it)->m_obj->GetScale().x;
+			j["scaleY"] = (*it)->m_obj->GetScale().y;
+			j["scaleZ"] = (*it)->m_obj->GetScale().z;
+			j["rotX"] = (*it)->m_obj->GetRotate().x;
+			j["rotY"] = (*it)->m_obj->GetRotate().y;
+			j["rotZ"] = (*it)->m_obj->GetRotate().z;
+			outFile << j.dump(m_mapList.size());
+			it++;
+			if(it!=m_gimmickList.end())
+			outFile << ",";
+		}
+		outFile << "]";
+		outFile.close();
+		Application::Instance().m_log.AddLog("Save\n");
+	}
 }

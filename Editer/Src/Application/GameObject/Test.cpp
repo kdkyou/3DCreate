@@ -6,19 +6,10 @@ void Test::Init()
 {
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 
-	DirectX::BoundingBox box;
-	extents = { 1,1,1 };
-	box.Center = {5,1,6};
-	box.Extents = { 1,1,1 };
+	
+	m_mWorld = Math::Matrix::CreateTranslation({0,0,0});
 
-	color = { 0,1,0 };
-
-	DirectX::BoundingSphere sphere;
-	sphere.Center = { 5,1,6 };
-	sphere.Radius = 1.0f;
-
-	m_mWorld = Math::Matrix::CreateTranslation(box.Center);
-
+	
 	Application::Instance().m_log.AddLog("create\n");
 }
 
@@ -31,7 +22,7 @@ void Test::Update()
 
 void Test::PostUpdate()
 {
-	m_pDebugWire->AddDebugBox(m_mWorld, extents, {}, false, color);
+	//m_pDebugWire->AddDebugBox(m_mWorld, extents, {}, false, color);
 	//m_pDebugWire->AddDebugSphere(m_mWorld.Translation(), 1.0f, color);
 }
 

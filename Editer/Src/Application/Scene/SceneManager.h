@@ -74,14 +74,20 @@ private :
 
 	//imgui関連
 	void CreateObject(ObjectName name);
+	void CreateGimmick();
 	void SaveMap();
+	void LoadMap();
+	void ClearMap();
+	void SaveGimic();
 	//
 	Math::Vector3	m_pos;
 	Math::Vector3	m_scale;
 	Math::Vector3	m_rot;
 	std::list<std::shared_ptr<MapObject>> m_mapList;
+	std::list<std::shared_ptr<MapObject>> m_gimmickList;
 	// オブジェクトポインタ
 	std::shared_ptr<KdGameObject> m_spNow	 = nullptr;
+	int num=0;
 
 
 	// 現在のシーンのインスタンスを保持しているポインタ
@@ -99,7 +105,8 @@ private :
 private:
 
 	SceneManager() { Init(); }
-	~SceneManager() {}
+	~SceneManager() { //SaveGimic(); SaveMap();
+	}
 
 public:
 

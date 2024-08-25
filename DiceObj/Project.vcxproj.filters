@@ -106,11 +106,35 @@
     <Filter Include="Src\Application\AssetRepository">
       <UniqueIdentifier>{9d201526-96a9-48ce-ae8c-a39c107e2705}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Test">
-      <UniqueIdentifier>{2b8978a4-2269-4123-9cce-6652caf5b3b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Camera\FreeCamera">
       <UniqueIdentifier>{7df4f555-e09a-4a2d-bf1b-350dfbe4531e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\MapScene">
+      <UniqueIdentifier>{d82ee2b7-d11f-445c-8930-93ecc05b4b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\DiceScene">
+      <UniqueIdentifier>{52ce9251-83f6-47c2-ae29-7048aed443f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Dice\DiceBase">
+      <UniqueIdentifier>{7a5e87a7-d3ff-496b-b38c-cc4f5e49bbe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick">
+      <UniqueIdentifier>{a94881d0-e740-408d-8d5c-c54594c3364d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Nidle">
+      <UniqueIdentifier>{266b8e94-749f-4e12-bb65-eac9b1436e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\BaseGimmick">
+      <UniqueIdentifier>{7f98d58d-bdff-49f7-af86-83ea07219a4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Relief">
+      <UniqueIdentifier>{72cdfefc-05ff-4b92-961f-7c63743bd2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Information">
+      <UniqueIdentifier>{e4ce502d-d848-4bb7-8e0c-58f45690b093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\GimmickScene">
+      <UniqueIdentifier>{b6cc0bd2-94e3-4052-a3d2-54c6e5778f1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -306,20 +330,41 @@
     <ClInclude Include="Src\Application\GameObject\Dice\RedDice\RedDice.h">
       <Filter>Src\Application\GameObject\Dice\RedDice</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Dice\DiceBase.h">
-      <Filter>Src\Application\GameObject\Dice</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Cutin\Cutin.h">
       <Filter>Src\Application\GameObject\Cutin</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\AssetRepository\AssetRepository.h">
       <Filter>Src\Application\AssetRepository</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Test.h">
-      <Filter>Src\Application\GameObject\Test</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Camera\FreeCamera\FreeCamera.h">
       <Filter>Src\Application\GameObject\Camera\FreeCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\MapScene\MapScene.h">
+      <Filter>Src\Application\Scene\MapScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\DiceScene\DiceScene.h">
+      <Filter>Src\Application\Scene\DiceScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Dice\DiceBase\DiceBase.h">
+      <Filter>Src\Application\GameObject\Dice\DiceBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Dice\DiceManager.h">
+      <Filter>Src\Application\GameObject\Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Relief\Relief.h">
+      <Filter>Src\Application\GameObject\Gimmick\Relief</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\BaseGimmick\BaseGimmick.h">
+      <Filter>Src\Application\GameObject\Gimmick\BaseGimmick</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Information\Information.h">
+      <Filter>Src\Application\GameObject\Information</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\GimmickScene\GimmickScene.h">
+      <Filter>Src\Application\Scene\GimmickScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.h">
+      <Filter>Src\Application\GameObject\Gimmick\Nidle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -488,20 +533,41 @@
     <ClCompile Include="Src\Application\GameObject\Dice\RedDice\RedDice.cpp">
       <Filter>Src\Application\GameObject\Dice\RedDice</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Dice\DiceBase.cpp">
-      <Filter>Src\Application\GameObject\Dice</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Cutin\Cutin.cpp">
       <Filter>Src\Application\GameObject\Cutin</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\AssetRepository\AssetRepository.cpp">
       <Filter>Src\Application\AssetRepository</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Test.cpp">
-      <Filter>Src\Application\GameObject\Test</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Camera\FreeCamera\FreeCamera.cpp">
       <Filter>Src\Application\GameObject\Camera\FreeCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\MapScene\MapScene.cpp">
+      <Filter>Src\Application\Scene\MapScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\DiceScene\DiceScene.cpp">
+      <Filter>Src\Application\Scene\DiceScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Dice\DiceBase\DiceBase.cpp">
+      <Filter>Src\Application\GameObject\Dice\DiceBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Dice\DiceManager.cpp">
+      <Filter>Src\Application\GameObject\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Relief\Relief.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Relief</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\BaseGimmick\BaseGimmick.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\BaseGimmick</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Information\Information.cpp">
+      <Filter>Src\Application\GameObject\Information</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\GimmickScene\GimmickScene.cpp">
+      <Filter>Src\Application\Scene\GimmickScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Nidle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿#include "DiceBase.h"
 
-#include"../Camera/TPSCamera/TPSCamera.h"
+#include"../../Camera/TPSCamera/TPSCamera.h"
 
 
 void DiceBase::Update()

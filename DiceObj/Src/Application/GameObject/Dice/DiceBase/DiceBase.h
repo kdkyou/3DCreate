@@ -38,8 +38,6 @@ protected:
 
 	std::weak_ptr<KdModelData>	m_wpModel;
 	
-	std::shared_ptr<KdAnimator> m_spAnimetor;
-
 	std::weak_ptr<CameraBase>	m_wpCamera;
 
 	//座標

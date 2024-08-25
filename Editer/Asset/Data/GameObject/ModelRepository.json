@@ -29,7 +29,7 @@
     },
     {
 	"Name":"Bridge",
-        "Path":"Asset/Models/Terrains/R'lyeh/Bridge/Bridge/Bridge.gltf"
+        "Path":"Asset/Models/Terrains/R'lyeh/Bridge/Bridge.gltf"
     },
     {
 	"Name":"FenceNormal",
@@ -62,5 +62,10 @@
     {
 	"Name":"Temple",
         "Path":"Asset/Models/Terrains/R'lyeh/Temple/Temple.gltf"
+    },
+    {
+	"Name":"Nidle",
+        "Path":"Asset/Models/Terrains/Gimmick/Nidle/Nidle.gltf"
     }
+
 ]

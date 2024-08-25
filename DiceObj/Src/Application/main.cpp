@@ -373,12 +373,12 @@ void Application::ImGuiProcess()
 	//===========================================================
 
 	// デバッグウィンドウ
-	//if (ImGui::Begin("Debug Window"))
-	//{
-	//	// FPS
-	//	ImGui::Text("FPS : %d", m_fpsController.m_nowfps);
-	//}
-	//ImGui::End();
+	if (ImGui::Begin("Debug Window"))
+	{
+		// FPS
+		ImGui::Text("FPS : %d", m_fpsController.m_nowfps);
+	}
+	ImGui::End();
 
 	// ログウィンドウ
 	m_log.Draw("Log Window");

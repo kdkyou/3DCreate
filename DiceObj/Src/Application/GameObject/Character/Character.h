@@ -12,6 +12,15 @@ class DiceBase;
 class Character : public KdGameObject
 {
 public:
+
+	enum Skill
+	{
+		None,
+		Search,
+		Listeing,
+		Max,
+	};
+	
 	Character()							{}
 	~Character()			override	{}
 
@@ -24,30 +33,33 @@ public:
 	{
 		m_wpCamera = camera;
 	}
+	
+	void Dice();
 
 private:
 
-	enum Skill
-	{
-		None,
-		Search,
-		Listeing,
-		Max,
-	};
 
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
 
-	void Dice();
 
 	std::shared_ptr<KdModelWork>		m_spModel		= nullptr;
 	std::shared_ptr<KdAnimator>			m_spAnimetor	= nullptr;
 
 	std::weak_ptr<CameraBase>			m_wpCamera;
 
+	std::shared_ptr<KdGameObject>		m_now			= nullptr;
+
 	Math::Vector3						m_worldRot;
 
+	Math::Vector3						m_pos;
+
+	float								m_gravity;
+
+	const float							m_moveSpd=0.08f;
+
 	//ダイス関係
-	bool								m_diceFlg;
+	bool								m_diceFlg = false;
+	bool								m_listeingFlg = false;
 	
 	//技能関係
 	int									m_skillParam	= 0;
@@ -59,4 +71,4 @@ private:
 };
 
 #define	TEXTUREPASS "Asset/Textures/GameObject/CutIn/"
-#define SOUNDPASS	"Asset/Sounds/"
+#define SOUNDPASS	"Asset/Sounds/SE/"

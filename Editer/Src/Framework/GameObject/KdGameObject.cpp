@@ -35,6 +35,11 @@ Math::Vector3 KdGameObject::GetScale() const
 	return Math::Vector3(m_mWorld.Right().Length(), m_mWorld.Up().Length(), m_mWorld.Backward().Length());
 }
 
+void KdGameObject::SetRot(const Math::Vector3& rotate)
+{
+	m_rot = rotate;
+}
+
 void KdGameObject::SetMatrix(const Math::Matrix& mat)
 {
 	m_mWorld = mat;

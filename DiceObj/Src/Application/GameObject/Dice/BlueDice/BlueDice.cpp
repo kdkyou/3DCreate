@@ -12,19 +12,8 @@ void BlueDice::Init()
 	m_mRotMat = Math::Matrix::CreateFromYawPitchRoll(m_rot);
 	m_mWorld = m_mScaleMat * m_mRotMat * _transMat;
 
-	KdCollider::BoxInfo m_box;
-	m_box.m_Abox.Center = m_pos;
-	m_box.m_Abox.Extents = { 1,1,1 };
-	
-	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
-	m_pDebugWire->AddDebugBox(m_mWorld, m_box.m_Abox.Extents,{},false,kBlueColor);
 }
 
-void BlueDice::Update()
-{
-	
-	DiceBase::Update();
-}
 
 void BlueDice::Shake(const int _number, const Math::Vector3 _pos, const Math::Vector3 _moveDir, const float _speed, const Math::Vector3 _rotDir)
 {

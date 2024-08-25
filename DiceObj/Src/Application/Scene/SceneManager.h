@@ -31,6 +31,15 @@ public :
 	// 現在のシーンのオブジェクトリストを取得
 	const std::list<std::shared_ptr<KdGameObject>>& GetObjList();
 
+	//マップシーンのオブジェクトリストを取得
+	const std::list<std::shared_ptr<KdGameObject>>& GetMapObjList();
+	
+	//ギミックシーンのオブジェクトリストを取得
+	const std::list<std::shared_ptr<KdGameObject>>& GetGimmickObjList();
+
+	const int& GetReliefCount();
+	void AddReliefCount();
+
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& obj);
 
@@ -49,6 +58,14 @@ private :
 
 	// 現在のシーンのインスタンスを保持しているポインタ
 	std::shared_ptr<BaseScene> m_currentScene = nullptr;
+
+	//マップオブジェクトを入れたシーン
+	std::shared_ptr<BaseScene> m_mapScene	  = nullptr;
+	//描画フラグ
+	bool					   m_MapObjFlg	  = false;
+
+	//ギミックオブジェクトを入れたシーン
+	std::shared_ptr<BaseScene> m_gimmickScene	  = nullptr;
 
 	// 現在のシーンの種類を保持している変数
 	SceneType m_currentSceneType = SceneType::Title;

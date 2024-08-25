@@ -45,6 +45,7 @@ public:
 	virtual void SetScale(const Math::Vector3& scale);
 	virtual Math::Vector3 GetScale() const;
 
+	virtual void SetMatrix(const Math::Matrix& mat) { m_mWorld = mat; }
 	const Math::Matrix& GetMatrix() const { return m_mWorld; }
 
 	virtual bool IsExpired() const { return m_isExpired; }
@@ -68,6 +69,9 @@ public:
 
 	//当たり判定後処理
 	virtual void OnHit(){}
+	virtual void OnEncount(){}
+	virtual void OnBright(){}
+
 
 protected:
 

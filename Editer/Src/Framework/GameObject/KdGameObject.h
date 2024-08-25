@@ -45,6 +45,8 @@ public:
 	virtual void SetScale(const Math::Vector3& scale);
 	virtual Math::Vector3 GetScale() const;
 
+	virtual void SetRot(const Math::Vector3& rotate);
+	const Math::Vector3& GetRotate()const { return m_rot; }
 	virtual void SetMatrix(const Math::Matrix& mat);
 
 	const Math::Matrix& GetMatrix() const { return m_mWorld; }
@@ -71,6 +73,8 @@ public:
 	//当たり判定後処理
 	virtual void OnHit(){}
 
+	void Expired() { m_isExpired = true; }
+
 protected:
 
 	void Release() {}
@@ -86,6 +90,9 @@ protected:
 
 	// 3D空間に存在する機能
 	Math::Matrix	m_mWorld;
+
+	//回転行列保持
+	Math::Vector3	m_rot;
 
 	// 当たり判定クラス
 	std::unique_ptr<KdCollider> m_pCollider = nullptr;

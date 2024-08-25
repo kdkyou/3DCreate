@@ -5,6 +5,7 @@
 #include"../Dice/BlueDice/BlueDice.h"
 #include"../Dice/RedDice/RedDice.h"
 #include"../Cutin/Cutin.h"
+#include"../Information/Information.h"
 
 #include"../../Scene/SceneManager.h"
 
@@ -17,12 +18,16 @@ void Character::Init()
 	{
 		m_spModel = std::make_shared<KdModelWork>();
 		//m_spModel->SetModelData("Asset/Models/Robot/Robot.gltf");
-		m_spModel->SetModelData("Asset/Models/SkinMeshMan/SkinMeshMan.gltf");
+		m_spModel->SetModelData("Asset/Models/Probe/Probe.gltf");
 	
 		//初期のアニメーションをセットする
-		m_spAnimetor = std::make_shared<KdAnimator>();
-		m_spAnimetor->SetAnimation(m_spModel->GetAnimation("Walk"));
+		/*m_spAnimetor = std::make_shared<KdAnimator>();
+		m_spAnimetor->SetAnimation(m_spModel->GetAnimation("Walk"));*/
 	}
+
+	m_gravity = 0;
+	m_pos = {};
+	m_mWorld = Math::Matrix::CreateTranslation(m_pos);
 
 	m_diceFlg = false;
 	m_skillParam = 60;
@@ -35,10 +40,6 @@ void Character::Init()
 void Character::Update()
 {
 	m_skill = Skill::None;
-
-	// キャラクターの移動速度(真似しちゃダメですよ)
-	float			_moveSpd = 0.05f;
-	Math::Vector3	_nowPos	= GetPos();
 
 	Math::Vector3 _moveVec = Math::Vector3::Zero;
 	if (GetAsyncKeyState('D')) { _moveVec.x =  1.0f; }
@@ -54,49 +55,105 @@ void Character::Update()
 		_moveVec = _moveVec.TransformNormal(_moveVec, _spCamera->GetRotationYMatrix());
 	}
 	_moveVec.Normalize();
-	_moveVec *= _moveSpd;
-	_nowPos += _moveVec;
+	_moveVec *= m_moveSpd;
+	m_pos += _moveVec;
+
+	m_pos.y -= m_gravity;
+	m_gravity += 0.001f;
 
 	// キャラクターの回転行列を創る
 	UpdateRotate(_moveVec);
 
-	//Application::Instance().m_log.AddLog("post %.0f,%.0f,%.0f",m_mWorld.Translation().x, m_mWorld.Translation().y, m_mWorld.Translation().z);
-
-
 	// キャラクターのワールド行列を創る処理
 	Math::Matrix _rotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_worldRot.y));
-	m_mWorld = _rotation * Math::Matrix::CreateTranslation(_nowPos);
+	m_mWorld = _rotation * Math::Matrix::CreateTranslation(m_pos);
 }
 
 void Character::PostUpdate()
 {
-	//アニメーションの更新
-	m_spAnimetor->AdvanceTime(m_spModel->WorkNodes());
-	m_spModel->CalcNodeMatrices();
-
-	KdCollider::BoxInfo _boxInfo;
-
-	_boxInfo.m_Abox.Center = m_mWorld.Translation();
-	_boxInfo.m_Abox.Extents = { 1,1,1 };
-	_boxInfo.m_type = KdCollider::TypeDamage;
-
-	m_pDebugWire->AddDebugBox(m_mWorld, _boxInfo.m_Abox.Extents);
-
-	for (auto& obj : SceneManager::Instance().GetObjList())
-	{
-		if (obj->Intersects(_boxInfo, nullptr))
-		{
-			obj->OnHit();
-		}
-	}
-
-	//球判定
 	KdCollider::SphereInfo _sphereInfo;
-	//結果を格納する
-	std::list<KdCollider::CollisionResult> retSphereList;
+	std::list<KdCollider::CollisionResult> retList;
 	float maxOverLap = 0;	//	はみ出た球の長さ
 	Math::Vector3 hitDir;	//当たった方向
 	bool isHit = false;		//	当たっていたらtrue
+
+
+	//レイ判定用に変数を作成
+	KdCollider::RayInfo ray;
+	//レイの発射位置(座標)を設定
+	ray.m_pos = m_pos;		//自分の足元
+	//レイの発射方向を設定
+	ray.m_dir = Math::Vector3::Down;
+	//段差の許容範囲を設定
+	float enableStepHigh = 1.0f;
+	ray.m_pos.y += enableStepHigh;
+	//レイの長さを設定
+	ray.m_range = m_gravity + enableStepHigh;
+	//当たり判定をしたいタイプを設定
+	ray.m_type = KdCollider::TypeGround;
+
+	retList.clear();
+
+	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range,kGreenColor);
+
+	//レイと当たり判定！！
+	for (auto& obj : SceneManager::Instance().GetMapObjList())
+	{
+		obj->Intersects(ray, &retList);
+	}
+
+	
+	//レイに当たったリストから一番近いオブジェクトを検出
+	for (auto& ret : retList)
+	{
+		//レイを遮断し、オーバーした長さが一番長いものを探す
+		if (maxOverLap < ret.m_overlapDistance)
+		{
+			maxOverLap = ret.m_overlapDistance;
+			hitDir = ret.m_hitPos;
+			isHit = true;
+		}
+	}
+
+	if (isHit)
+	{
+		//地面に当たっている
+		m_pos = hitDir + Math::Vector3(0.0f, -0.0f, 0.0f);
+		m_gravity = 0.0f;
+	}
+
+	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{0.f,0.5f,0.f};
+	_sphereInfo.m_sphere.Radius = 0.5;
+	_sphereInfo.m_type = KdCollider::TypeGround;
+
+	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius);
+	
+	for (auto& obj : SceneManager::Instance().GetMapObjList())
+	{
+		obj->Intersects(_sphereInfo, &retList);
+	}
+	//　球に当たったリストから一番近いオブジェクトを検出
+	for (auto& ret : retList)
+	{
+		//球にめり込んで、オーバーした長さが一番長いものを探す
+		if (maxOverLap < ret.m_overlapDistance)
+		{
+			maxOverLap = ret.m_overlapDistance;
+			hitDir = ret.m_hitDir;
+			isHit = true;
+		}
+	}
+	if (isHit)
+	{
+		//	正規化(長さを1にする)
+		//	方向は絶対長さ1
+		hitDir.Normalize();
+		//	地面に当たっている
+		m_pos += hitDir * maxOverLap;
+	}
+	
+	retList.clear();
+
 	switch (m_skill)
 	{
 	case Skill::Search:
@@ -104,43 +161,33 @@ void Character::PostUpdate()
 
 		_sphereInfo.m_sphere.Center = m_mWorld.Translation() + Math::Vector3{0.f,0.5f,0.f};
 		_sphereInfo.m_sphere.Radius = m_sphereRadius;
-		_sphereInfo.m_type = KdCollider::TypeDamage;
+		_sphereInfo.m_type = KdCollider::TypeEvent;
 
 		m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius, kWhiteColor);
 
-		for (auto& obj : SceneManager::Instance().GetObjList())
+		for (auto& obj : SceneManager::Instance().GetGimmickObjList())
 		{
-			obj->Intersects(_sphereInfo, &retSphereList);
-		}
-		//　球に当たったリストから一番近いオブジェクトを検出
-		
-		for (auto& ret : retSphereList)
-		{
-			//if (retSphereList.size() == 0)return;
-
-			//範囲内のオブジェクトの位置
-			Math::Vector3 posDelta = ret.m_hitPos - m_mWorld.Translation();
-
-			//現在の向いてる方向
-			Math::Vector3 nowDir = m_mWorld.Backward();
-
-			//範囲内オブジェクトの角度を算出
-			float target_angle = nowDir.Dot(posDelta);
-
-			static float angle = 40;
-
-			if (target_angle < angle)
+			if (obj->Intersects(_sphereInfo, &retList))
 			{
-				//障害物があるかどうか
-				/*KdCollider::RayInfo rayInfo;
-				rayInfo.m_pos = m_mWorld.Translation();
-				rayInfo.m_dir = nowDir;
-				rayInfo.m_range = 1.f;
-				rayInfo.m_type = KdCollider::TypeBump;*/
-				Application::Instance().m_log.AddLog("search\n");
-				
+				//範囲内のオブジェクトの位置
+				Math::Vector3 posDelta = retList.begin()->m_hitPos - m_mWorld.Translation();
+
+				//現在の向いてる方向
+				Math::Vector3 nowDir = m_mWorld.Backward();
+
+				//範囲内オブジェクトの角度を算出
+				float target_angle = nowDir.Dot(posDelta);
+
+				static float angle = 40;
+
+				if (target_angle < angle)
+				{
+					obj->OnBright();
+				}
+				retList.clear();
 			}
 		}
+		
 		
 		break;
 	case Skill::Listeing:
@@ -150,20 +197,20 @@ void Character::PostUpdate()
 		_sphereInfo.m_type = KdCollider::TypeDamage;
 
 		m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius, kWhiteColor);
-
-		for (auto& obj : SceneManager::Instance().GetObjList())
+		
+		for (auto& obj : SceneManager::Instance().GetGimmickObjList())
 		{
-			obj->Intersects(_sphereInfo, &retSphereList);
+			if (obj->Intersects(_sphereInfo,nullptr))
+			{		
+				if (!m_listeingFlg)
+				{
+					m_listeingFlg = true;
+					std::shared_ptr<Information> _info = std::make_shared<Information>();
+					_info->SetTexture("Asset/Textures/GameObject/Dice/listeing.png");
+					SceneManager::Instance().AddObject(_info);
+				}
+			}
 		}
-		//　球に当たったリストから一番近いオブジェクトを検出
-
-		for (auto& ret : retSphereList)
-		{
-			
-				Application::Instance().m_log.AddLog("listeing\n");
-		}
-
-
 		break;
 	default:
 		break;
@@ -226,19 +273,10 @@ void Character::Dice()
 
 				int l_num = m_randGen.GetInt(1, 100);
 
-				Application::Instance().m_log.AddLog("num %d\n", l_num);
-
-				if (m_randGen.GetInt(0, 1)==1)
-				{
-					m_skill = Skill::Search;
-				}
-				else
-				{
-					m_skill = Skill::Listeing;
-				}
-
 				std::shared_ptr<Cutin> _cut = std::make_shared<Cutin>();
 
+				m_skill = Skill::Listeing;
+				
 				if (l_num <= m_skillParam)
 				{
 					if (l_num <= CRITICAL_RANGE)
@@ -257,11 +295,14 @@ void Character::Dice()
 					if (l_num >= FUMBLE_RANGE)
 					{
 						_cut->Set(TEXTUREPASS "Fumble.png", SOUNDPASS"Fumble.wav");
+						m_sphereRadius = 0.0f;
+						m_skill = Skill::None;
 					}
 					else
 					{
 						_cut->Set(TEXTUREPASS "", SOUNDPASS"Fail.wav");
 						m_sphereRadius = 0.0f;
+						m_skill = Skill::None;
 					}
 				}
 				SceneManager::Instance().AddObject(_cut);

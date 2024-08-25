@@ -7,14 +7,14 @@ public :
 	BaseScene() { Init(); }
 	virtual ~BaseScene() {}
 
-	void PreUpdate();
-	void Update();
-	void PostUpdate();
+	virtual void PreUpdate();
+	virtual void Update();
+	virtual void PostUpdate();
 
-	void PreDraw();
-	void Draw();
-	void DrawSprite();
-	void DrawDebug();
+	virtual void PreDraw();
+	virtual void Draw();
+	virtual void DrawSprite();
+	virtual void DrawDebug();
 
 	// オブジェクトリストを取得
 	const std::list<std::shared_ptr<KdGameObject>>& GetObjList()
@@ -28,6 +28,10 @@ public :
 		m_objList.push_back(obj);
 	}
 
+	//カウント増やす
+	void IncreaseCount() { m_count++; }
+	const int GetCount() { return m_count; }
+
 protected :
 
 	// 継承先シーンで必要ならオーバーライドする
@@ -36,4 +40,6 @@ protected :
 
 	// 全オブジェクトのアドレスをリストで管理
 	std::list<std::shared_ptr<KdGameObject>> m_objList;
+
+	int										 m_count;
 };

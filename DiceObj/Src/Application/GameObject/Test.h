@@ -10,6 +10,7 @@ public:
 	void Update()		override;
 	void PostUpdate()	override;
 	void DrawLit()		override;
+	void DrawBright()	override;
 
 	void OnHit()		override;
 
@@ -22,4 +23,7 @@ private:
 	Math::Color			color;
 
 	Math::Vector3		extents;
+
+	bool				m_brightFlg;
+	int					time;
 };
