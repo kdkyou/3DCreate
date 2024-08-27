@@ -146,6 +146,14 @@ void SceneManager::Imgui()
 		{
 			CreateObject(SceneManager::ObjectName::Temple);
 		}
+		if (ImGui::Button("Megaro"))
+		{
+			CreateObject(SceneManager::ObjectName::Megaro);	
+		}
+		if (ImGui::Button("Cal"))
+		{
+			CreateObject(SceneManager::ObjectName::Cal);
+		}
 
 		ImGui::Text("Gimmick");
 		if (ImGui::Button("Nidle"))
@@ -159,12 +167,12 @@ void SceneManager::Imgui()
 	{
 		m_pos = {};
 	}
-	ImGui::SliderFloat("pos.x", &m_pos.x, -100, 400);
-	//ImGui::InputFloat("pos.x", &m_pos.x, 0.1f);
-	ImGui::SliderFloat("pos.y", &m_pos.y, -100, 100);
-	//ImGui::InputFloat("pos.y", &m_pos.x, 0.1f);
-	ImGui::SliderFloat("pos.z", &m_pos.z, -100, 100);
-	//ImGui::InputFloat("pos.z", &m_pos.x, 0.1f);
+	//ImGui::SliderFloat("pos.x", &m_pos.x, -100, 400);
+	ImGui::InputFloat("pos.x", &m_pos.x, 0.1f);
+	//ImGui::SliderFloat("pos.y", &m_pos.y, -100, 100);
+	ImGui::InputFloat("pos.y", &m_pos.y, 0.1f);
+	//ImGui::SliderFloat("pos.z", &m_pos.z, -100, 100);
+	ImGui::InputFloat("pos.z", &m_pos.z, 0.1f);
 
 	ImGui::Text("scale");
 	if (ImGui::Button("ScaleReset"))
@@ -292,6 +300,14 @@ void SceneManager::CreateObject(SceneManager::ObjectName name)
 		model = AssetRepository::Instance().GetModel("Temple");
 		_map->m_name = "Temple";
 		break;
+	case SceneManager::ObjectName::Megaro:
+		model = AssetRepository::Instance().GetModel("Megaro");
+		_map->m_name = "Megaro";
+		break;
+	case SceneManager::ObjectName::Cal:
+		model = AssetRepository::Instance().GetModel("Cal");
+		_map->m_name = "Cal";
+
 	default:
 		break;
 	}

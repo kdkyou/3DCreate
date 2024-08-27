@@ -66,6 +66,15 @@
     {
 	"Name":"Nidle",
         "Path":"Asset/Models/Terrains/Gimmick/Nidle/Nidle.gltf"
+    },
+    {
+	"Name":"Megaro",
+        "Path":"Asset/Models/Enemy/Megaro/Megaro.gltf"
+    },
+    {
+	"Name":"Cal",
+        "Path":"Asset/Models/Enemy/Cal/Cal.gltf"
     }
+
 
 ]
