@@ -7,6 +7,8 @@ public:
 	virtual ~Terrain()		override {}
 
 	void Update()			override;
+
+	void GenerateDepthMapFromLight()override;
 	void DrawLit()			override;
 
 	void SetModel(std::shared_ptr<KdModelData>& model);

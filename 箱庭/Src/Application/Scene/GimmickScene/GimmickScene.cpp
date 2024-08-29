@@ -13,7 +13,7 @@
 void GimmickScene::Init()
 {
 	nlohmann::json j;
-	std::ifstream inFile("Asset/Data/GameObject/Gimmick.json");
+	std::ifstream inFile("Asset/Data/GameObject/gimmick.json");
 	inFile >> j;
 
 	std::shared_ptr<Relief> _relief;
@@ -53,12 +53,12 @@ void GimmickScene::Init()
 		}
 		else if (item["name"] == "Megaro")
 		{
-			_megaro = std::make_shared<Megaro>();
+			/*_megaro = std::make_shared<Megaro>();
 			_model = AssetRepository::Instance().GetModel(item["name"]);
 			_megaro->SetMatrix(_mat);
 			_megaro->SetModel(_model);
 			_megaro->SetPos(pos);
-			AddObject(_megaro);
+			AddObject(_megaro);*/
 		}
 	}
 
@@ -76,6 +76,7 @@ void GimmickScene::Event()
 		if (time > 180)
 		{
 			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
+			KdAudioManager::Instance().StopAllSound();
 		}
 	}
 }

@@ -6,7 +6,7 @@ public:
 	Cal() {}
 	virtual ~Cal()		override {}
 
-	void DrawLit()			override;
+	void DrawUnLit()			override;
 
 	void SetModel(std::shared_ptr<KdModelData>& model);
 

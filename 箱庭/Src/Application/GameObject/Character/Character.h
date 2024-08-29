@@ -8,6 +8,8 @@ class DiceBase;
 
 #define CRITICAL_RANGE	5
 #define FUMBLE_RANGE	96
+#define PENALTH 		120
+
 
 class Character : public KdGameObject
 {
@@ -27,6 +29,7 @@ public:
 	void Init()				override;
 	void Update()			override;
 	void PostUpdate()		override;
+	void GenerateDepthMapFromLight()override;
 	void DrawLit()			override;
 
 	void SetCamera(const std::shared_ptr<CameraBase>& camera)
@@ -41,6 +44,8 @@ public:
 	void OnHit()override;
 
 private:
+
+	void CoolTime();
 
 	void Dice();
 
@@ -60,9 +65,14 @@ private:
 
 	Math::Vector3						m_pos;
 
-	float								m_gravity;
+	float								m_gravity		= 0;
+
+	int									m_hobber		= 0;
 
 	const float							m_moveSpd=0.08f;
+	float								m_moveLevel = 1;
+
+	int									m_time			= 0;
 
 	//ダイス関係
 	bool								m_diceFlg = false;

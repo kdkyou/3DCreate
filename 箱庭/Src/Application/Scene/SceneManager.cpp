@@ -28,12 +28,20 @@ void SceneManager::Update()
 	else
 	{
 		m_currentScene->Update();
+		if (m_MapObjFlg)
+		{
+			m_gimmickScene->Update();
+		}
 	}
 }
 
 void SceneManager::PostUpdate()
 {
 	m_currentScene->PostUpdate();
+	if (m_MapObjFlg)
+	{
+		m_gimmickScene->PostUpdate();
+	}
 }
 
 void SceneManager::PreDraw()
@@ -43,11 +51,12 @@ void SceneManager::PreDraw()
 
 void SceneManager::Draw()
 {
-	m_currentScene->Draw();
 	if (m_MapObjFlg)
 	{
 		m_mapScene->Draw();
+		m_gimmickScene->Draw();
 	}
+	m_currentScene->Draw();
 }
 
 void SceneManager::DrawSprite()
@@ -57,6 +66,7 @@ void SceneManager::DrawSprite()
 	{
 		m_diceScene->DrawSprite();
 	}
+	m_gimmickScene->DrawSprite();
 	m_currentScene->DrawSprite();
 
 }
@@ -64,10 +74,10 @@ void SceneManager::DrawSprite()
 void SceneManager::DrawDebug()
 {
 	m_currentScene->DrawDebug();
-	/*if (m_MapObjFlg)
+	if (m_MapObjFlg)
 	{
 		m_gimmickScene->DrawDebug();
-	}*/
+	}
 }
 
 const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()
@@ -81,11 +91,11 @@ const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetMapObjList()
 	return m_mapScene->GetObjList();
 }
 
-//const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetGimmickObjList()
-//{
-//	// TODO: return ステートメントをここに挿入します
-//	return m_gimmickScene->GetObjList();
-//}
+const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetGimmickObjList()
+{
+	// TODO: return ステートメントをここに挿入します
+	return m_gimmickScene->GetObjList();
+}
 
 const int& SceneManager::GetReliefCount()
 {
@@ -128,6 +138,7 @@ void SceneManager::ChangeScene(SceneType sceneType)
 	}
 
 	if (!m_mapScene)m_mapScene = std::make_shared<MapScene>();
+	if (!m_gimmickScene)m_gimmickScene = std::make_shared<GimmickScene>();
 	if (!m_diceScene)m_diceScene = std::make_shared<DiceScene>();
 
 	// 現在のシーン情報を更新

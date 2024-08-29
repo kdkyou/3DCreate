@@ -29,6 +29,8 @@ private:
 	Math::Matrix		m_mRotaion;
 	Math::Vector3		m_rot;
 
+	int					m_moveLevel;
+
 	std::shared_ptr<KdGameObject>			m_target;
 
 };

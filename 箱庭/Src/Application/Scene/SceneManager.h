@@ -35,7 +35,7 @@ public :
 	const std::list<std::shared_ptr<KdGameObject>>& GetMapObjList();
 	
 	//ギミックシーンのオブジェクトリストを取得
-	//const std::list<std::shared_ptr<KdGameObject>>& GetGimmickObjList();
+	const std::list<std::shared_ptr<KdGameObject>>& GetGimmickObjList();
 
 	const int& GetReliefCount();
 	void AddReliefCount();

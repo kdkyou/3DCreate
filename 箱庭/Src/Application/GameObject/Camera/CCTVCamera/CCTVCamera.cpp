@@ -17,7 +17,7 @@ void CCTVCamera::Init()
 
 void CCTVCamera::Update()
 {
-	if (GetAsyncKeyState('F'))m_flg = true;
+	if (GetAsyncKeyState(VK_LBUTTON))m_flg = true;
 
 	if (m_flg)
 	{

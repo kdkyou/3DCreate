@@ -11,6 +11,7 @@ public:
 	virtual void SetModel(std::shared_ptr<KdModelData>& model){}
 	virtual void SetModel(std::shared_ptr<KdModelWork>& model){}
 
+	void GenerateDepthMapFromLight()override;
 	void DrawLit()override;
 	void DrawBright()override;
 

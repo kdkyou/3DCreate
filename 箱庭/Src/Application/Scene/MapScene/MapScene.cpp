@@ -28,14 +28,14 @@ void MapScene::Init()
 
 		Math::Matrix mat = scaleMat * rotMat * transMat;
 
-		if (item["name"] == "Cal")
+		/*if (item["name"] == "Cal")
 		{
 			std::shared_ptr<Cal> _cal = std::make_shared<Cal>();
 			_cal->SetMatrix(mat);
 			_cal->SetModel(_model);
 			AddObject(_cal);
 		}
-		else
+		else*/
 		{
 			_terrain->SetMatrix(mat);
 			_terrain->SetModel(_model);
@@ -49,5 +49,19 @@ void MapScene::Init()
 	_cal->SetMatrix(mat);
 	_cal->SetModel(_model);
 	AddObject(_cal);
+
+	//平行光(ディレクショナルライト)								↓方向			↓RGB
+	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ -0.2,-1,-0.5f }, { 1,1,1 });
 	
+	//環境光(アンビエントライト)											↓色RGBA　デフォルト0.3
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight({ 0.3f, 0.3f, 0.4f, 1 });
+
+	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.25f);
+
+	////フォグ(霧)
+	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(false, true);
+
+	//////高さフォグ														↓色	上の上限　下の上限　カメラとの距離
+	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1f,0.1f,0.3f }, 70, -40, 0);
+
 }

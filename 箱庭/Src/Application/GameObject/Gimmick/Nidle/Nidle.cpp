@@ -11,6 +11,11 @@ void Nidle::SetModel(std::shared_ptr<KdModelWork>& model)
 
 void Nidle::Update()
 {
+	m_brightTime--;
+	if (m_brightTime < 0)
+	{
+		m_brightTime = 0;
+	}
 }
 
 void Nidle::PostUpdate()

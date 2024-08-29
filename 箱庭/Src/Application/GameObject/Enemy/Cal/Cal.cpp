@@ -1,6 +1,6 @@
 ﻿#include "Cal.h"
 
-void Cal::DrawLit()
+void Cal::DrawUnLit()
 {
 	if (!m_spModel) return;
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);

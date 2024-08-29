@@ -63,7 +63,7 @@ void Relief::OnHit()
 void Relief::OnEncount()
 {
 	m_drawFkeyFlg = true;
-	if (GetAsyncKeyState('F'))
+	if (GetAsyncKeyState(VK_LBUTTON))
 	{
 		if (!m_createFlg)
 		{
