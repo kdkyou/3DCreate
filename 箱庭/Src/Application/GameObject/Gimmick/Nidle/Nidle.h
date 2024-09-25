@@ -8,7 +8,7 @@ public:
 	Nidle(){}
 	~Nidle()override{}
 
-	void SetModel(std::shared_ptr<KdModelWork>& model)override;
+	void SetModel(const std::shared_ptr<KdModelWork>& model)override;
 
 	void Update()override;
 	void PostUpdate()override;
@@ -18,7 +18,6 @@ public:
 	
 private:
 
-	std::shared_ptr<KdAnimator>			m_spAnimetor = nullptr;
 
 
 };

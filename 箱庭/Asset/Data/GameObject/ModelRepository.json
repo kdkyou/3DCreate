@@ -78,5 +78,21 @@
     {
 	"Name":"Cage",
         "Path":"Asset/Models/Terrains/R'lyeh/Cage/Cage.gltf"
+    },
+    {
+	"Name":"Arrow",
+        "Path":"Asset/Models/Weapon/Arrow/Arrow.gltf"
+    },
+    {
+	"Name":"ArrowBox",
+        "Path":"Asset/Models/Terrains/Gimmick/ArrowBox/ArrowBox.gltf"
+    },
+    {
+	"Name":"Box",
+        "Path":"Asset/Models/Terrains/R'lyeh/Box/Box.gltf"
+    },
+    {
+	"Name":"WallBox",
+        "Path":"Asset/Models/Terrains/R'lyeh/WallBox/WallBox.gltf"
     }
 ]

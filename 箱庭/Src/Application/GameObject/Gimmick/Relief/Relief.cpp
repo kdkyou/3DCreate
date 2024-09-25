@@ -4,7 +4,7 @@
 
 #include"../../../Scene/SceneManager.h"
 
-void Relief::SetModel(std::shared_ptr<KdModelData>& model)
+void Relief::SetModel(const std::shared_ptr<KdModelData>& model)
 {
 	m_spModel = model;
 	m_pCollider = std::make_unique<KdCollider>();
@@ -28,41 +28,44 @@ void Relief::Update()
 
 void Relief::OnHit()
 {
-	std::shared_ptr<Information> _info = std::make_shared<Information>();
-	
-	std::string _path;
-
-	int num = SceneManager::Instance().GetReliefCount();
-	switch (num)
+	if (!m_createFlg)
 	{
-	case 0:
-		_path = RELIEFPATH"known.png";
-		break;
-	case 1:
-		_path = RELIEFPATH"little.png";
-		break;
-	case 2:
-		_path = RELIEFPATH"half.png";	
-		break;
-	case 3:
-		_path = RELIEFPATH"understand.png";
-		break;
-	default:
-		break;
-	}
-	_info->SetTexture(_path,true);
-	SceneManager::Instance().AddObject(_info);
-	if (!m_isOnes)
-	{
-		SceneManager::Instance().AddReliefCount();
-		m_isOnes = true;
-	}
+		m_createFlg = true;
+		std::shared_ptr<Information> _info = std::make_shared<Information>();
 
+		std::string _path;
+
+		int num = SceneManager::Instance().GetReliefCount();
+		switch (num)
+		{
+		case 0:
+			_path = RELIEFPATH"known.png";
+			break;
+		case 1:
+			_path = RELIEFPATH"little.png";
+			break;
+		case 2:
+			_path = RELIEFPATH"half.png";
+			break;
+		case 3:
+			_path = RELIEFPATH"understand.png";
+			break;
+		default:
+			break;
+		}
+		_info->SetTexture(_path, true);
+		SceneManager::Instance().AddObject(_info);
+		if (!m_isOnes)
+		{
+			SceneManager::Instance().AddReliefCount();
+			m_isOnes = true;
+		}
+	}
 }
 
 void Relief::OnEncount()
 {
-	m_drawFkeyFlg = true;
+	/*m_drawFkeyFlg = true;
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
 		if (!m_createFlg)
@@ -74,7 +77,7 @@ void Relief::OnEncount()
 	else
 	{
 		m_createFlg = false;
-	}
+	}*/
 }
 
 void Relief::DrawSprite()

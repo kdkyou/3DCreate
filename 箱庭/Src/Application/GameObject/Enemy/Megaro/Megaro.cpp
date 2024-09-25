@@ -63,7 +63,7 @@ void Megaro::Update()
 	m_mWorld = m_mRotaion * trans;
 }
 
-void Megaro::SetModel(std::shared_ptr<KdModelData>& model)
+void Megaro::SetModel(const std::shared_ptr<KdModelData>& model)
 {
 	m_spModel = model;
 	m_pCollider = std::make_unique<KdCollider>();

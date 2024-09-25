@@ -395,6 +395,25 @@ bool MeshIntersect(const KdMesh& mesh, const DirectX::BoundingSphere& sphere,
 	return isHit;
 }
 
+
+static void InvertBoxInfo(DirectX::XMVECTOR& boxPosInv, DirectX::XMVECTOR& boxScale, float& radiusSqr,
+	const DirectX::XMMATRIX& matrix, const DirectX::BoundingBox& box)
+{
+	// メッシュの逆行列で、球の中心座標を変換(メッシュの座標系へ変換される)
+	DirectX::XMMATRIX invMat = XMMatrixInverse(0, matrix);
+	boxPosInv = XMVector3TransformCoord(XMLoadFloat3(&box.Center), invMat);
+
+	// 半径の二乗(判定の高速化用)
+	//radiusSqr = box.Radius * sphere.Radius;	// 半径の２乗
+
+	// 行列の各軸の拡大率を取得しておく
+	boxScale.m128_f32[0] = DirectX::XMVector3Length(matrix.r[0]).m128_f32[0];
+	boxScale.m128_f32[1] = DirectX::XMVector3Length(matrix.r[1]).m128_f32[0];
+	boxScale.m128_f32[2] = DirectX::XMVector3Length(matrix.r[2]).m128_f32[0];
+	boxScale.m128_f32[3] = 0;
+}
+
+
 bool PolygonsIntersect(const KdPolygon& poly, const DirectX::BoundingBox& box, const DirectX::XMMATRIX& matrix, CollisionMeshResult* pResult)
 {
 	//------------------------------------------
@@ -448,11 +467,76 @@ bool MeshIntersect(const KdMesh& mesh, const DirectX::BoundingBox& box, const Di
 		DirectX::BoundingBox aabb;
 		mesh.GetBoundingBox().Transform(aabb, matrix);
 
-		if (aabb.Intersects(box) == false) { return false; }
-		else { return true; }
+		if (aabb.Intersects(box) == true) { return true; }
+		else { return false; }
 	}
 
-	
+	//------------------------------------------
+	// ナローフェイズ
+	// 　ボックスとメッシュとの詳細判定
+	//------------------------------------------
+
+	//// １つでもヒットしたらtrue
+	//bool isHit = false;
+
+	//// DEBUGビルドでも速度を維持するため、別変数に拾っておく
+	//const auto* pFaces = &mesh.GetFaces()[0];
+	//UINT faceNum = mesh.GetFaces().size();
+	//auto& vertices = mesh.GetVertexPositions();
+
+	//DirectX::XMVECTOR finalHitPos = {};	// 当たった座標の中でも最後の座標
+	//DirectX::XMVECTOR finalPos = {};	// 各面に押されて最終的に到達する座標：判定する球の中心
+	//DirectX::XMVECTOR objScale = {};	// ターゲットオブジェクトの各軸の拡大率
+	//float radiusSqr = 0.0f;
+	//InvertSphereInfo(finalPos, objScale, radiusSqr, matrix, sphere);
+	//InvertBoxInfo;
+
+	//// 全ての面と判定
+	//// ※判定はメッシュのローカル空間で行われる
+	//for (UINT faceIdx = 0; faceIdx < faceNum; faceIdx++)
+	//{
+	//	DirectX::XMVECTOR nearPoint;
+
+	//	// 三角形を構成する３つの頂点のIndex
+	//	const UINT* idx = pFaces[faceIdx].Idx;
+
+	//	// 点 と 三角形 の最近接点を求める
+	//	KdPointToTriangle(finalPos, vertices[idx[0]], vertices[idx[1]], vertices[idx[2]], nearPoint);
+
+	//	// 当たっているかどうかの判定と最終座標の更新
+	//	isHit |= HitCheckAndPosUpdate(finalPos, finalHitPos, nearPoint, objScale, radiusSqr, sphere.Radius);
+
+	//	// CollisionResult無しなら結果は関係ないので当たった時点で返る
+	//	if (!pResult && isHit) { return isHit; }
+	//}
+
+	//// リザルトに結果を格納
+	//if (pResult && isHit)
+	//{
+	//	SetSphereResult(*pResult, isHit, XMVector3TransformCoord(finalHitPos, matrix),
+	//		XMVector3TransformCoord(finalPos, matrix), XMLoadFloat3(&sphere.Center));
+	//}
+
+	//return isHit;
+}
+
+bool MeshIntersect(const KdMesh& mesh, const DirectX::BoundingOrientedBox& box, const DirectX::XMMATRIX& matrix, CollisionMeshResult* pResult)
+{
+	//------------------------------------------
+	// ブロードフェイズ
+	// 　高速化のため、まずは境界ボックス(AABB)で判定
+	// 　この段階でヒットしていないなら、詳細な判定をする必要なし
+	//------------------------------------------
+	{
+		// メッシュのAABBを元に、行列で変換したAABBを作成
+		DirectX::BoundingBox aabb;
+		mesh.GetBoundingBox().Transform(aabb, matrix);
+
+		if (aabb.Intersects(box) == false) { return false; }
+		//else { return true; }
+	}
+
+	return false;
 }
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////

@@ -34,4 +34,6 @@ void Information::DrawSprite()
 	Math::Color _color = { 1,1,1,0.6f };
 
 	KdShaderManager::Instance().m_spriteShader.DrawTex(m_tex, 0, 0,nullptr,&_color);
+
+
 }

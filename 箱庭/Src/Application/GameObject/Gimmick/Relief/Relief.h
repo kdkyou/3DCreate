@@ -8,7 +8,7 @@ public:
 	Relief(){}
 	~Relief()override{}
 
-	void SetModel(std::shared_ptr<KdModelData>& model);
+	void SetModel(const std::shared_ptr<KdModelData>& model)override;
 
 	void Update()override;
 
@@ -23,7 +23,6 @@ private:
 	std::shared_ptr<KdTexture>		m_fTexture		= nullptr;
 	bool							m_drawFkeyFlg	= false;
 	bool							m_createFlg		= false;
-	bool							m_isOnes		= false;
 };
 
 #define RELIEFPATH "Asset/Textures/GameObject/Relief/"

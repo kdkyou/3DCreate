@@ -22,8 +22,8 @@ private:
 
 	//アルファ値
 	Math::Color						m_color;
-	float							m_alpha;
-	float							m_addAlpha;
+	float							m_alpha = 0.f;
+	float							m_addAlpha = 0.f;
 
 	//アルファ値変更フラグ
 	bool							m_checkAlpha=false;

@@ -7,8 +7,10 @@ void TPSCamera::Init()
 	// 親クラスの初期化呼び出し
 	CameraBase::Init();
 
+	m_iniPos = { -0.f, 1.3f, -3.f };
+	m_pos = m_iniPos;
 	// 注視点
-	m_mLocalPos = Math::Matrix::CreateTranslation(-0.f, 1.3f,-3.f);
+	m_mLocalPos = Math::Matrix::CreateTranslation(m_iniPos);
 
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 	m_DegAng.y = 90;
@@ -18,16 +20,36 @@ void TPSCamera::Init()
 	m_mWorld = m_mRotation * m_mLocalPos;
 
 	//被写界深度	  
-	m_spCamera->SetFocus(
-		m_mWorld.Translation().x,		// ピントの位置
-		m_mWorld.Translation().x - 30,		//手前のぼかし距離
-		m_mWorld.Translation().x + 30);		//奥のぼかし距離
+	//m_spCamera->SetFocus(
+	//	m_mWorld.Translation().x,		// ピントの位置
+	//	m_mWorld.Translation().x - 30,		//手前のぼかし距離
+	//	m_mWorld.Translation().x + 30);		//奥のぼかし距離
+
+	//フォグ(霧)
+	//KdShaderManager::Instance().WorkAmbientController().SetFogEnable(false, true);
+}
+
+void TPSCamera::Update()
+{
+	/*Math::Vector3 m_move = Math::Vector3::Zero;
+
+	const std::shared_ptr<const KdGameObject>	_spTarget = m_wpTarget.lock();
+
+	if (_spTarget)
+	{
+		Math::Vector3 _vec = _spTarget->GetMatrix().Translation() - m_pos;
+		if (_vec.Length() > 17.f)
+		{
+			int i = _vec.Length();
+			m_move = (_spTarget->GetMatrix().Translation() - m_pos);
+			m_move.Normalize();
+			m_pos += m_iniPos + m_move * Math::Vector3(_spTarget->GetMatrix().Translation() - m_pos).Length() / MOVE_SPEED;
+		}
+
+	}
 
 
-	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.25f);
-
-	////フォグ(霧)
-	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(false, true);
+	m_mLocalPos = Math::Matrix::CreateTranslation(m_pos);*/
 }
 
 void TPSCamera::PostUpdate()
@@ -38,18 +60,18 @@ void TPSCamera::PostUpdate()
 	if (_spTarget)
 	{
 		_targetMat = Math::Matrix::CreateTranslation(_spTarget->GetPos());
-		//_targetMat.Backward();
 	}
 
 	// カメラの回転
-	UpdateRotateByMouse();
+	if (!(GetAsyncKeyState(VK_LSHIFT)))
+	{
+		UpdateRotateByMouse();
+	}
 	m_mRotation = GetRotationMatrix();
 	m_mWorld =  m_mLocalPos * m_mRotation  * _targetMat;
 
 
-	//////距離フォグ														↓色　　　↓密度
-	//KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ 0.1f,0.1f,0.2f }, 0.05f);
-	//////高さフォグ														↓色	上の上限　下の上限　カメラとの距離
+	//高さフォグ														↓色	上の上限　下の上限　カメラとの距離
 	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1f,0.1f,0.3f }, m_mWorld.Translation().y + 70, m_mWorld.Translation().y - 40, 0);
 
 	//// ↓めり込み防止の為の座標補正計算↓

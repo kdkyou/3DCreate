@@ -15,17 +15,11 @@ void SceneManager::PreUpdate()
 		ChangeScene(m_nextSceneType);
 	}
 
-	m_diceScene->PreUpdate();
 	m_currentScene->PreUpdate();
 }
 
 void SceneManager::Update()
 {
-	if (m_diceFlg)
-	{
-		m_diceScene->Update();
-	}
-	else
 	{
 		m_currentScene->Update();
 		if (m_MapObjFlg)
@@ -62,10 +56,6 @@ void SceneManager::Draw()
 void SceneManager::DrawSprite()
 {
 	
-	if (m_nextSceneType == SceneManager::SceneType::Game)
-	{
-		m_diceScene->DrawSprite();
-	}
 	m_gimmickScene->DrawSprite();
 	m_currentScene->DrawSprite();
 
@@ -108,13 +98,6 @@ void SceneManager::AddReliefCount()
 	m_gimmickScene->IncreaseCount();
 }
 
-void SceneManager::DiceFlgONOFF(bool OnOff)
-{
-	m_diceFlg = OnOff;
-}
-
-
-
 
 void SceneManager::AddObject(const std::shared_ptr<KdGameObject>& obj)
 {
@@ -139,8 +122,7 @@ void SceneManager::ChangeScene(SceneType sceneType)
 
 	if (!m_mapScene)m_mapScene = std::make_shared<MapScene>();
 	if (!m_gimmickScene)m_gimmickScene = std::make_shared<GimmickScene>();
-	if (!m_diceScene)m_diceScene = std::make_shared<DiceScene>();
-
+	
 	// 現在のシーン情報を更新
 	m_currentSceneType = sceneType;
 }

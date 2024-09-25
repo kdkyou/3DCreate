@@ -151,6 +151,39 @@
     <Filter Include="Src\Application\Scene\NoiseScene">
       <UniqueIdentifier>{2e0d66aa-a9b7-4b59-a383-e4a62fabba0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon">
+      <UniqueIdentifier>{99a17dfd-8fee-4dab-ab56-bae1ba45600e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\Axe">
+      <UniqueIdentifier>{dd28cf0d-f217-4c49-9cad-d431c26c0a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\WeaponBase">
+      <UniqueIdentifier>{fca6c9a7-dff9-41c2-ad62-1f8e7a6245b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Player">
+      <UniqueIdentifier>{27304013-c0f2-494e-8843-a1b66df75fbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\CharacterBase">
+      <UniqueIdentifier>{0a44e9b0-7685-4599-823a-c9dc78fc13be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\FallPillar">
+      <UniqueIdentifier>{a59decca-0610-4e80-b1e0-835b0c2764ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\RotateBridge">
+      <UniqueIdentifier>{a1888554-bedb-4d8a-9b6c-a2121a585578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Wall">
+      <UniqueIdentifier>{bf1ae9c1-0307-4f42-bba5-5f43082dd082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\BreakWall">
+      <UniqueIdentifier>{2adf7970-1e9b-4069-b569-8526f20247db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\ArrowBox">
+      <UniqueIdentifier>{2fdf15b5-6b69-460b-971d-52c84951ac7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\Arrow">
+      <UniqueIdentifier>{e2e6fb2f-28ca-40a3-b2e2-cfe3859282ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -327,9 +360,6 @@
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h">
       <Filter>Src\Application\GameObject\Camera\FPSCamera</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Character\Character.h">
-      <Filter>Src\Application\GameObject\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Terrain\Terrain.h">
       <Filter>Src\Application\GameObject\Terrain</Filter>
     </ClInclude>
@@ -392,6 +422,36 @@
     </ClInclude>
     <ClInclude Include="Src\Application\Scene\NoiseScene\NoiseScene.h">
       <Filter>Src\Application\Scene\NoiseScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\Axe\Axe.h">
+      <Filter>Src\Application\GameObject\Weapon\Axe</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h">
+      <Filter>Src\Application\GameObject\Weapon\WeaponBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\Character.h">
+      <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\CharacterBase\CharacterBase.h">
+      <Filter>Src\Application\GameObject\Character\CharacterBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\FallPillar\FallPillar.h">
+      <Filter>Src\Application\GameObject\Gimmick\FallPillar</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\RotateBridge\RotateBridge.h">
+      <Filter>Src\Application\GameObject\Gimmick\RotateBridge</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Wall\Wall.h">
+      <Filter>Src\Application\GameObject\Gimmick\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\BreakWall\BreakWall.h">
+      <Filter>Src\Application\GameObject\Gimmick\BreakWall</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\ArrowBox\ArrowBox.h">
+      <Filter>Src\Application\GameObject\Gimmick\ArrowBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\Arrow\Arrow.h">
+      <Filter>Src\Application\GameObject\Weapon\Arrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -542,9 +602,6 @@
     <ClCompile Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.cpp">
       <Filter>Src\Application\GameObject\Camera\FPSCamera</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Character\Character.cpp">
-      <Filter>Src\Application\GameObject\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Terrain\Terrain.cpp">
       <Filter>Src\Application\GameObject\Terrain</Filter>
     </ClCompile>
@@ -607,6 +664,36 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\NoiseScene\NoiseScene.cpp">
       <Filter>Src\Application\Scene\NoiseScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\Axe\Axe.cpp">
+      <Filter>Src\Application\GameObject\Weapon\Axe</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp">
+      <Filter>Src\Application\GameObject\Weapon\WeaponBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\Character.cpp">
+      <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\CharacterBase\CharacterBase.cpp">
+      <Filter>Src\Application\GameObject\Character\CharacterBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\FallPillar\Fallpillar.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\FallPillar</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\RotateBridge\RotateBridge.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\RotateBridge</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Wall\Wall.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\BreakWall\BreakWall.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\BreakWall</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\ArrowBox\ArrowBox.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\ArrowBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\Arrow\Arrow.cpp">
+      <Filter>Src\Application\GameObject\Weapon\Arrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

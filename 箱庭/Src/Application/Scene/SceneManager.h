@@ -40,9 +40,6 @@ public :
 	const int& GetReliefCount();
 	void AddReliefCount();
 
-	void DiceFlgONOFF(bool OnOff);
-
-
 	
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& obj);
@@ -70,11 +67,6 @@ private :
 
 	//ギミックオブジェクトを入れたシーン
 	std::shared_ptr<BaseScene> m_gimmickScene = nullptr;
-
-	//ダイスシーン
-	std::shared_ptr<BaseScene> m_diceScene	  = nullptr;
-	//ダイスフラグ
-	bool					   m_diceFlg	  = false;
 
 	// 現在のシーンの種類を保持している変数
 	SceneType m_currentSceneType = SceneType::Title;

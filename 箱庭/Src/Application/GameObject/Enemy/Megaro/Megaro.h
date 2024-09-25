@@ -14,7 +14,7 @@ public:
 
 	void Update()override;
 
-	void SetModel(std::shared_ptr<KdModelData>& model);
+	void SetModel(const std::shared_ptr<KdModelData>& model)override;
 	void SetPos(const Math::Vector3& pos)override;
 
 	void SetTarget(std::shared_ptr<KdGameObject> _target);

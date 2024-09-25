@@ -1,17 +1,15 @@
 ﻿#include "GameScene.h"
 #include"../SceneManager.h"
 
-#include "../../GameObject/Character/Character.h"
-
+#include "../../GameObject/Character/Player/Character.h"
 
 #include "../../GameObject/Camera/FPSCamera/FPSCamera.h"
 #include "../../GameObject/Camera/TPSCamera/TPSCamera.h"
 #include "../../GameObject/Camera/CCTVCamera/CCTVCamera.h"
 #include"../../GameObject/Camera/FreeCamera/FreeCamera.h"
 
-#include"../../GameObject/Gimmick/Relief/Relief.h"
-#include"../../GameObject/Gimmick/Nidle/Nidle.h"
 #include"../../GameObject/Enemy/Megaro/Megaro.h"
+#include"../../GameObject/Weapon/Axe/Axe.h"
 
 #include"../../AssetRepository/AssetRepository.h"
 
@@ -37,6 +35,11 @@ void GameScene::Init()
 	_character->Init();
 	AddObject(_character);
 
+	std::shared_ptr<Axe> _axe = std::make_shared<Axe>();
+	_axe->Init();
+	_axe->SetParent(_character);
+	AddObject(_axe);
+
 	//===================================================================
 	// カメラ初期化
 	//===================================================================
@@ -50,12 +53,11 @@ void GameScene::Init()
 	_character->SetCamera(_camera);
 	AddObject(_camera);
 
+
 	nlohmann::json j;
 	std::ifstream inFile("Asset/Data/GameObject/enemy.json");
 	inFile >> j;
 
-	std::shared_ptr<Relief> _relief;
-	std::shared_ptr<Nidle> _nidle;
 	std::shared_ptr<Megaro> _megaro;
 	std::shared_ptr<KdModelData>_model;
 	for (auto& item : j)
@@ -80,6 +82,9 @@ void GameScene::Init()
 		AddObject(_megaro);
 
 	}
+
+
+
 
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav", true);
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav", true);

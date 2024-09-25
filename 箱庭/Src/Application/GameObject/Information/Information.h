@@ -18,6 +18,6 @@ private:
 
 	std::shared_ptr<KdTexture>		m_tex;
 
-	int								m_showTime;
+	int								m_showTime = 0;
 
 };

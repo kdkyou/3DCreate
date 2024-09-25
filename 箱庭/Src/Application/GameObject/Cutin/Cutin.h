@@ -14,9 +14,9 @@ public:
 
 private:
 
-	std::shared_ptr<KdTexture>		m_tex;
+	std::shared_ptr<KdTexture>		m_tex = nullptr;
 
 	//表示時間
-	int								m_time;
+	int								m_time = 0 ;
 
 };

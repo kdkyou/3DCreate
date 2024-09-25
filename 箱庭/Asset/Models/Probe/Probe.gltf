@@ -10,7 +10,8 @@
 			"nodes":[
 				0,
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -73,6 +74,65 @@
 				0.08697548508644104,
 				0.2765408456325531,
 				0.5797215700149536
+			]
+		},
+		{
+			"name":"AttachPoint",
+			"rotation":[
+				-0.6899197101593018,
+				0,
+				0,
+				0.7238858938217163
+			],
+			"translation":[
+				0.20585839450359344,
+				0.2565382122993469,
+				-0.27237388491630554
+			]
+		}
+	],
+	"animations":[
+		{
+			"channels":[
+				{
+					"sampler":0,
+					"target":{
+						"node":3,
+						"path":"translation"
+					}
+				},
+				{
+					"sampler":1,
+					"target":{
+						"node":3,
+						"path":"rotation"
+					}
+				},
+				{
+					"sampler":2,
+					"target":{
+						"node":3,
+						"path":"scale"
+					}
+				}
+			],
+			"name":"Action",
+			"samplers":[
+				{
+					"input":27,
+					"interpolation":"LINEAR",
+					"output":28
+				},
+				{
+					"input":27,
+					"interpolation":"LINEAR",
+					"output":29
+				},
+				{
+					"input":30,
+					"interpolation":"STEP",
+					"output":31
+				}
 			]
 		}
 	],
@@ -416,6 +476,48 @@
 			"componentType":5126,
 			"count":704,
 			"type":"VEC2"
+		},
+		{
+			"bufferView":27,
+			"componentType":5126,
+			"count":26,
+			"max":[
+				1.0416666666666667
+			],
+			"min":[
+				0
+			],
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":28,
+			"componentType":5126,
+			"count":26,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":29,
+			"componentType":5126,
+			"count":26,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":30,
+			"componentType":5126,
+			"count":2,
+			"max":[
+				1.0416666666666667
+			],
+			"min":[
+				0
+			],
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":31,
+			"componentType":5126,
+			"count":2,
+			"type":"VEC3"
 		}
 	],
 	"bufferViews":[
@@ -580,11 +682,36 @@
 			"byteLength":5632,
 			"byteOffset":134448,
 			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":104,
+			"byteOffset":140080
+		},
+		{
+			"buffer":0,
+			"byteLength":312,
+			"byteOffset":140184
+		},
+		{
+			"buffer":0,
+			"byteLength":416,
+			"byteOffset":140496
+		},
+		{
+			"buffer":0,
+			"byteLength":8,
+			"byteOffset":140912
+		},
+		{
+			"buffer":0,
+			"byteLength":24,
+			"byteOffset":140920
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":140080,
+			"byteLength":140944,
 			"uri":"Probe.bin"
 		}
 	]
