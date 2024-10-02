@@ -44,7 +44,29 @@ public :
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& obj);
 
+	//imgui関連
+	void Imgui();
+
+
 private :
+
+
+	//imgui関連
+	void CreateObject();
+	void CreateGimmick();
+	void SaveMap();
+	void LoadMap();
+	void ClearMap();
+	void SaveGimic();
+	void LoadGimmick();
+	//
+	Math::Vector3	m_pos;
+	Math::Vector3	m_scale;
+	Math::Vector3	m_rot;
+	// オブジェクトポインタ
+	std::shared_ptr<KdGameObject> m_spNow = nullptr;
+	int num = 0;
+
 
 	// マネージャーの初期化
 	// インスタンス生成(アプリ起動)時にコンストラクタで自動実行

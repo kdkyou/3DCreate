@@ -27,29 +27,24 @@ void TPSCamera::Init()
 
 	//フォグ(霧)
 	//KdShaderManager::Instance().WorkAmbientController().SetFogEnable(false, true);
+
+	KdEffekseerManager::GetInstance().Create(1280,720);
+	KdEffekseerManager::GetInstance().SetCamera(m_spCamera);
 }
 
 void TPSCamera::Update()
 {
-	/*Math::Vector3 m_move = Math::Vector3::Zero;
+	
+	Math::Vector3 m_move = Math::Vector3::Zero;
 
-	const std::shared_ptr<const KdGameObject>	_spTarget = m_wpTarget.lock();
-
-	if (_spTarget)
+	if (Math::Vector3(m_wpTarget.lock()->GetMatrix().Translation() - m_pos).Length() > 0.1f)
 	{
-		Math::Vector3 _vec = _spTarget->GetMatrix().Translation() - m_pos;
-		if (_vec.Length() > 17.f)
-		{
-			int i = _vec.Length();
-			m_move = (_spTarget->GetMatrix().Translation() - m_pos);
-			m_move.Normalize();
-			m_pos += m_iniPos + m_move * Math::Vector3(_spTarget->GetMatrix().Translation() - m_pos).Length() / MOVE_SPEED;
-		}
-
+		m_move = (m_wpTarget.lock()->GetMatrix().Translation() - m_pos);
 	}
+	m_move.Normalize();
 
-
-	m_mLocalPos = Math::Matrix::CreateTranslation(m_pos);*/
+	m_pos += m_iniPos + m_move * Math::Vector3(m_wpTarget.lock()->GetMatrix().Translation() - m_pos).Length() / MOVE_SPEED;
+//	m_mLocalPos = Math::Matrix::CreateTranslation(m_pos);
 }
 
 void TPSCamera::PostUpdate()
@@ -59,6 +54,7 @@ void TPSCamera::PostUpdate()
 	const std::shared_ptr<const KdGameObject>	_spTarget = m_wpTarget.lock();
 	if (_spTarget)
 	{
+		m_pos = _spTarget->GetPos();
 		_targetMat = Math::Matrix::CreateTranslation(_spTarget->GetPos());
 	}
 
@@ -72,7 +68,7 @@ void TPSCamera::PostUpdate()
 
 
 	//高さフォグ														↓色	上の上限　下の上限　カメラとの距離
-	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1f,0.1f,0.3f }, m_mWorld.Translation().y + 70, m_mWorld.Translation().y - 40, 0);
+	//KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1f,0.1f,0.3f }, m_mWorld.Translation().y + 70, m_mWorld.Translation().y - 40, 0);
 
 	//// ↓めり込み防止の為の座標補正計算↓
 	//// ①当たり判定(レイ判定)用の情報作成

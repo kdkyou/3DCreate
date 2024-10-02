@@ -162,6 +162,7 @@
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\FreeCamera\FreeCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.h" />
+    <ClInclude Include="Src\Application\GameObject\Camera\TrackingCamera\TrackingCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Character\CharacterBase\CharacterBase.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\Character.h" />
     <ClInclude Include="Src\Application\GameObject\Cutin\Cutin.h" />
@@ -176,8 +177,10 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\BreakWall\BreakWall.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\FallPillar\FallPillar.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Relief\Relief.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\RotateBridge\RotateBridge.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Wall\Wall.h" />
     <ClInclude Include="Src\Application\GameObject\Information\Information.h" />
     <ClInclude Include="Src\Application\GameObject\Terrain\Terrain.h" />
@@ -246,6 +249,7 @@
     <ClCompile Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\FreeCamera\FreeCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\TPSCamera\TPSCamera.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Camera\TrackingCamera\TrackingCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\CharacterBase\CharacterBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\Character.cpp" />
     <ClCompile Include="Src\Application\GameObject\Cutin\Cutin.cpp" />
@@ -260,8 +264,10 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\BreakWall\BreakWall.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\FallPillar\Fallpillar.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Relief\Relief.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\RotateBridge\RotateBridge.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Wall\Wall.cpp" />
     <ClCompile Include="Src\Application\GameObject\Information\Information.cpp" />
     <ClCompile Include="Src\Application\GameObject\Terrain\Terrain.cpp" />

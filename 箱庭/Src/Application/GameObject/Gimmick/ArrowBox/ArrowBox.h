@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include"../BaseGimmick/BaseGimmick.h"
 
-#define COOL_TIME 60
+#define COOL_TIME 120
 
 class ArrowBox :public BaseGimmick
 {

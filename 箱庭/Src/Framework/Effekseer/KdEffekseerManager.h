@@ -2,6 +2,8 @@
 
 class KdEffekseerObject;
 
+class Arrow;
+
 class KdEffekseerManager
 {
 public:
@@ -19,10 +21,13 @@ public:
 		Math::Vector3 Rotate = Math::Vector3::One;
 		float Speed = 1.0f;
 		bool IsLoop = false;
+		bool IsTracking = false;
 	};
 
 	// Effekseerエフェクト再生
 	std::weak_ptr<KdEffekseerObject> Play(const std::string& effName, const DirectX::SimpleMath::Vector3& pos, const float size = 1, const float speed = 1, const bool isLoop = true);
+	std::weak_ptr<KdEffekseerObject> Play(const std::string& effName, const DirectX::SimpleMath::Vector3& pos, const float size = 1, const float speed = 1, const std::shared_ptr<Arrow>& spTarget = nullptr, const bool isLoop = true, const bool isTracking = false);
+
 
 	void StopAllEffect();
 	void StopEffect(const std::string& name);
@@ -81,6 +86,9 @@ private:
 
 	// カメラ
 	std::weak_ptr<KdCamera> m_wpCamera;
+
+	//追尾対象
+	std::weak_ptr<Arrow> m_wpParent;
 
 	bool m_isPause = false;
 
@@ -155,6 +163,10 @@ public:
 
 	// ループするかどうか
 	const bool IsLoop() const { return m_info.IsLoop; }
+	
+	//追尾するかどうか
+	const bool IsTracking()const { return m_info.IsTracking; }
+
 
 	// エフェクトの各種情報取得
 	KdEffekseerManager::PlayEfkInfo& WorkPlayEfkInfo()				{ return m_info; }

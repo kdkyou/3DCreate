@@ -1,33 +1,45 @@
 ﻿#pragma once
 
-class Character;
+class CameraBase;
+
+
+#define TEN	10
+#define CRITICAL_RANGE	5
+#define FUMBLE_RANGE	96
+
+#define	TEXTUREPASS "Asset/Textures/GameObject/CutIn/"
+#define SOUNDPASS	"Asset/Sounds/SE/"
 
 class DiceManager:public KdGameObject
 {
 public:
-	DiceManager(){}
-	~DiceManager()override{}
 
-	void Init()override;
 	void Update()override;
-	void DrawSprite()override;
-
-	void SetCharacter(std::shared_ptr<Character>& _chara);
+	void DrawUnLit()override;
+	const bool Dice(const int _judgeNum,const std::weak_ptr<CameraBase>& _wpCamera);
 
 private:
 
-	std::shared_ptr<KdTexture>	m_skillTex;
-	std::shared_ptr<KdTexture>	m_frameTex;
+	void Release();
 
-	std::shared_ptr<Character>	m_spChara;
+	KdRandomGenerator m_randGen;
 
-	Math::Vector2				m_skillPos;
-	Math::Vector2				m_skillClosePos;
-	Math::Vector2				m_skillOpenPos;
-	Math::Vector2				m_framePos;
-	Math::Vector2				m_searchPos;
-	Math::Vector2				m_listeingPos;
+	std::shared_ptr<KdModelData> m_spBlueD = nullptr;
+	std::shared_ptr<KdModelData> m_spRedD = nullptr;
 
-	bool						m_onFlg;
+
+public:
+
+	static DiceManager& GetInstance()
+	{
+		static DiceManager instance;
+
+		return instance;
+	}
+
+
+private:
+	DiceManager() {}
+	~DiceManager()override { Release(); }
 
 };

@@ -65,6 +65,7 @@ public:
 		return false;
 	}
 
+
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);
 

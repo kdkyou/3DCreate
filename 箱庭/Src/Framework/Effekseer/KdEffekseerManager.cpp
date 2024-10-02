@@ -1,4 +1,6 @@
-﻿
+﻿#include "KdEffekseerManager.h"
+#include"../../Application/GameObject/Weapon/Arrow/Arrow.h"
+
 void KdEffekseerManager::Create(int w, int h)
 {
 	// エフェクトのレンダラーの作成
@@ -60,7 +62,21 @@ std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(
 	info.Size = Math::Vector3(size);
 	info.Speed = speed;
 	info.IsLoop = isLoop;
+	info.IsTracking = false;
+	return Play(info);
+}
 
+std::weak_ptr<KdEffekseerObject> KdEffekseerManager::Play(const std::string& effName, const DirectX::SimpleMath::Vector3& pos, const float size, const float speed, const std::shared_ptr<Arrow>& spTarget, const bool isLoop, const bool isTracking)
+{
+	PlayEfkInfo info;
+
+	info.FileName = effName;
+	info.Pos = pos;
+	info.Size = Math::Vector3(size);
+	info.Speed = speed;
+	info.IsLoop = isLoop;
+	info.IsTracking = isTracking;
+	m_wpParent = spTarget;
 	return Play(info);
 }
 
@@ -248,6 +264,14 @@ void KdEffekseerManager::UpdateEffekseerEffect()
 			if (effObj)
 			{
 				int handle = effObj->GetHandle();
+				//追尾エフェクトの座標をターゲットに追尾更新
+				if (effObj->IsTracking())
+				{
+					if (!m_wpParent.expired())
+					{
+						effObj->SetWorldMatrix(m_wpParent.lock()->GetMatrix());
+					}
+				}
 				// 再生が終了している
 				if (m_efkManager->GetInstanceCount(handle) == 0)
 				{

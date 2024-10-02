@@ -41,6 +41,8 @@ void Character::Init()
 	m_moveLevel = 1;
 	m_time = 0;
 
+	m_nextType = SelectType::Break;
+
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 }
 
@@ -62,18 +64,38 @@ void Character::Update()
 
 	Math::Vector3 _moveVec = Math::Vector3::Zero;
 
-	if (GetAsyncKeyState('D')) { _moveVec.x = 1.0f; }
-	if (GetAsyncKeyState('A')) { _moveVec.x = -1.0f; }
-	if (GetAsyncKeyState('W')) { _moveVec.z = 1.0f; }
-	if (GetAsyncKeyState('S')) { _moveVec.z = -1.0f; }
-	if (GetAsyncKeyState(VK_LBUTTON)) {
+	if (GetAsyncKeyState('D') & 0x8000) { _moveVec.x = 1.0f; }
+	if (GetAsyncKeyState('A') & 0x8000) { _moveVec.x = -1.0f; }
+	if (GetAsyncKeyState('W') & 0x8000) { _moveVec.z = 1.0f; }
+	if (GetAsyncKeyState('S') & 0x8000) { _moveVec.z = -1.0f; }
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) {
 		if (m_type == SelectType::None)
 		{
 			m_spAnimetor->SetAnimation(m_spModelWork->GetData()->GetAnimation("Action"), false);
-			m_type = SelectType::Push;
+			m_type = m_nextType;
 		}
 	}
-
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	{
+		if (!m_controlKey)
+		{
+			if (m_nextType == SelectType::Break)
+			{
+				m_controlKey = true;
+				m_nextType = SelectType::Push;
+			}
+			else
+			{
+				m_controlKey = true;
+				m_nextType = SelectType::Break;
+			}
+		}
+		
+	}
+	else
+	{
+		m_controlKey = false;
+	}
 
 	//Dice();
 
@@ -91,7 +113,6 @@ void Character::Update()
 
 	// キャラクターの回転行列を創る
 	UpdateRotate(_moveVec);
-
 
 
 	// キャラクターのワールド行列を創る処理;
@@ -160,12 +181,12 @@ void Character::PostUpdate()
 		m_pos =hitDir;
 		m_gravity = 0.0f;
 
-		////プレイヤーが何かに乗っていれば
-		////乗り物から見たプレイヤーのローカル行列を保存
+		//プレイヤーが何かに乗っていれば
+		//乗り物から見たプレイヤーのローカル行列を保存
 
-		////ex 逆行列の取得方法	※プレイヤーの場合
-		////Math::Matrix _invertMat = GetMatrix().Invert();
-		////乗り物の逆行列の取得
+		//ex 逆行列の取得方法	※プレイヤーの場合
+		//Math::Matrix _invertMat = GetMatrix().Invert();
+		//乗り物の逆行列の取得
 		//const std::shared_ptr<const KdGameObject> _spParent = m_wpRideObject.lock();
 		//Math::Matrix _parentInvertMat;
 		//if (_spParent)
@@ -227,6 +248,14 @@ void Character::PostUpdate()
 	_sphereInfo.m_type = KdCollider::TypeDamage;
 
 	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
+	{
+		if (obj->Intersects(_sphereInfo, nullptr))
+		{
+			OnHit();
+		}
+	}
+
+	for (auto& obj : SceneManager::Instance().GetObjList())
 	{
 		if (obj->Intersects(_sphereInfo, nullptr))
 		{

@@ -7,17 +7,12 @@ void Wall::SetModel(const std::shared_ptr<KdModelWork>& model)
 	m_pCollider->RegisterCollisionShape("Wall", m_spWkModel, KdCollider::TypeEvent | KdCollider::TypeDamage);
 
 	m_spAnimator = std::make_shared<KdAnimator>();
+	m_spAnimator->SetAnimation(m_spWkModel->GetAnimation("CloseOut"), false);
+
 }
 
 void Wall::Init()
 {
-	m_spWkModel = std::make_shared<KdModelWork>();
-	m_spWkModel->SetModelData("Asset/Models/Terrains/Gimmick/Wall/Wall.gltf");
-	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("Wall", m_spWkModel, KdCollider::TypeEvent | KdCollider::TypeDamage);
-
-	m_spAnimator = std::make_shared<KdAnimator>();
-	m_spAnimator->SetAnimation(m_spWkModel->GetAnimation("CloseOut"), false);
 	m_type = InOut::None;
 }
 

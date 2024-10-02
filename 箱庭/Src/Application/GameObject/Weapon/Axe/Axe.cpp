@@ -34,35 +34,51 @@ void Axe::PostUpdate()
 	if (_spParent)
 	{
 		Math::Matrix m_parentMat = _spParent->GetMatrix();
-		if (_spParent->GetType()==CharacterBase::SelectType::Break)
+
+		const CharacterBase::SelectType _type = _spParent->GetType();
+
+		if (_type==CharacterBase::SelectType::Break)
 		{
 			const KdModelWork::Node* _pNode = m_spWModel->FindWorkNode("BreakPoint");
 			if (_pNode)
 			{
 				_sphereInfo.m_sphere.Center =((_pNode->m_worldTransform* m_parentAttachMat)*m_parentMat).Translation();
 			}
+			_sphereInfo.m_type = KdCollider::TypeDamage;
+
 		}
-		else if (_spParent->GetType() == CharacterBase::SelectType::Push)
+		else if (_type == CharacterBase::SelectType::Push)
 		{
 			const KdModelWork::Node* _pNode = m_spWModel->FindWorkNode("PushPoint");
 			if (_pNode)
 			{
-				_sphereInfo.m_sphere.Center = ((_pNode->m_worldTransform * m_parentAttachMat
-					)* m_parentMat).Translation();
+				_sphereInfo.m_sphere.Center = ((_pNode->m_worldTransform * m_parentAttachMat)* m_parentMat).Translation();
 			}
+			_sphereInfo.m_type = KdCollider::TypeEvent;
+
 		}
 		else
 			return;
 
 		_sphereInfo.m_sphere.Radius = m_scaleSize;
-	}
 
-	_sphereInfo.m_type = KdCollider::TypeEvent;
-
-	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
-	{
-		if (obj->Intersects(_sphereInfo, nullptr)) {
-			obj->OnHit();
+		if (_type == CharacterBase::SelectType::Break)
+		{
+			for (auto& obj : SceneManager::Instance().GetObjList())
+			{
+				if (obj->Intersects(_sphereInfo, nullptr)) {
+					obj->OnHit();
+				}
+			}
+		}
+		else if (_type == CharacterBase::SelectType::Push)
+		{
+			for (auto& obj : SceneManager::Instance().GetGimmickObjList())
+			{
+				if (obj->Intersects(_sphereInfo, nullptr)) {
+					obj->OnHit();
+				}
+			}
 		}
 	}
 }

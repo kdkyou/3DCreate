@@ -184,6 +184,15 @@
     <Filter Include="Src\Application\GameObject\Weapon\Arrow">
       <UniqueIdentifier>{e2e6fb2f-28ca-40a3-b2e2-cfe3859282ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\PitFall">
+      <UniqueIdentifier>{6896c450-6abd-4224-aa8a-98c661ffefc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Camera\TrackingCamera">
+      <UniqueIdentifier>{f08de07f-cd65-4e0c-85a4-be2eeebf48f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\SlideDoor">
+      <UniqueIdentifier>{f8295e68-07d0-41bc-a5a0-d9920270e808}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -453,6 +462,15 @@
     <ClInclude Include="Src\Application\GameObject\Weapon\Arrow\Arrow.h">
       <Filter>Src\Application\GameObject\Weapon\Arrow</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.h">
+      <Filter>Src\Application\GameObject\Gimmick\PitFall</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Camera\TrackingCamera\TrackingCamera.h">
+      <Filter>Src\Application\GameObject\Camera\TrackingCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.h">
+      <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -694,6 +712,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Weapon\Arrow\Arrow.cpp">
       <Filter>Src\Application\GameObject\Weapon\Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\PitFall</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Camera\TrackingCamera\TrackingCamera.cpp">
+      <Filter>Src\Application\GameObject\Camera\TrackingCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

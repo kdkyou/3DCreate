@@ -11,12 +11,6 @@ void BreakWall::SetModel(const std::shared_ptr<KdModelWork>& model)
 
 void BreakWall::Init()
 {
-	/*m_spWkModel = std::make_shared<KdModelWork>();
-	m_spWkModel->SetModelData("Asset/Models/Terrains/Gimmick/BreakWall/BreakWall.gltf");
-	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("Wall", m_spWkModel, KdCollider::TypeEvent | KdCollider::Type::TypeGround);
-
-	m_spAnimator = std::make_shared<KdAnimator>();*/
 	m_isOnes = false;
 }
 

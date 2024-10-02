@@ -53,7 +53,7 @@ private:
 
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
 
-
+	SelectType							m_nextType;
 
 	std::weak_ptr<CameraBase>			m_wpCamera;
 
@@ -70,6 +70,10 @@ private:
 
 	int									m_time			= 0;
 
+	bool								m_controlKey = false;
+
+	float								m_sphereRadius	= 0;
+	
 	//ダイス関係
 	bool								m_diceFlg = false;
 	bool								m_listeingFlg = false;
@@ -77,7 +81,6 @@ private:
 	//技能関係
 	int									m_skillParam	= 0;
 	Skill								m_skill			= Skill::None;
-	float								m_sphereRadius	= 0;
 	Math::Vector3						m_boxExtents	= {};
 	
 	KdRandomGenerator					m_randGen;

@@ -18,8 +18,11 @@ public:
 	void DrawLit()override;
 	void GenerateDepthMapFromLight()override;
 	
-	void SetParam(Math::Vector3 _pos, Math::Vector3 _dir, float _spd);
+	void SetParam(const Math::Vector3& _pos,const Math::Vector3& _dir, float _spd);
 	
+	void OnHit()override;
+
+	//void SetMe(const std::shared_ptr<Arrow>& _this);
 
 private:
 
@@ -43,7 +46,12 @@ private:
 	bool									m_dissolveFlg=false;
 	float									m_dissolve = 0.0f;
 
+
 	std::shared_ptr<KdTrailPolygon>			m_trail;
 
+	//自身のポインタ
+	std::shared_ptr<Arrow>					m_spMe = nullptr;
 	
 };
+
+#define PATH "Asset/Textures/GameObject/Trail/Babul.png"

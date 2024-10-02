@@ -76,7 +76,7 @@ void ArrowBox::OnEncount()
 		case ArrowBox::Five:
 			one = _p1Node->m_worldTransform;
 			two = _p2Node->m_worldTransform;
-			three = _p5Node->m_worldTransform;
+			three = _p6Node->m_worldTransform;
 			four = _p4Node->m_worldTransform;
 			break;
 		default:
@@ -86,28 +86,24 @@ void ArrowBox::OnEncount()
 		std::shared_ptr<Arrow> _arrow;
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->Init();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
 			_arrow->SetParam((m_mWorld * one).Translation(), one.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->Init();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
 			_arrow->SetParam((m_mWorld * two).Translation(), two.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->Init();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
 			_arrow->SetParam((m_mWorld * three).Translation(), three.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->Init();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
 			_arrow->SetParam((m_mWorld * four).Translation(), four.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
@@ -122,6 +118,4 @@ void ArrowBox::SetModel(const std::shared_ptr<KdModelData>& model)
 
 	m_pCollider = std::make_unique<KdCollider>();
 	m_pCollider->RegisterCollisionShape("ArrowBox", m_spModel,KdCollider::Type::TypeGround | KdCollider::TypeEvent );
-
-	
 }

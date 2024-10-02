@@ -35,6 +35,8 @@ void BaseScene::Update()
 		obj->Update();
 	}
 
+	KdEffekseerManager::GetInstance().Update();
+
 	// シーン毎のイベント処理
 	Event();
 }
@@ -76,6 +78,7 @@ void BaseScene::Draw()
 		{
 			obj->DrawLit();
 		}
+
 	}
 	KdShaderManager::Instance().m_StandardShader.EndLit();
 
@@ -87,6 +90,9 @@ void BaseScene::Draw()
 		{
 			obj->DrawUnLit();
 		}
+		
+		KdEffekseerManager::GetInstance().Draw();
+
 	}
 	KdShaderManager::Instance().m_StandardShader.EndUnLit();
 

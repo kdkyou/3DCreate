@@ -8,6 +8,7 @@
 #include"../../GameObject/Gimmick/Wall/Wall.h"
 #include"../../GameObject/Gimmick/BreakWall/BreakWall.h"
 #include"../../GameObject/Gimmick/ArrowBox/ArrowBox.h"
+#include"../../GameObject/Gimmick/PitFall/PitFall.h"
 #include"../../Scene/SceneManager.h"
 
 #include"../../AssetRepository/AssetRepository.h"
@@ -59,38 +60,42 @@ void GimmickScene::Init()
 		
 	}
 	Math::Matrix _mat = Math::Matrix::CreateTranslation({ 30.f,5.f,0.f });
-	std::shared_ptr<KdModelWork> _Model = std::make_shared<KdModelWork>();
+	std::shared_ptr<KdModelWork> _Model ;
 
-	/*std::shared_ptr<FallPillar> _fall = std::make_shared<FallPillar>();
+	std::shared_ptr<FallPillar> _fall = std::make_shared<FallPillar>();
 	_fall->SetMatrix(_mat);
 	_Model = std::make_shared<KdModelWork>();
 	_Model->SetModelData("Asset/Models/Terrains/Gimmick/FallPillar/Pillar.gltf");
 	_fall->Init();
 	_fall->SetModel(_Model);
-	AddObject(_fall);*/
+	AddObject(_fall);
 
-	/*std::shared_ptr<RotateBridge> _bridge = std::make_shared<RotateBridge>();
+	std::shared_ptr<RotateBridge> _bridge = std::make_shared<RotateBridge>();
+	_Model = std::make_shared<KdModelWork>();
 	_Model->SetModelData("Asset/Models/Terrains/Gimmick/RotateBridge/RotateBridge.gltf");
 	 _mat = Math::Matrix::CreateTranslation({ 10,-6,0 });
 	 _bridge->SetMatrix(_mat);
 	 _bridge->SetModel(_Model);
-	AddObject(_bridge);*/
+	AddObject(_bridge);
 
-	/*std::shared_ptr<BreakWall> _break = std::make_shared<BreakWall>();
+	std::shared_ptr<BreakWall> _break = std::make_shared<BreakWall>();
 	_Model = std::make_shared<KdModelWork>();
 	_Model->SetModelData("Asset/Models/Terrains/Gimmick/BreakWall/BreakWall.gltf");
 	_mat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90)) * Math::Matrix::CreateTranslation({ 40.f,5.f,2.f });
 	_break->SetMatrix(_mat);
 	_break->Init();
 	_break->SetModel(_Model);
-	AddObject(_break);*/
+	AddObject(_break);
 
 
-	/*std::shared_ptr<Wall> _wall = std::make_shared<Wall>();
+	std::shared_ptr<Wall> _wall = std::make_shared<Wall>();
+	_Model = std::make_shared<KdModelWork>();
+	_Model->SetModelData("Asset/Models/Terrains/Gimmick/Wall/Wall.gltf");
 	_mat=Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90))* Math::Matrix::CreateTranslation({ -10.f,0.f,0.f });
 	_wall->Init();
 	_wall->SetMatrix(_mat);
-	AddObject(_wall);*/
+	_wall->SetModel(_Model);
+	AddObject(_wall);
 
 	std::shared_ptr<ArrowBox> _arrow = std::make_shared<ArrowBox>();
 	_model = std::make_shared<KdModelData>();
@@ -100,6 +105,15 @@ void GimmickScene::Init()
 	_arrow->Init();
 	_arrow->SetModel(_model);
 	AddObject(_arrow);
+
+	std::shared_ptr<PitFall> _pit = std::make_shared<PitFall>();
+	_Model = std::make_shared<KdModelWork>();
+	_Model->SetModelData("Asset/Models/Terrains/Gimmick/PitFall/PitFall.gltf");
+	_mat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0)) * Math::Matrix::CreateTranslation({ -13.f,0.f,0.f });
+	_pit->SetMatrix(_mat);
+	_pit->Init();
+	_pit->SetModel(_Model);
+	AddObject(_pit);
 
 	m_count = 0;
 	time = 0;

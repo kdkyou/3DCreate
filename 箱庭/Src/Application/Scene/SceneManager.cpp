@@ -64,10 +64,10 @@ void SceneManager::DrawSprite()
 void SceneManager::DrawDebug()
 {
 	m_currentScene->DrawDebug();
-	if (m_MapObjFlg)
-	{
-		m_gimmickScene->DrawDebug();
-	}
+	//if (m_MapObjFlg)
+	//{
+	//	m_gimmickScene->DrawDebug();
+	//}
 }
 
 const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()
@@ -85,6 +85,7 @@ const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetGimmickObjList(
 {
 	// TODO: return ステートメントをここに挿入します
 	return m_gimmickScene->GetObjList();
+//	return m_currentScene->GetObjList();
 }
 
 const int& SceneManager::GetReliefCount()
@@ -102,6 +103,13 @@ void SceneManager::AddReliefCount()
 void SceneManager::AddObject(const std::shared_ptr<KdGameObject>& obj)
 {
 	m_currentScene->AddObject(obj);
+}
+
+void SceneManager::Imgui()
+{
+	ImGui::Begin("Create");
+
+	ImGui::End();
 }
 
 void SceneManager::ChangeScene(SceneType sceneType)
@@ -125,4 +133,33 @@ void SceneManager::ChangeScene(SceneType sceneType)
 	
 	// 現在のシーン情報を更新
 	m_currentSceneType = sceneType;
+}
+
+void SceneManager::CreateObject()
+{
+	//if(ImGui::Button(""))
+}
+
+void SceneManager::CreateGimmick()
+{
+}
+
+void SceneManager::SaveMap()
+{
+}
+
+void SceneManager::LoadMap()
+{
+}
+
+void SceneManager::ClearMap()
+{
+}
+
+void SceneManager::SaveGimic()
+{
+}
+
+void SceneManager::LoadGimmick()
+{
 }
