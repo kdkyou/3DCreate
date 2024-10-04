@@ -24,24 +24,24 @@ void BaseGimmick::DrawLit()
 	}
 }
 
-void BaseGimmick::DrawBright()
-{
-	if (m_spModel)
-	{
-		if (m_brightTime > 0)
-		{
-			KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);
-		}
-	}
-
-	if (m_spWkModel)
-	{
-		if (m_brightTime > 0)
-		{
-			KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spWkModel, m_mWorld);
-		}
-	}
-}
+//void BaseGimmick::DrawBright()
+//{
+//	if (m_spModel)
+//	{
+//		if (m_brightTime > 0)
+//		{
+//			KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);
+//		}
+//	}
+//
+//	if (m_spWkModel)
+//	{
+//		if (m_brightTime > 0)
+//		{
+//			KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spWkModel, m_mWorld);
+//		}
+//	}
+//}
 
 void BaseGimmick::OnBright()
 {

@@ -13,6 +13,8 @@
 
 #include"../../AssetRepository/AssetRepository.h"
 
+#include"../../GameObject/Dice/DiceManager.h"
+
 #include"json.hpp"
 
 
@@ -53,6 +55,7 @@ void GameScene::Init()
 	_character->SetCamera(_camera);
 	AddObject(_camera);
 
+	DiceManager::GetInstance().SetCamera(_camera);
 
 	nlohmann::json j;
 	std::ifstream inFile("Asset/Data/GameObject/enemy.json");

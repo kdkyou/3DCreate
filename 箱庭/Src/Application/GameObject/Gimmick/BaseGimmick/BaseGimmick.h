@@ -13,7 +13,7 @@ public:
 
 	void GenerateDepthMapFromLight()override;
 	void DrawLit()override;
-	void DrawBright()override;
+	//void DrawBright()override;
 
 	void OnBright()override;
 

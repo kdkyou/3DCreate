@@ -20,10 +20,6 @@ void Character::Init()
 		m_spModelWork->SetModelData("Asset/Models/Probe/Probe.gltf");
 
 		m_spAnimetor = std::make_shared<KdAnimator>();
-
-
-		/*m_pCollider = std::make_unique<KdCollider>();
-		m_pCollider->RegisterCollisionShape("Probe", m_spModelWork, KdCollider::TypeEvent);*/
 	}
 
 	m_gravity = 0;

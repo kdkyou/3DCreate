@@ -2,6 +2,8 @@
 
 #include"../BaseGimmick/BaseGimmick.h"
 
+#define RIMIT_HEIGHT 6.0
+
 class SlideDoor :public BaseGimmick
 {
 public:
@@ -17,6 +19,8 @@ public:
 	void GenerateDepthMapFromLight()override;
 
 	void OnEncount()override;
+
+	void SetModel(const std::shared_ptr<KdModelData>& model)override;
 
 private:
 
@@ -35,6 +39,8 @@ private:
 	Math::Vector3 m_right;
 	Math::Vector3 m_left;
 
+	float m_speed;
+	int m_ang;
 
 	//
 	LR	m_lrFlg =LR::None;

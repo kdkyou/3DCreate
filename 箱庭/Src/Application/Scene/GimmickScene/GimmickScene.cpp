@@ -9,6 +9,8 @@
 #include"../../GameObject/Gimmick/BreakWall/BreakWall.h"
 #include"../../GameObject/Gimmick/ArrowBox/ArrowBox.h"
 #include"../../GameObject/Gimmick/PitFall/PitFall.h"
+#include"../../GameObject/Gimmick/SlideDoor/SlideDoor.h"
+
 #include"../../Scene/SceneManager.h"
 
 #include"../../AssetRepository/AssetRepository.h"
@@ -73,9 +75,12 @@ void GimmickScene::Init()
 	std::shared_ptr<RotateBridge> _bridge = std::make_shared<RotateBridge>();
 	_Model = std::make_shared<KdModelWork>();
 	_Model->SetModelData("Asset/Models/Terrains/Gimmick/RotateBridge/RotateBridge.gltf");
-	 _mat = Math::Matrix::CreateTranslation({ 10,-6,0 });
+	_model = std::make_shared<KdModelData>();
+	_model->Load("Asset/Models/Terrains/Gimmick/RotateBridge/BridgeUp.gltf");
+	 _mat = Math::Matrix::CreateTranslation({ 10,2,0 });
 	 _bridge->SetMatrix(_mat);
 	 _bridge->SetModel(_Model);
+	 _bridge->SetModel(_model);
 	AddObject(_bridge);
 
 	std::shared_ptr<BreakWall> _break = std::make_shared<BreakWall>();
@@ -114,6 +119,17 @@ void GimmickScene::Init()
 	_pit->Init();
 	_pit->SetModel(_Model);
 	AddObject(_pit);
+
+	std::shared_ptr<SlideDoor>_slide = std::make_shared<SlideDoor>();
+	_model = std::make_shared<KdModelData>();
+	_model = AssetRepository::Instance().GetModel("BreakWall");
+	_mat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90)) * Math::Matrix::CreateTranslation({ 20.f,6.f,0.f });
+	_slide->SetMatrix(_mat);
+	_slide->Init();
+	_slide->SetModel(_model);
+	AddObject(_slide);
+
+
 
 	m_count = 0;
 	time = 0;

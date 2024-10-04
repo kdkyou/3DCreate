@@ -10,13 +10,19 @@ class CameraBase;
 #define	TEXTUREPASS "Asset/Textures/GameObject/CutIn/"
 #define SOUNDPASS	"Asset/Sounds/SE/"
 
+#define DRAW_TIME  120
+
 class DiceManager:public KdGameObject
 {
 public:
 
 	void Update()override;
 	void DrawUnLit()override;
-	const bool Dice(const int _judgeNum,const std::weak_ptr<CameraBase>& _wpCamera);
+	const bool Dice(const int _judgeNum);
+
+	void Ready(const Math::Matrix& _mat);
+
+	void SetCamera(const std::shared_ptr<CameraBase>& _spCamera) { m_wpCamera = _spCamera; }
 
 private:
 
@@ -24,8 +30,15 @@ private:
 
 	KdRandomGenerator m_randGen;
 
+	std::weak_ptr<CameraBase> m_wpCamera;
+
 	std::shared_ptr<KdModelData> m_spBlueD = nullptr;
 	std::shared_ptr<KdModelData> m_spRedD = nullptr;
+
+	Math::Matrix m_mRedD = Math::Matrix::Identity;
+	Math::Matrix m_mBlueD = Math::Matrix::Identity;
+
+	float	m_drawTime = 0;
 
 
 public:

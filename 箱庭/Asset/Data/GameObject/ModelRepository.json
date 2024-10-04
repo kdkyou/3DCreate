@@ -94,5 +94,10 @@
     {
 	"Name":"WallBox",
         "Path":"Asset/Models/Terrains/R'lyeh/WallBox/WallBox.gltf"
+    },
+    {
+	"Name":"BreakWall",
+        "Path":"Asset/Models/Terrains/Gimmick/BreakWall/BreakWall.gltf"
     }
+
 ]

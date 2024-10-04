@@ -7,30 +7,39 @@
 #include"../../Scene/SceneManager.h"
 
 #include"../../AssetRepository/AssetRepository.h"
+#include"../Camera/CameraBase.h"
 
 void DiceManager::Update()
 {
-	
+	m_drawTime--;
+	if (m_drawTime < 0)
+	{
+		m_drawTime = 0;
+		m_spBlueD = nullptr;
+		m_spRedD = nullptr;
+	}
 }
 
 void DiceManager::DrawUnLit()
 {
 	if (m_spBlueD)
 	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spBlueD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spBlueD,m_mBlueD);
 	}
 	if (m_spRedD)
 	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spRedD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spRedD,m_mRedD);
 	}
 
 }
 
-const bool DiceManager::Dice(const int _judgeNum,const std::weak_ptr<CameraBase>& _wpCamera)
+const bool DiceManager::Dice(const int _judgeNum)
 {
 	int l_num = m_randGen.GetInt(1, 100);
 
-	std::shared_ptr<CameraBase> _spCamera = _wpCamera.lock();
+	bool ONOFF = false;
+
+	std::shared_ptr<CameraBase> _spCamera = m_wpCamera.lock();
 
 	std::shared_ptr<Cutin> _cut = std::make_shared<Cutin>();
 
@@ -45,6 +54,7 @@ const bool DiceManager::Dice(const int _judgeNum,const std::weak_ptr<CameraBase>
 		{
 			_cut->Set(TEXTUREPASS "", SOUNDPASS"Success.wav");
 		}
+		ONOFF = true;
 	}
 	else
 	{
@@ -77,7 +87,16 @@ const bool DiceManager::Dice(const int _judgeNum,const std::weak_ptr<CameraBase>
 	SceneManager::Instance().AddObject(_redDice);
 	SceneManager::Instance().AddObject(_blueDice);
 
-	return false;
+	return ONOFF;
+}
+
+void DiceManager::Ready(const Math::Matrix& _mat)
+{
+	m_spBlueD = AssetRepository::Instance().GetModel("BlueDice");
+	m_spRedD = AssetRepository::Instance().GetModel("RedDice");
+	m_drawTime = DRAW_TIME;
+	m_mBlueD = Math::Matrix::CreateScale(0.2) *Math::Matrix::CreateTranslation({ -2.f,0.f,-3.f }) * _mat;
+	m_mRedD =  Math::Matrix::CreateScale(0.2)* Math::Matrix::CreateTranslation({ -1.f,0.f,-3.f }) * _mat;
 }
 
 void DiceManager::Release()
