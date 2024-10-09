@@ -156,6 +156,13 @@ public:
 	void RegisterCollisionShape(std::string_view name, const std::shared_ptr<KdPolygon> polygon, UINT type);
 	void RegisterCollisionShape(std::string_view name, KdPolygon* polygon, UINT type);
 
+	//追加分
+	void RegisterCollisionShape(std::string_view name, const std::shared_ptr<KdModelData>& model,const Math::Matrix& mat, UINT type);
+	void RegisterCollisionShape(std::string_view name, KdModelData* model,const Math::Matrix& mat, UINT type);
+	void RegisterCollisionShape(std::string_view name, const std::shared_ptr<KdModelWork>& model, const Math::Matrix& mat, UINT type);
+	void RegisterCollisionShape(std::string_view name, KdModelWork* model, const Math::Matrix& mat ,UINT type);
+
+
 	// 当たり判定実行
 	bool Intersects(const SphereInfo& targetShape, const Math::Matrix& ownerMatrix, std::list<KdCollider::CollisionResult>* pResults) const;
 	bool Intersects(const BoxInfo& targetBox, const Math::Matrix& ownerMatrix, std::list<KdCollider::CollisionResult>* pResults) const;
@@ -278,6 +285,14 @@ public:
 	KdModelCollision(const std::shared_ptr<KdModelWork>& model, UINT type) :
 		KdCollisionShape(type), m_shape(model) {}
 
+	//追加
+	KdModelCollision(const std::shared_ptr<KdModelData>& model, const Math::Matrix& mat, UINT type) :
+		KdCollisionShape(type), m_shape(std::make_shared<KdModelWork>(model)),m_mLocal(mat){}
+	KdModelCollision(const std::shared_ptr<KdModelWork>& model, const Math::Matrix& mat, UINT type) :
+		KdCollisionShape(type), m_shape(model), m_mLocal(mat) {}
+
+
+
 	virtual ~KdModelCollision() { m_shape.reset(); }
 
 	bool Intersects(const DirectX::BoundingSphere& target, const Math::Matrix& world, KdCollider::CollisionResult* pRes) override;
@@ -287,6 +302,7 @@ public:
 
 private:
 	std::shared_ptr<KdModelWork> m_shape;
+	Math::Matrix  m_mLocal = Math::Matrix::Identity;
 };
 
 

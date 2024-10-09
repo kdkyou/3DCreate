@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#define HALF			0.5
-#define RFTWO			0.2 
-#define RFONE			0.1 
-#define MOVE_DECREASE	0.0002
+#define HALF			0.5f
+#define RFTWO			0.2f
+#define RFONE			0.1f 
+#define MOVE_DECREASE	0.0002f
 #define ONE_AROUND		360
 
 class CameraBase;
@@ -30,7 +30,7 @@ public:
 		m_wpCamera = _camera;
 	}
 
-	virtual void Shake(const int _number,const Math::Vector3 _pos, const Math::Vector3 _moveDir,const float _speed,const Math::Vector3 _rotDir){}
+	virtual void Shake(const int _number,const Math::Vector3& _pos, const Math::Vector3& _moveDir,const float _speed,const Math::Vector3& _rotDir){}
 	
 protected:
 
@@ -45,7 +45,7 @@ protected:
 	
 	//移動方向
 	Math::Vector3				m_moveDir;
-	float						m_moveSpeed;
+	float						m_moveSpeed = 0.0f;
 	
 	//回転量
 	Math::Vector3				m_rotDir;
@@ -60,5 +60,5 @@ protected:
 	Math::Matrix				m_mTransMat;
 
 	//残存時間
-	int							m_showFrame;
+	int							m_showFrame =  0;
 };

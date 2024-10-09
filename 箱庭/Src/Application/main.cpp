@@ -207,7 +207,8 @@ bool Application::Init(int w, int h)
 	//===================================================================
 	// シーン初期化
 	//===================================================================
-	SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
+	SceneManager::Instance().Init();
+
 	ShowCursor(false);
 
 	return true;
@@ -386,6 +387,10 @@ void Application::ImGuiProcess()
 
 	// ログウィンドウ
 	//m_log.Draw("Log Window");
+
+
+	//マップ生成
+	SceneManager::Instance().Imgui();
 
 	//=====================================================
 	// ログ出力 ・・・ AddLog("～") で追加

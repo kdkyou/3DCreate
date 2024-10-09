@@ -95,13 +95,12 @@ void DiceManager::Ready(const Math::Matrix& _mat)
 	m_spBlueD = AssetRepository::Instance().GetModel("BlueDice");
 	m_spRedD = AssetRepository::Instance().GetModel("RedDice");
 	m_drawTime = DRAW_TIME;
-	m_mBlueD = Math::Matrix::CreateScale(0.2) *Math::Matrix::CreateTranslation({ -2.f,0.f,-3.f }) * _mat;
-	m_mRedD =  Math::Matrix::CreateScale(0.2)* Math::Matrix::CreateTranslation({ -1.f,0.f,-3.f }) * _mat;
+	m_mBlueD = Math::Matrix::CreateScale(0.4f) * Math::Matrix::CreateTranslation({ -2.f,1.5f,2.f }) * _mat;
+	m_mRedD = Math::Matrix::CreateScale(0.4f) * Math::Matrix::CreateTranslation({ -2.f,1.5f,-0.f }) * _mat;
 }
 
 void DiceManager::Release()
 {
-
 	m_spBlueD = nullptr;
 	m_spRedD = nullptr;
 }

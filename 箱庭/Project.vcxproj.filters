@@ -193,6 +193,9 @@
     <Filter Include="Src\Application\GameObject\Gimmick\SlideDoor">
       <UniqueIdentifier>{f8295e68-07d0-41bc-a5a0-d9920270e808}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Framework\Shader\MyShader">
+      <UniqueIdentifier>{a46eb129-1793-4466-9099-c9709cd1dd6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -471,6 +474,9 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.h">
       <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\Door.h">
+      <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -722,6 +728,9 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.cpp">
       <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\Door.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Framework\Shader\inc_KdCommon.hlsli">
@@ -735,6 +744,9 @@
     </None>
     <None Include="Src\Framework\Shader\StandardShader\inc_KdStandardShader.hlsli">
       <Filter>Src\Framework\Shader\StandardShader</Filter>
+    </None>
+    <None Include="Src\Framework\Shader\MyShader\inc_MyShader.hlsli">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

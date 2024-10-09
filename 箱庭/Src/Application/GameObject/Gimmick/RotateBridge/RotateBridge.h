@@ -23,6 +23,7 @@ public:
 
 private:
 
+
 	Math::Matrix m_mGear =Math::Matrix::Identity;
 
 	int m_ang = 0;;

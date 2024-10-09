@@ -2,6 +2,9 @@
 
 #include"../WeaponBase.h"
 
+#define NONE_AROUND 0
+#define HALF_AROUND 180
+
 class Axe:public WeaponBase
 {
 public:
@@ -15,6 +18,10 @@ public:
 	
 private:
 
-	float m_scaleSize;
+	float m_scaleSize = 0.0f;
+
+	float m_rotAng  = 0.0f;
+
+	bool m_dirtyFlg = false;
 
 };

@@ -53,13 +53,14 @@ private:
 
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
 
-	SelectType							m_nextType;
-
+	
 	std::weak_ptr<CameraBase>			m_wpCamera;
 
 	std::shared_ptr<KdGameObject>		m_now			= nullptr;
 
 	Math::Vector3						m_worldRot;
+
+	float								m_ajustHeight = 0.5f;
 
 	float								m_gravity		= 0;
 

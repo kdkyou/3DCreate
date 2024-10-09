@@ -5,20 +5,50 @@
 void Axe::Update()
 {
 	//親(プレイヤー)の行列を取得
-		const std::shared_ptr<const CharacterBase> _wpParent = m_wpParent.lock();
-		
-		if (_wpParent)
+		const std::shared_ptr<const CharacterBase> _spParent = m_wpParent.lock();
+		Math::Matrix _rotMat = Math::Matrix::Identity;
+		static CharacterBase::SelectType _nowType = CharacterBase::SelectType::None;
+		static CharacterBase::SelectType _nextType = CharacterBase::SelectType::None;
+
+		if (_spParent)
 		{
-			const KdModelWork::Node* _pNode = _wpParent->GetModelWork()->FindWorkNode("AttachPoint");
+			const KdModelWork::Node* _pNode = _spParent->GetModelWork()->FindWorkNode("AttachPoint");
 			if (_pNode)
 			{
 				m_parentAttachMat = _pNode->m_worldTransform;
 			}
 
-			_parentMat = _wpParent->GetMatrix();
+			if (!m_dirtyFlg)
+			{
+				_nextType = _spParent->GetNextType();
+				if (_nowType != _nextType)
+				{
+					_nowType = _nextType;
+					m_dirtyFlg = true;
+				}
+
+			}
+
+			_parentMat = _spParent->GetMatrix();
+
+
 		}
 
-		m_mWorld = m_parentAttachMat*_parentMat;	
+
+		if (m_dirtyFlg)
+		{
+			m_dirtyFlg = false;
+			m_rotAng += HALF_AROUND;
+			if (m_rotAng > 360)
+			{
+				m_rotAng -= 360;
+			}
+
+		}
+
+		_rotMat = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(m_rotAng));
+
+		m_mWorld = _rotMat * m_parentAttachMat * _parentMat;
 }
 
 void Axe::PostUpdate()
@@ -26,9 +56,6 @@ void Axe::PostUpdate()
 
 	KdCollider::SphereInfo _sphereInfo;
 	std::list<KdCollider::CollisionResult> retList;
-	float maxOverLap = 0;	//	はみ出た球の長さ
-	Math::Vector3 hitDir;	//当たった方向
-	bool isHit = false;		//	当たっていたらtrue
 
 	const std::shared_ptr<const CharacterBase> _spParent = m_wpParent.lock();
 	if (_spParent)
@@ -90,5 +117,6 @@ void Axe::Init()
 
 
 	m_scaleSize = 0.1f;
+	m_rotAng = 0.0f;
 }
 

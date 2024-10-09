@@ -24,6 +24,8 @@ void Character::Init()
 
 	m_gravity = 0;
 	m_pos = {};
+	m_pos.y += m_ajustHeight;
+
 
 	Math::Matrix _scale = Math::Matrix::CreateScale(1.0f);
 	Math::Matrix _rotY = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90));
@@ -104,8 +106,8 @@ void Character::Update()
 	_moveVec *= m_moveSpd;
 	m_pos += _moveVec;
 
-	m_pos.y -= m_gravity;
-	m_gravity += 0.001f;
+	/*m_pos.y -= m_gravity;
+	m_gravity += 0.001f;*/
 
 	// キャラクターの回転行列を創る
 	UpdateRotate(_moveVec);
@@ -132,7 +134,8 @@ void Character::PostUpdate()
 	KdCollider::RayInfo ray;
 	//レイの発射位置(座標)を設定
 	ray.m_pos = m_pos;		//自分の足元
-	//レイの発射方向を設定
+	ray.m_pos.y -= m_ajustHeight;
+ 	//レイの発射方向を設定
 	ray.m_dir = Math::Vector3::Down;
 	//段差の許容範囲を設定
 	float enableStepHigh = 1.0f;
@@ -175,6 +178,7 @@ void Character::PostUpdate()
 	{
 		//地面に当たっている
 		m_pos =hitDir;
+		m_pos.y += m_ajustHeight;
 		m_gravity = 0.0f;
 
 		//プレイヤーが何かに乗っていれば
@@ -202,7 +206,7 @@ void Character::PostUpdate()
 
 	//球判定
 	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.f,0.3f,0.f };
-	_sphereInfo.m_sphere.Radius = 0.3;
+	_sphereInfo.m_sphere.Radius = 0.3f;
 	_sphereInfo.m_type = KdCollider::TypeGround;
 	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius);
 

@@ -43,16 +43,72 @@ public :
 	
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& obj);
+	void AddGimmick(const std::shared_ptr<KdGameObject>& obj);
 
 	//imgui関連
 	void Imgui();
 
 
+	// マネージャーの初期化
+	// インスタンス生成(アプリ起動)時にコンストラクタで自動実行
+	void Init()
+	{
+		// 開始シーンに切り替え
+		ChangeScene(m_currentSceneType);
+	}
+
+
 private :
 
+	struct MapObject
+	{
+		std::string m_name;						//モデル名
+		std::string m_conrtollName;				//操作時名
+		std::shared_ptr<KdGameObject> m_obj;	
+	};
+
+
+	void AddMapObject(const std::shared_ptr<KdGameObject>& obj);
 
 	//imgui関連
+	enum class ObjectName
+	{
+		CathedralArch,
+		CathedralNormal,
+		CathedralRod,
+		CathedralSentral,
+		CathedralWall,
+		Bridge,
+		FenceNormal,
+		FenceOneBreak,
+		FenceBreaked,
+		Pillar,
+		Relief,
+		Stairs,
+		Tail,
+		Temple,
+		Box,
+		SepBox,
+		CorBox,
+		WallBox,
+		BreakWall,
+		Cal,
+	};
+
+	enum class GimmickName
+	{
+		ArrowBox,
+		BreakWall,
+		FallPillar,
+		Nidle,
+		PitFall,
+		RotateBridge,
+		SlideDoor,
+		Wall,
+	};
+
 	void CreateObject();
+	void CreateMapObject(ObjectName name);
 	void CreateGimmick();
 	void SaveMap();
 	void LoadMap();
@@ -66,16 +122,11 @@ private :
 	// オブジェクトポインタ
 	std::shared_ptr<KdGameObject> m_spNow = nullptr;
 	int num = 0;
+	std::list<std::shared_ptr<MapObject>> m_mapList;
+	std::list<std::shared_ptr<MapObject>> m_gimmickList;
 
 
-	// マネージャーの初期化
-	// インスタンス生成(アプリ起動)時にコンストラクタで自動実行
-	void Init()
-	{
-		// 開始シーンに切り替え
-		ChangeScene(m_currentSceneType);
-	}
-
+	
 	// シーン切り替え関数
 	void ChangeScene(SceneType sceneType);
 
@@ -84,9 +135,6 @@ private :
 
 	//マップオブジェクトを入れたシーン
 	std::shared_ptr<BaseScene> m_mapScene	  = nullptr;
-	//描画フラグ
-	bool					   m_MapObjFlg	  = false;
-
 	//ギミックオブジェクトを入れたシーン
 	std::shared_ptr<BaseScene> m_gimmickScene = nullptr;
 
@@ -98,7 +146,7 @@ private :
 
 private:
 
-	SceneManager() { Init(); }
+	SceneManager() {}
 	~SceneManager() {}
 
 public:

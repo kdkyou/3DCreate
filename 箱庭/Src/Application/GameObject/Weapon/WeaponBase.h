@@ -8,8 +8,6 @@ public:
 	WeaponBase(){}
 	virtual ~WeaponBase()override{}
 
-	virtual void Update()override;
-
 	void DrawLit()override;
 	void GenerateDepthMapFromLight()override;
 

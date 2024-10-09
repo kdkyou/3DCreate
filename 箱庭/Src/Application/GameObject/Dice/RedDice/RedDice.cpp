@@ -17,7 +17,7 @@ void RedDice::Init()
 }
 
 
-void RedDice::Shake(const int _number, const Math::Vector3 _pos, const Math::Vector3 _moveDir, const float _speed, const Math::Vector3 _rotDir)
+void RedDice::Shake(const int _number, const Math::Vector3& _pos, const Math::Vector3& _moveDir, const float _speed, const Math::Vector3& _rotDir)
 {
 	switch (_number)
 	{

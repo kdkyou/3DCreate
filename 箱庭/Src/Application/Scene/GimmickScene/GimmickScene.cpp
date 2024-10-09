@@ -1,8 +1,8 @@
 ﻿#include "GimmickScene.h"
 
+#include"../../GameObject/Enemy/Megaro/Megaro.h"
 #include"../../GameObject/Gimmick/Relief/Relief.h"
 #include"../../GameObject/Gimmick/Nidle/Nidle.h"
-#include"../../GameObject/Enemy/Megaro/Megaro.h"
 #include"../../GameObject/Gimmick/FallPillar/FallPillar.h"
 #include"../../GameObject/Gimmick/RotateBridge/RotateBridge.h"
 #include"../../GameObject/Gimmick/Wall/Wall.h"
@@ -72,7 +72,7 @@ void GimmickScene::Init()
 	_fall->SetModel(_Model);
 	AddObject(_fall);
 
-	std::shared_ptr<RotateBridge> _bridge = std::make_shared<RotateBridge>();
+	/*std::shared_ptr<RotateBridge> _bridge = std::make_shared<RotateBridge>();
 	_Model = std::make_shared<KdModelWork>();
 	_Model->SetModelData("Asset/Models/Terrains/Gimmick/RotateBridge/RotateBridge.gltf");
 	_model = std::make_shared<KdModelData>();
@@ -81,7 +81,7 @@ void GimmickScene::Init()
 	 _bridge->SetMatrix(_mat);
 	 _bridge->SetModel(_Model);
 	 _bridge->SetModel(_model);
-	AddObject(_bridge);
+	AddObject(_bridge);*/
 
 	std::shared_ptr<BreakWall> _break = std::make_shared<BreakWall>();
 	_Model = std::make_shared<KdModelWork>();
@@ -93,14 +93,14 @@ void GimmickScene::Init()
 	AddObject(_break);
 
 
-	std::shared_ptr<Wall> _wall = std::make_shared<Wall>();
+	/*std::shared_ptr<Wall> _wall = std::make_shared<Wall>();
 	_Model = std::make_shared<KdModelWork>();
 	_Model->SetModelData("Asset/Models/Terrains/Gimmick/Wall/Wall.gltf");
 	_mat=Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90))* Math::Matrix::CreateTranslation({ -10.f,0.f,0.f });
 	_wall->Init();
 	_wall->SetMatrix(_mat);
 	_wall->SetModel(_Model);
-	AddObject(_wall);
+	AddObject(_wall);*/
 
 	std::shared_ptr<ArrowBox> _arrow = std::make_shared<ArrowBox>();
 	_model = std::make_shared<KdModelData>();
@@ -122,11 +122,9 @@ void GimmickScene::Init()
 
 	std::shared_ptr<SlideDoor>_slide = std::make_shared<SlideDoor>();
 	_model = std::make_shared<KdModelData>();
-	_model = AssetRepository::Instance().GetModel("BreakWall");
-	_mat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90)) * Math::Matrix::CreateTranslation({ 20.f,6.f,0.f });
+	_mat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0)) * Math::Matrix::CreateTranslation({ 20.f,5.f,0.f });
 	_slide->SetMatrix(_mat);
 	_slide->Init();
-	_slide->SetModel(_model);
 	AddObject(_slide);
 
 

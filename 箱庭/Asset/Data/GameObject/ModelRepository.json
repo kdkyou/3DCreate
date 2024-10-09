@@ -92,6 +92,14 @@
         "Path":"Asset/Models/Terrains/R'lyeh/Box/Box.gltf"
     },
     {
+	"Name":"SepBox",
+        "Path":"Asset/Models/Terrains/R'lyeh/SepBox/SepBox.gltf"
+    },
+    {
+	"Name":"CorBox",
+        "Path":"Asset/Models/Terrains/R'lyeh/CorBox/CorBox.gltf"
+    },
+    {
 	"Name":"WallBox",
         "Path":"Asset/Models/Terrains/R'lyeh/WallBox/WallBox.gltf"
     },

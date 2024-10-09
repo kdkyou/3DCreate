@@ -74,6 +74,26 @@ void KdCollider::RegisterCollisionShape(std::string_view name, KdPolygon* polygo
 	RegisterCollisionShape(name, std::make_unique<KdPolygonCollision>(std::shared_ptr<KdPolygon>(polygon), type));
 }
 
+void KdCollider::RegisterCollisionShape(std::string_view name, const std::shared_ptr<KdModelData>& model, const Math::Matrix& mat, UINT type)
+{
+	RegisterCollisionShape(name, std::make_unique<KdModelCollision>(model,mat, type));
+}
+
+void KdCollider::RegisterCollisionShape(std::string_view name, KdModelData* model, const Math::Matrix& mat, UINT type)
+{
+	RegisterCollisionShape(name, std::make_unique<KdModelCollision>(std::shared_ptr<KdModelData>(model),mat, type));
+}
+
+void KdCollider::RegisterCollisionShape(std::string_view name, const std::shared_ptr<KdModelWork>& model, const Math::Matrix& mat, UINT type)
+{
+	RegisterCollisionShape(name, std::make_unique<KdModelCollision>(model,mat, type));
+}
+
+void KdCollider::RegisterCollisionShape(std::string_view name, KdModelWork* model, const Math::Matrix& mat, UINT type)
+{
+	RegisterCollisionShape(name, std::make_unique<KdModelCollision>(std::shared_ptr<KdModelWork>(model),mat, type));
+}
+
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 // コライダーvs球に登録された任意の形状の当たり判定
 // 球に合わせて何のために当たり判定をするのか type を渡す必要がある
@@ -472,7 +492,7 @@ bool KdModelCollision::Intersects(const DirectX::BoundingSphere& target, const M
 		CollisionMeshResult* pTmpResult = pRes ? &tmpResult : nullptr;
 
 		// メッシュと球形の当たり判定実行
-		if (!MeshIntersect(*dataNode.m_spMesh, pushedSphere, workNode.m_worldTransform * world, pTmpResult))
+		if (!MeshIntersect(*dataNode.m_spMesh, pushedSphere, workNode.m_worldTransform *m_mLocal* world, pTmpResult))
 		{
 			continue;
 		}
@@ -550,7 +570,7 @@ bool KdModelCollision::Intersects(const DirectX::BoundingBox& target, const Math
 		CollisionMeshResult* pTmpResult = pRes ? &tmpResult : nullptr;
 
 		// メッシュとボックス形の当たり判定実行
-		if (!MeshIntersect(*dataNode.m_spMesh, pushedBox, workNode.m_worldTransform * world, pTmpResult))
+		if (!MeshIntersect(*dataNode.m_spMesh, pushedBox, workNode.m_worldTransform * m_mLocal * world, pTmpResult))
 		{
 			continue;
 		}
@@ -615,7 +635,7 @@ bool KdModelCollision::Intersects(const DirectX::BoundingOrientedBox& target, co
 		CollisionMeshResult* pTmpResult = pRes ? &tmpResult : nullptr;
 
 		// メッシュとボックス形の当たり判定実行
-		if (!MeshIntersect(*dataNode.m_spMesh, pushedBox, workNode.m_worldTransform * world, pTmpResult))
+		if (!MeshIntersect(*dataNode.m_spMesh, pushedBox, workNode.m_worldTransform * m_mLocal * world, pTmpResult))
 		{
 			continue;
 		}
@@ -670,7 +690,7 @@ bool KdModelCollision::Intersects(const KdCollider::RayInfo& target, const Math:
 		CollisionMeshResult* pTmpResult = pRes ? &tmpResult : nullptr;
 
 		if (!MeshIntersect(*dataNode.m_spMesh, target.m_pos, target.m_dir, target.m_range,
-			workNode.m_worldTransform * world, pTmpResult))
+			workNode.m_worldTransform * m_mLocal * world, pTmpResult))
 		{
 			continue;
 		}

@@ -31,7 +31,7 @@ private:
 	int m_cooltime = 0;
 	bool m_shotflg = false;
 
-	Pattern m_nowPattern;
+	Pattern m_nowPattern = Pattern::None;
 
 	KdRandomGenerator m_random;
 

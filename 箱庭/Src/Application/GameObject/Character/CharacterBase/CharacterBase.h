@@ -19,6 +19,7 @@ public:
 	void GenerateDepthMapFromLight()override;
 
 	const SelectType GetType()const { return m_type; }
+	const SelectType GetNextType()const { return m_nextType; }
 
 	const std::shared_ptr<KdModelWork> GetModelWork()const { return m_spModelWork; }
 	
@@ -37,5 +38,6 @@ protected:
 	Math::Vector3					m_move;
 
 	SelectType						m_type = SelectType::None;
+	SelectType						m_nextType = SelectType::None;
 
 };
