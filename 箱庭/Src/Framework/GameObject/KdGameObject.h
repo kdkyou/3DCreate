@@ -48,7 +48,13 @@ public:
 	virtual void SetMatrix(const Math::Matrix& mat) { m_mWorld = mat; }
 	const Math::Matrix& GetMatrix() const { return m_mWorld; }
 
+	virtual void SetRot(const Math::Vector3& rotate);
+	const Math::Vector3& GetRotate()const;
+
 	virtual bool IsExpired() const { return m_isExpired; }
+
+	//消去
+	void Expired(){ m_isExpired = true; }
 
 	virtual bool IsVisible()	const { return false; }
 	virtual bool IsRideable()	const { return false; }
@@ -71,7 +77,7 @@ public:
 	virtual void OnHit(){}
 	virtual void OnEncount(){}
 	virtual void OnBright(){}
-
+	virtual void NowObject();
 
 protected:
 
@@ -88,6 +94,9 @@ protected:
 
 	// 3D空間に存在する機能
 	Math::Matrix	m_mWorld;
+
+	//角度
+	Math::Vector3  m_angle;
 
 	// 当たり判定クラス
 	std::unique_ptr<KdCollider> m_pCollider = nullptr;

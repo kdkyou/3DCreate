@@ -62,6 +62,11 @@ void TPSCamera::PostUpdate()
 	if (!(GetAsyncKeyState(VK_LSHIFT)))
 	{
 		UpdateRotateByMouse();
+		ShowCursor(false);
+	}
+	else
+	{
+		ShowCursor(true);
 	}
 	m_mRotation = GetRotationMatrix();
 	m_mWorld =  m_mLocalPos * m_mRotation  * _targetMat;

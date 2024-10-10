@@ -91,6 +91,7 @@ private :
 		SepBox,
 		CorBox,
 		WallBox,
+		UpperBox,
 		BreakWall,
 		Cal,
 	};
@@ -110,15 +111,21 @@ private :
 	void CreateObject();
 	void CreateMapObject(ObjectName name);
 	void CreateGimmick();
+
+	void Controll();
+
 	void SaveMap();
 	void LoadMap();
 	void ClearMap();
 	void SaveGimic();
 	void LoadGimmick();
+
+	void List();
 	//
 	Math::Vector3	m_pos;
+	bool m_settingFlg = false;
 	Math::Vector3	m_scale;
-	Math::Vector3	m_rot;
+	Math::Vector3	m_ang;
 	// オブジェクトポインタ
 	std::shared_ptr<KdGameObject> m_spNow = nullptr;
 	int num = 0;

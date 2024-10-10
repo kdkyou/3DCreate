@@ -104,6 +104,10 @@
         "Path":"Asset/Models/Terrains/R'lyeh/WallBox/WallBox.gltf"
     },
     {
+	"Name":"UpperBox",
+        "Path":"Asset/Models/Terrains/R'lyeh/UpperBox/UpperBox.gltf"
+    },
+    {
 	"Name":"BreakWall",
         "Path":"Asset/Models/Terrains/Gimmick/BreakWall/BreakWall.gltf"
     }

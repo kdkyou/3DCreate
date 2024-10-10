@@ -386,7 +386,7 @@ void Application::ImGuiProcess()
 	//ImGui::End();
 
 	// ログウィンドウ
-	//m_log.Draw("Log Window");
+	m_log.Draw("Log Window");
 
 
 	//マップ生成
