@@ -77,9 +77,12 @@
 		{
 			"doubleSided":true,
 			"name":"Material",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
@@ -106,13 +109,22 @@
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
 		{
+			"mimeType":"image/png",
+			"name":"normalstone2",
+			"uri":"normalstone2.png"
+		},
+		{
 			"mimeType":"image/jpeg",
-			"name":"keisodoL02",
-			"uri":"keisodoL02.jpg"
+			"name":"stone2",
+			"uri":"stone2.jpg"
 		}
 	],
 	"accessors":[

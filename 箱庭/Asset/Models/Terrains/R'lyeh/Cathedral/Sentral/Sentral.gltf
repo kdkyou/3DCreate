@@ -97,9 +97,12 @@
 		{
 			"doubleSided":true,
 			"name":"Material",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0.4036697447299957,
 				"roughnessFactor":0.2706421911716461
@@ -192,13 +195,22 @@
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
 		{
+			"mimeType":"image/png",
+			"name":"normalstone3",
+			"uri":"normalstone3.png"
+		},
+		{
 			"mimeType":"image/jpeg",
-			"name":"sunahekiL02",
-			"uri":"sunahekiL02.jpg"
+			"name":"stone3",
+			"uri":"stone3.jpg"
 		}
 	],
 	"accessors":[

@@ -142,6 +142,7 @@ void SceneManager::AddObject(const std::shared_ptr<KdGameObject>& obj)
 	m_currentScene->AddObject(obj);
 }
 
+
 void SceneManager::AddGimmick(const std::shared_ptr<KdGameObject>& obj)
 {
 	m_gimmickScene->AddObject(obj);
@@ -573,10 +574,20 @@ void SceneManager::Controll()
 	{
 		LoadMap();
 	}
+	if (ImGui::Button("SaveGimmick"))
+	{
+		SaveGimmick();
+	}
+
+	if (ImGui::Button("LoadGimmick"))
+	{
+		LoadGimmick();
+	}
 
 	if (ImGui::Button("Erase"))
 	{
 		m_spNow->Expired();
+
 	}
 
 	if (ImGui::Button("MatReset"))
@@ -643,20 +654,23 @@ void SceneManager::SaveMap()
 		{
 			auto it = m_mapList.begin();
 			std::advance(it, i);
-			j["name"] = (*it)->m_name;
-			j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
-				{"Y",(*it)->m_obj->GetPos().y},
-				{"Z",(*it)->m_obj->GetPos().z} };
-			j["scale"] = { { "X",(*it)->m_obj->GetScale().x },
-				{"Y",(*it)->m_obj->GetScale().y},
-				{"Z",(*it)->m_obj->GetScale().z} };
-			j["rot"] = { {"X", (*it)->m_obj->GetRotate().x},
-				{"Y", (*it)->m_obj->GetRotate().y },
-				{"Z", (*it)->m_obj->GetRotate().z } };
-			outFile << j.dump(4);
-			if (i < m_mapList.size() - 1)
+			if ((*it)->m_obj)
 			{
-				outFile << ",";
+				j["name"] = (*it)->m_name;
+				j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
+					{"Y",(*it)->m_obj->GetPos().y},
+					{"Z",(*it)->m_obj->GetPos().z} };
+				j["scale"] = { { "X",(*it)->m_obj->GetScale().x },
+					{"Y",(*it)->m_obj->GetScale().y},
+					{"Z",(*it)->m_obj->GetScale().z} };
+				j["rot"] = { {"X", (*it)->m_obj->GetRotate().x},
+					{"Y", (*it)->m_obj->GetRotate().y },
+					{"Z", (*it)->m_obj->GetRotate().z } };
+				outFile << j.dump(4);
+				if (i < m_mapList.size() - 1)
+				{
+					outFile << ",";
+				}
 			}
 		}
 		outFile << "]";
@@ -696,8 +710,7 @@ void SceneManager::LoadMap()
 
 		test->SetModel(model);
 		test->SetRot(rot);
-		AddObject(test);
-		m_spNow = test;
+		AddMapObject(test);
 		_map->m_obj = test;
 		m_mapList.push_back(_map);
 	}
@@ -708,7 +721,7 @@ void SceneManager::ClearMap()
 {
 }
 
-void SceneManager::SaveGimic()
+void SceneManager::SaveGimmick()
 {
 	nlohmann::json j;
 	std::ofstream outFile("gimmick.json");
@@ -718,25 +731,28 @@ void SceneManager::SaveGimic()
 		{
 			auto it = m_gimmickList.begin();
 			std::advance(it, i);
-			j["name"] = (*it)->m_name;
-			j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
-				{"Y",(*it)->m_obj->GetPos().y},
-				{"Z",(*it)->m_obj->GetPos().z} };
-			j["scale"] = { { "X",(*it)->m_obj->GetScale().x },
-				{"Y",(*it)->m_obj->GetScale().y},
-				{"Z",(*it)->m_obj->GetScale().z} };
-			j["rot"] = { {"X", (*it)->m_obj->GetRotate().x},
-				{"Y", (*it)->m_obj->GetRotate().y },
-				{"Z", (*it)->m_obj->GetRotate().z } };
-			outFile << j.dump(4);
-			if (i < m_gimmickList.size() - 1)
+			if ((*it)->m_obj)
 			{
-				outFile << ",";
+				j["name"] = (*it)->m_name;
+				j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
+					{"Y",(*it)->m_obj->GetPos().y},
+					{"Z",(*it)->m_obj->GetPos().z} };
+				j["scale"] = { { "X",(*it)->m_obj->GetScale().x },
+					{"Y",(*it)->m_obj->GetScale().y},
+					{"Z",(*it)->m_obj->GetScale().z} };
+				j["rot"] = { {"X", (*it)->m_obj->GetRotate().x},
+					{"Y", (*it)->m_obj->GetRotate().y },
+					{"Z", (*it)->m_obj->GetRotate().z } };
+				outFile << j.dump(4);
+				if (i < m_gimmickList.size() - 1)
+				{
+					outFile << ",";
+				}
 			}
 		}
 		outFile << "]";
 		outFile.close();
-		Application::Instance().m_log.AddLog("SaveGimmick");
+		Application::Instance().m_log.AddLog("SaveGimmick\n");
 	}
 }
 
@@ -762,23 +778,19 @@ void SceneManager::LoadGimmick()
 		Math::Matrix _mat = scaleMat * rotMat * transMat;
 		_map->m_name = item["name"];
 
-		if (item["name"] == "Nidle")
+		if (_map->m_name == "Nidle")
 		{
 			std::shared_ptr<Nidle> _nidle = std::make_shared<Nidle>();
 			_Model = std::make_shared<KdModelWork>();
 			_Model->SetModelData("Asset/Models/Terrains/Gimmick/Nidle/Nidle.gltf");
-			_nidle->SetModel(_Model);
 			_nidle->SetMatrix(_mat);
+			_nidle->SetModel(_Model);
 			_nidle->SetRot(rot);
 			AddGimmick(_nidle);
-			std::shared_ptr<MapObject> _map;
-			_map = std::make_shared<MapObject>();
-			_map->m_name = "Nidle";
 			_map->m_obj = _nidle;
 			m_gimmickList.push_back(_map);
-			m_spNow = _nidle;
 		}
-		else if (item["name"] == "Fall")
+		else if (_map->m_name == "Fall")
 		{
 			std::shared_ptr<KdModelWork> _Model;
 			std::shared_ptr<FallPillar> _fall = std::make_shared<FallPillar>();
@@ -786,20 +798,97 @@ void SceneManager::LoadGimmick()
 			_Model->SetModelData("Asset/Models/Terrains/Gimmick/FallPillar/Pillar.gltf");
 			_fall->Init();
 			_fall->SetMatrix(_mat);
-			_fall->SetModel(_Model);
 			_fall->SetRot(rot);
+			_fall->SetModel(_Model);
 			AddGimmick(_fall);
-			std::shared_ptr<MapObject> _map;
-			_map = std::make_shared<MapObject>();
-			_map->m_name = "Fall";
 			_map->m_obj = _fall;
 			m_gimmickList.push_back(_map);
-			m_spNow = _fall;
-
-			m_scale = { 1,1,1 };
-			m_ang = {};
 		}
-		
+		else if (_map->m_name == "Rotate")
+		{
+			std::shared_ptr<KdModelWork> _Model;
+			std::shared_ptr<RotateBridge> _bridge = std::make_shared<RotateBridge>();
+			_Model = std::make_shared<KdModelWork>();
+			_Model->SetModelData("Asset/Models/Terrains/Gimmick/RotateBridge/RotateBridge.gltf");
+			std::shared_ptr<KdModelData> _model;
+			_model = std::make_shared<KdModelData>();
+			_model->Load("Asset/Models/Terrains/Gimmick/RotateBridge/BridgeUp.gltf");
+			_bridge->SetMatrix(_mat);
+			_bridge->SetRot(rot);
+			_bridge->SetModel(_Model);
+			_bridge->SetModel(_model);
+			
+			AddGimmick(_bridge);
+			_map->m_obj = _bridge;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "BreakWall")
+		{
+			std::shared_ptr<BreakWall> _break = std::make_shared<BreakWall>();
+			std::shared_ptr<KdModelWork> _Model;
+			_Model = std::make_shared<KdModelWork>();
+			_Model->SetModelData("Asset/Models/Terrains/Gimmick/BreakWall/BreakWall.gltf");
+			_break->Init();
+			_break->SetMatrix(_mat);
+			_break->SetRot(rot);
+			_break->SetModel(_Model);
+			AddGimmick(_break);
+			_map->m_obj = _break;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "Wall")
+		{
+			std::shared_ptr<KdModelWork> _Model;
+			std::shared_ptr<Wall> _wall = std::make_shared<Wall>();
+			_Model = std::make_shared<KdModelWork>();
+			_Model->SetModelData("Asset/Models/Terrains/Gimmick/Wall/Wall.gltf");
+			_wall->Init();
+			_wall->SetMatrix(_mat);
+			_wall->SetRot(rot);
+			_wall->SetModel(_Model);
+			AddGimmick(_wall);
+			_map->m_obj = _wall;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "Arrow")
+		{
+			std::shared_ptr<ArrowBox> _arrow = std::make_shared<ArrowBox>();
+			std::shared_ptr<KdModelData> _model;
+			_model = std::make_shared<KdModelData>();
+			_model->Load("Asset/Models/Terrains/Gimmick/ArrowBox/ArrowBox.gltf");
+			_arrow->Init();
+			_arrow->SetMatrix(_mat);
+			_arrow->SetRot(rot);
+			_arrow->SetModel(_model);
+			AddGimmick(_arrow);
+			_map->m_obj = _arrow;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "Pit")
+		{
+			std::shared_ptr<KdModelWork> _Model;
+			std::shared_ptr<PitFall> _pit = std::make_shared<PitFall>();
+			_Model = std::make_shared<KdModelWork>();
+			_Model->SetModelData("Asset/Models/Terrains/Gimmick/PitFall/PitFall.gltf");
+			_pit->Init();
+			_pit->SetMatrix(_mat);
+			_pit->SetRot(rot);
+			_pit->SetModel(_Model);
+			AddGimmick(_pit);
+			_map->m_obj = _pit;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "Slide")
+		{
+			std::shared_ptr<SlideDoor>_slide = std::make_shared<SlideDoor>();
+			std::shared_ptr<KdModelData> _model = std::make_shared<KdModelData>();
+			_slide->Init();
+			_slide->SetMatrix(_mat);
+			_slide->SetRot(rot);
+			AddGimmick(_slide);
+			_map->m_obj = _slide;
+			m_gimmickList.push_back(_map);
+		}
 
 	}
 	Application::Instance().m_log.AddLog("LoadGimmick\n");

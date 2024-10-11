@@ -117,7 +117,7 @@ private :
 	void SaveMap();
 	void LoadMap();
 	void ClearMap();
-	void SaveGimic();
+	void SaveGimmick();
 	void LoadGimmick();
 
 	void List();

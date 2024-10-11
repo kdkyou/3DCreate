@@ -122,9 +122,12 @@
 		{
 			"doubleSided":true,
 			"name":"Material.002",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
@@ -152,20 +155,29 @@
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
 		{
+			"mimeType":"image/png",
+			"name":"normalstone1",
+			"uri":"normalstone1.png"
+		},
+		{
 			"mimeType":"image/jpeg",
-			"name":"sunahekiL02",
-			"uri":"sunahekiL02.jpg"
+			"name":"stone1",
+			"uri":"stone1.jpg"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":132,
+			"count":128,
 			"max":[
 				1,
 				1.706681728363037,
@@ -181,19 +193,19 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":132,
+			"count":128,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":132,
+			"count":128,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":132,
+			"count":128,
 			"type":"VEC2"
 		},
 		{
@@ -206,32 +218,32 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1584,
+			"byteLength":1536,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1584,
-			"byteOffset":1584,
+			"byteLength":1536,
+			"byteOffset":1536,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1056,
-			"byteOffset":3168,
+			"byteLength":1024,
+			"byteOffset":3072,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1056,
-			"byteOffset":4224,
+			"byteLength":1024,
+			"byteOffset":4096,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":504,
-			"byteOffset":5280,
+			"byteOffset":5120,
 			"target":34963
 		}
 	],
@@ -243,7 +255,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":5784,
+			"byteLength":5624,
 			"uri":"ArrowBox.bin"
 		}
 	]

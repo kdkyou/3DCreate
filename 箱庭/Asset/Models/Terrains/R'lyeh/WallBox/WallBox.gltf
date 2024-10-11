@@ -32,9 +32,12 @@
 		{
 			"doubleSided":true,
 			"name":"Material.002",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
@@ -72,20 +75,29 @@
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
 		{
+			"mimeType":"image/png",
+			"name":"normalstone1",
+			"uri":"normalstone1.png"
+		},
+		{
 			"mimeType":"image/jpeg",
-			"name":"sunahekiL02",
-			"uri":"sunahekiL02.jpg"
+			"name":"stone1",
+			"uri":"stone1.jpg"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":162,
+			"count":160,
 			"max":[
 				1,
 				1.705292820930481,
@@ -101,19 +113,19 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":162,
+			"count":160,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":162,
+			"count":160,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":162,
+			"count":160,
 			"type":"VEC2"
 		},
 		{
@@ -166,62 +178,62 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1944,
+			"byteLength":1920,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1944,
-			"byteOffset":1944,
+			"byteLength":1920,
+			"byteOffset":1920,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1296,
-			"byteOffset":3888,
+			"byteLength":1280,
+			"byteOffset":3840,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1296,
-			"byteOffset":5184,
+			"byteLength":1280,
+			"byteOffset":5120,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":636,
-			"byteOffset":6480,
+			"byteOffset":6400,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":192,
-			"byteOffset":7116,
+			"byteOffset":7036,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":192,
-			"byteOffset":7308,
+			"byteOffset":7228,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":128,
-			"byteOffset":7500,
+			"byteOffset":7420,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":128,
-			"byteOffset":7628,
+			"byteOffset":7548,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":48,
-			"byteOffset":7756,
+			"byteOffset":7676,
 			"target":34963
 		}
 	],
@@ -233,7 +245,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":7804,
+			"byteLength":7724,
 			"uri":"WallBox.bin"
 		}
 	]
