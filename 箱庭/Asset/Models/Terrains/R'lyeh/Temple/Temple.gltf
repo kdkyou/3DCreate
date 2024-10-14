@@ -258,9 +258,12 @@
 		{
 			"doubleSided":true,
 			"name":"\u30de\u30c6\u30ea\u30a2\u30eb",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0.5454545021057129,
 				"roughnessFactor":0.48701298236846924
@@ -552,9 +555,18 @@
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"normalS3",
+			"uri":"normalS3.png"
+		},
 		{
 			"mimeType":"image/jpeg",
 			"name":"sunahekiL03",

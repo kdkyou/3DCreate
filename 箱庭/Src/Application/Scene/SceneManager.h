@@ -57,6 +57,16 @@ public :
 		ChangeScene(m_currentSceneType);
 	}
 
+	//レンダーターゲット切り替え関連
+	void ChangeRenderTarget();
+	//元に戻す関数
+	void UndoRenderTarget();
+	//出来上がったテクスチャを取得
+	const std::shared_ptr<KdTexture>& GetRenderTargetTexture() const
+	{
+		return m_rtPack.m_RTTexture;
+	}
+
 
 private :
 
@@ -133,6 +143,7 @@ private :
 	std::list<std::shared_ptr<MapObject>> m_gimmickList;
 
 
+
 	
 	// シーン切り替え関数
 	void ChangeScene(SceneType sceneType);
@@ -150,6 +161,10 @@ private :
 	
 	// 次のシーンの種類を保持している変数
 	SceneType m_nextSceneType = m_currentSceneType;
+
+	//レンダーターゲット切り替え
+	KdRenderTargetPack	m_rtPack;
+	KdRenderTargetChanger m_rtChanger;
 
 private:
 

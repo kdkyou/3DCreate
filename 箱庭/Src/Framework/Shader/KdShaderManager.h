@@ -17,6 +17,20 @@ struct PointLight
 	int		IsBright = 0;	// 明度用ライトかどうか
 };
 
+//黒崎授業
+//コーンライト
+struct ConeLight
+{
+	int enable = 0;						//オンオフ切り替え
+	Math::Vector3 pos = {};				//座標
+
+	Math::Vector3 dir = {};				//方向
+	float range = 0;					//半径
+
+	float angle = 0;					//角度
+	Math::Vector3 color = { 3,3,3 };	//色
+};
+
 //==========================
 //
 // 各パイプラインステートの呼び出しID
@@ -119,7 +133,13 @@ public:
 		float			_blank3[3] = { 0.0f, 0.0f ,0.0f };
 
 		std::array<PointLight, MaxPointLightNum> PointLights;
+
+		//黒崎授業
+		//１本だけ
+		ConeLight ConeLight;
 	};
+
+
 
 	static KdShaderManager& Instance()
 	{
@@ -198,6 +218,10 @@ public:
 	void WriteCBShadowArea(const Math::Matrix& proj, float dirLightHeight);
 	void WriteCBPointLight(const std::list<PointLight>& pointLights);
 
+	//黒崎授業
+	void WriteCBConeLightEnable(bool _enable);
+	void WriteCBConeLight(const Math::Vector3& _pos, const Math::Vector3& _dir, float _range, float _angle, const Math::Vector3& _color);
+
 	//==========================
 	//
 	// その他
@@ -236,7 +260,7 @@ private:
 	// パイプラインステート
 	//
 	//==========================
-	 
+
 	//深度ステンシル（奥行情報の使い方・手前にあるものを無視して描画したりできる
 	ID3D11DepthStencilState* m_depthStencilStates[(int)KdDepthStencilState::Max] = {};
 	std::stack<ID3D11DepthStencilState*> m_ds_Undo;

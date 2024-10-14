@@ -2,8 +2,6 @@
 
 #include "../../../main.h"
 #include "../../Camera/CameraBase.h"
-#include"../../Dice/BlueDice/BlueDice.h"
-#include"../../Dice/RedDice/RedDice.h"
 #include"../../Cutin/Cutin.h"
 #include"../../Information/Information.h"
 
@@ -51,14 +49,14 @@ void Character::Update()
 
 	CoolTime();
 
-	/*{
+	{
 		const std::shared_ptr<const KdGameObject> _spParent = m_wpRideObject.lock();
 		if (_spParent)
 		{
 			m_mWorld = m_localMatFromRideObject * _spParent->GetMatrix();
 			m_pos = m_mWorld.Translation();
 		}
-	}*/
+	}
 
 	Math::Vector3 _moveVec = Math::Vector3::Zero;
 
@@ -106,8 +104,8 @@ void Character::Update()
 	_moveVec *= m_moveSpd;
 	m_pos += _moveVec;
 
-	/*m_pos.y -= m_gravity;
-	m_gravity += 0.001f;*/
+	m_pos.y -= m_gravity;
+	m_gravity += 0.001f;
 
 	// キャラクターの回転行列を創る
 	UpdateRotate(_moveVec);
@@ -116,6 +114,16 @@ void Character::Update()
 	// キャラクターのワールド行列を創る処理;
 	Math::Matrix _rotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_worldRot.y));
 	m_mWorld = _rotation * Math::Matrix::CreateTranslation(m_pos);
+
+
+	KdShaderManager::Instance().WorkAmbientController().SetConeLight(
+		m_pos + Math::Vector3{ 0,1,0 },
+		m_mWorld.Backward(),
+		10,
+		DirectX::XMConvertToRadians(20),
+		{ 1,2,2 }
+	);
+
 }
 
 void Character::PostUpdate()
@@ -185,17 +193,17 @@ void Character::PostUpdate()
 		//乗り物から見たプレイヤーのローカル行列を保存
 
 		//ex 逆行列の取得方法	※プレイヤーの場合
-		//Math::Matrix _invertMat = GetMatrix().Invert();
+		// 
 		//乗り物の逆行列の取得
-		//const std::shared_ptr<const KdGameObject> _spParent = m_wpRideObject.lock();
-		//Math::Matrix _parentInvertMat;
-		//if (_spParent)
-		//{
-		//	_parentInvertMat = _spParent->GetMatrix().Invert();
-		//}
+		const std::shared_ptr<const KdGameObject> _spParent = m_wpRideObject.lock();
+		Math::Matrix _parentInvertMat = Math::Matrix::Identity;
+		if (_spParent)
+		{
+			_parentInvertMat = _spParent->GetMatrix().Invert();
+		}
 
-		////乗り物から見たプレイヤーのローカル行列作成
-		//m_localMatFromRideObject = m_mWorld * _parentInvertMat;
+		//乗り物から見たプレイヤーのローカル行列作成
+		m_localMatFromRideObject = m_mWorld * _parentInvertMat;
 	}
 
 	//初期化
@@ -313,7 +321,7 @@ void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
 	m_worldRot.y += rotateAng;
 }
 
-void Character::DiceSkill()
+/*void Character::DiceSkill()
 {
 	int l_num = m_randGen.GetInt(1, 100);
 
@@ -368,7 +376,7 @@ void Character::DiceSkill()
 	SceneManager::Instance().AddObject(_redDice);
 	SceneManager::Instance().AddObject(_blueDice);
 
-}
+}*/
 
 void Character::SetSkill(const Skill& skill)
 {
@@ -401,7 +409,7 @@ void Character::CoolTime()
 	}
 }
 
-void Character::Dice()
+/*void Character::Dice()
 {
 	if (GetAsyncKeyState('Q') & 0x8000)
 	{
@@ -544,7 +552,7 @@ void Character::Dice()
 	
 
 }
-
+*/
 void Character::Judge()
 {
 
@@ -563,7 +571,7 @@ void Character::Judge()
 		}
 	}
 
-	switch (m_skill)
+	/*switch (m_skill)
 	{
 	case Skill::Search:
 		//目星・・・プレイヤーの正面に球判定でアクションが起こせる物を光らせる
@@ -648,5 +656,5 @@ void Character::Judge()
 		break;
 	default:
 		break;
-	}
+	}*/
 }

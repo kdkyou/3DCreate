@@ -25,11 +25,40 @@ void RotateBridge::Init()
 {
 	m_ang = 0;
 	m_spin = 0;
+	m_stopFrame = STOP_FRAME;
 }
 
 void RotateBridge::Update()
 {
+	//停止時間のクールタイム
+	m_stopFrame--;
+	if (m_stopFrame <= 0)
+	{
+		m_rotFlg = true;
+		m_stopFrame = 0;
+	}
 
+	//回転
+	if (m_rotFlg)
+	{
+		
+
+		if (m_spin < ROTATE_ONCE_RIMIT)
+		{
+			//回転計測
+			m_spin++;
+			m_ang+=ADD_ANGLE;
+		}
+		else
+		{
+			m_spin = 0;
+			m_stopFrame = STOP_FRAME;
+			m_rotFlg = false;
+		}
+	}
+	Math::Matrix rotMat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_ang));
+	Math::Matrix transMat = Math::Matrix::CreateTranslation(m_mWorld.Translation());
+	m_mWorld = rotMat * transMat;
 }
 
 

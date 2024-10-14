@@ -62,9 +62,12 @@
 		{
 			"doubleSided":true,
 			"name":"\u30de\u30c6\u30ea\u30a2\u30eb.002",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
@@ -73,9 +76,12 @@
 		{
 			"doubleSided":true,
 			"name":"\u30de\u30c6\u30ea\u30a2\u30eb.004",
+			"normalTexture":{
+				"index":2
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":1
+					"index":3
 				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
@@ -149,18 +155,36 @@
 		{
 			"sampler":0,
 			"source":1
+		},
+		{
+			"sampler":0,
+			"source":2
+		},
+		{
+			"sampler":0,
+			"source":3
 		}
 	],
 	"images":[
 		{
-			"mimeType":"image/jpeg",
-			"name":"sunahekiL02",
-			"uri":"sunahekiL02.jpg"
+			"mimeType":"image/png",
+			"name":"normalK2",
+			"uri":"normalK2.png"
 		},
 		{
 			"mimeType":"image/jpeg",
-			"name":"sunahekiL03",
-			"uri":"sunahekiL03.jpg"
+			"name":"keisodoL02",
+			"uri":"keisodoL02.jpg"
+		},
+		{
+			"mimeType":"image/png",
+			"name":"normalstone2",
+			"uri":"normalstone2.png"
+		},
+		{
+			"mimeType":"image/jpeg",
+			"name":"stone2",
+			"uri":"stone2.jpg"
 		}
 	],
 	"accessors":[

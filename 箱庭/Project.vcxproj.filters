@@ -196,6 +196,9 @@
     <Filter Include="Src\Framework\Shader\MyShader">
       <UniqueIdentifier>{a46eb129-1793-4466-9099-c9709cd1dd6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Noise">
+      <UniqueIdentifier>{f6435aa6-0b9e-4b34-93b0-4748bc023bf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -477,6 +480,12 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\Door.h">
       <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Framework\Shader\MyShader\KdMyShader.h">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Noise\Noise.h">
+      <Filter>Src\Application\GameObject\Noise</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -731,6 +740,12 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\Door.cpp">
       <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Framework\Shader\MyShader\KdMyShader.cpp">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Noise\Noise.cpp">
+      <Filter>Src\Application\GameObject\Noise</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\Framework\Shader\inc_KdCommon.hlsli">
@@ -745,7 +760,7 @@
     <None Include="Src\Framework\Shader\StandardShader\inc_KdStandardShader.hlsli">
       <Filter>Src\Framework\Shader\StandardShader</Filter>
     </None>
-    <None Include="Src\Framework\Shader\MyShader\inc_MyShader.hlsli">
+    <None Include="Src\Framework\Shader\MyShader\inc_KdMyShader.hlsli">
       <Filter>Src\Framework\Shader\MyShader</Filter>
     </None>
   </ItemGroup>
@@ -785,6 +800,24 @@
     </FxCompile>
     <FxCompile Include="Src\Framework\Shader\StandardShader\KdStandardShader_VS_UnLit.hlsl">
       <Filter>Src\Framework\Shader\StandardShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\MyShader\KdMyShader_PS_Lit.hlsl">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\MyShader\KdMyShader_PS_UnLit.hlsl">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\MyShader\KdMyShader_VS_UnLit.hlsl">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\MyShader\KdMyShader_VS_Lit.hlsl">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\MyShader\KdMyShader_PS_GenDepthMapFromLight.hlsl">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Src\Framework\Shader\MyShader\KdMyShader_VS_GenDepthMapFromLight.hlsl">
+      <Filter>Src\Framework\Shader\MyShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

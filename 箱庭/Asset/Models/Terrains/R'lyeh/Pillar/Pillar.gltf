@@ -27,9 +27,12 @@
 		{
 			"doubleSided":true,
 			"name":"\u30de\u30c6\u30ea\u30a2\u30eb",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0.6770334243774414,
 				"roughnessFactor":0.3028019964694977
@@ -69,9 +72,18 @@
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"normalS3",
+			"uri":"normalS3.png"
+		},
 		{
 			"mimeType":"image/jpeg",
 			"name":"sunahekiL03",
@@ -82,10 +94,10 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":1728,
+			"count":5184,
 			"max":[
 				0.992195725440979,
-				3.1737966537475586,
+				11.521389961242676,
 				0.992195725440979
 			],
 			"min":[
@@ -98,19 +110,19 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":1728,
+			"count":5184,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":1728,
+			"count":5184,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":3060,
+			"count":9180,
 			"type":"SCALAR"
 		},
 		{
@@ -119,7 +131,7 @@
 			"count":24,
 			"max":[
 				1,
-				3.2436907291412354,
+				11.443411827087402,
 				1
 			],
 			"min":[
@@ -151,50 +163,50 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":20736,
+			"byteLength":62208,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":20736,
-			"byteOffset":20736,
+			"byteLength":62208,
+			"byteOffset":62208,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":13824,
-			"byteOffset":41472,
+			"byteLength":41472,
+			"byteOffset":124416,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6120,
-			"byteOffset":55296,
+			"byteLength":18360,
+			"byteOffset":165888,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":288,
-			"byteOffset":61416,
+			"byteOffset":184248,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":288,
-			"byteOffset":61704,
+			"byteOffset":184536,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":192,
-			"byteOffset":61992,
+			"byteOffset":184824,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":72,
-			"byteOffset":62184,
+			"byteOffset":185016,
 			"target":34963
 		}
 	],
@@ -206,7 +218,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":62256,
+			"byteLength":185088,
 			"uri":"Pillar.bin"
 		}
 	]

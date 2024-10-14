@@ -70,6 +70,14 @@ void SceneManager::PostUpdate()
 void SceneManager::PreDraw()
 {
 	m_currentScene->PreDraw();
+
+	//描画先をテクスチャに変更
+	ChangeRenderTarget();
+
+	m_mapScene->Draw();
+
+	//元に戻す
+	UndoRenderTarget();
 }
 
 void SceneManager::Draw()
@@ -163,6 +171,18 @@ void SceneManager::Imgui()
 	List();
 	ImGui::End();
 
+}
+
+//レンダーターゲット切り替え用
+void SceneManager::ChangeRenderTarget()
+{
+	m_rtPack.ClearTexture();
+	m_rtChanger.ChangeRenderTarget(m_rtPack);
+}
+
+void SceneManager::UndoRenderTarget()
+{
+	m_rtChanger.UndoRenderTarget();
 }
 
 void SceneManager::AddMapObject(const std::shared_ptr<KdGameObject>& obj)
@@ -382,6 +402,7 @@ void SceneManager::CreateMapObject(ObjectName name)
 	default:
 		break;
 	}
+	test->SetPos(m_pos);
 	test->SetModel(model);
 	AddMapObject(test);
 	_map->m_obj = test;
@@ -401,6 +422,7 @@ void SceneManager::CreateGimmick()
 		std::shared_ptr<Nidle> _nidle = std::make_shared<Nidle>();
 		std::shared_ptr<KdModelWork> _Model = std::make_shared<KdModelWork>();
 		_Model->SetModelData("Asset/Models/Terrains/Gimmick/Nidle/Nidle.gltf");
+		_nidle->SetPos(m_pos);
 		_nidle->SetModel(_Model);
 		AddGimmick(_nidle);
 		std::shared_ptr<MapObject> _map;
@@ -422,6 +444,7 @@ void SceneManager::CreateGimmick()
 		_Model = std::make_shared<KdModelWork>();
 		_Model->SetModelData("Asset/Models/Terrains/Gimmick/FallPillar/Pillar.gltf");
 		_fall->Init();
+		_fall->SetPos(m_pos);
 		_fall->SetModel(_Model);
 		AddGimmick(_fall);
 		std::shared_ptr<MapObject> _map;
@@ -444,6 +467,7 @@ void SceneManager::CreateGimmick()
 		std::shared_ptr<KdModelData> _model;
 		_model = std::make_shared<KdModelData>();
 		_model->Load("Asset/Models/Terrains/Gimmick/RotateBridge/BridgeUp.gltf");
+		_bridge->SetPos(m_pos);
 		_bridge->SetModel(_Model);
 		_bridge->SetModel(_model);
 		AddGimmick(_bridge);
@@ -458,13 +482,14 @@ void SceneManager::CreateGimmick()
 		m_ang = {};
 	}
 
-	if (ImGui::Button("BreakWall"))
+	if (ImGui::Button("Break"))
 	{
-		std::shared_ptr<BreakWall> _break = std::make_shared<BreakWall>();
 		std::shared_ptr<KdModelWork> _Model;
+		std::shared_ptr<BreakWall> _break = std::make_shared<BreakWall>();
 		_Model = std::make_shared<KdModelWork>();
 		_Model->SetModelData("Asset/Models/Terrains/Gimmick/BreakWall/BreakWall.gltf");
 		_break->Init();
+		_break->SetPos(m_pos);
 		_break->SetModel(_Model);
 		AddGimmick(_break);
 		std::shared_ptr<MapObject> _map;
@@ -478,13 +503,14 @@ void SceneManager::CreateGimmick()
 		m_ang = {};
 	}
 
-	if (ImGui::Button("Wall"))
+	if (ImGui::Button("FallWall"))
 	{
 		std::shared_ptr<KdModelWork> _Model;
 		std::shared_ptr<Wall> _wall = std::make_shared<Wall>();
 		_Model = std::make_shared<KdModelWork>();
 		_Model->SetModelData("Asset/Models/Terrains/Gimmick/Wall/Wall.gltf");
 		_wall->Init();
+		_wall->SetPos(m_pos);
 		_wall->SetModel(_Model);
 		AddGimmick(_wall);
 		std::shared_ptr<MapObject> _map;
@@ -505,6 +531,7 @@ void SceneManager::CreateGimmick()
 		_model = std::make_shared<KdModelData>();
 		_model->Load("Asset/Models/Terrains/Gimmick/ArrowBox/ArrowBox.gltf");
 		_arrow->Init();
+		_arrow->SetPos(m_pos);
 		_arrow->SetModel(_model);
 		AddGimmick(_arrow);
 		std::shared_ptr<MapObject> _map;
@@ -525,6 +552,7 @@ void SceneManager::CreateGimmick()
 		_Model = std::make_shared<KdModelWork>();
 		_Model->SetModelData("Asset/Models/Terrains/Gimmick/PitFall/PitFall.gltf");
 		_pit->Init();
+		_pit->SetPos(m_pos);
 		_pit->SetModel(_Model);
 		AddGimmick(_pit);
 		std::shared_ptr<MapObject> _map;
@@ -543,6 +571,7 @@ void SceneManager::CreateGimmick()
 		std::shared_ptr<SlideDoor>_slide = std::make_shared<SlideDoor>();
 		std::shared_ptr<KdModelData> _model = std::make_shared<KdModelData>();
 		_slide->Init();
+		_slide->SetPos(m_pos);
 		AddGimmick(_slide);
 		std::shared_ptr<MapObject> _map;
 		_map = std::make_shared<MapObject>();

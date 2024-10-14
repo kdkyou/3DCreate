@@ -147,6 +147,23 @@ void KdAmbientController::SetheightFog(const Math::Vector3& col, float topValue,
 	m_dirtyFogHeight = true;
 }
 
+//黒崎授業
+void KdAmbientController::SetConeLightEnable(bool _enable)
+{
+	KdShaderManager::Instance().WriteCBConeLightEnable(_enable);
+}
+
+void KdAmbientController::SetConeLight(const Math::Vector3& _pos, const Math::Vector3& _dir, float _range, float _angle, const Math::Vector3& _color)
+{
+	m_parameter.m_coneLightPos = _pos;
+	m_parameter.m_coneLightDir = _dir;
+	m_parameter.m_coneLightRange = _range;
+	m_parameter.m_coneLightAngle = _angle;
+	m_parameter.m_coneLightColor = _color;
+
+	m_dirtyConeLight = true;
+}
+
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 // 光関連パラメータの書き込み
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -173,6 +190,15 @@ void KdAmbientController::WriteLightParams()
 	if (m_pointLights.size())
 	{
 		KdShaderManager::Instance().WriteCBPointLight(m_pointLights);
+	}
+
+	//黒崎授業
+	//コーンライト
+	if (m_dirtyConeLight)
+	{
+		KdShaderManager::Instance().WriteCBConeLight(m_parameter.m_coneLightPos, m_parameter.m_coneLightDir, m_parameter.m_coneLightRange, m_parameter.m_coneLightAngle, m_parameter.m_coneLightColor);
+
+		m_dirtyConeLight = false;
 	}
 
 	// 影描画エリアの更新

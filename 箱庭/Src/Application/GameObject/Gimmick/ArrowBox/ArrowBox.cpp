@@ -44,8 +44,26 @@ void ArrowBox::OnEncount()
 		Math::Matrix three;
 		Math::Matrix four;
 
-		m_nowPattern = Pattern::One;
-
+		switch (m_random.GetInt(1,5))
+		{
+		case 1:
+			m_nowPattern = ArrowBox::One;
+			break;
+		case 2:
+			m_nowPattern = ArrowBox::Two;
+			break;
+		case 3:
+			m_nowPattern = ArrowBox::Three;
+			break;
+		case 4:
+			m_nowPattern = ArrowBox::Four;
+			break;
+		case 5:
+			m_nowPattern = ArrowBox::Five;
+			break;
+		default:
+			break;
+		}
 
 		switch (m_nowPattern)
 		{

@@ -5,7 +5,6 @@
 void Arrow::Init()
 {
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
-
 }
 
 void Arrow::SetModel(const std::shared_ptr<KdModelData>& model)
@@ -135,11 +134,7 @@ void Arrow::SetParam(const Math::Vector3& _pos, const Math::Vector3& _dir, float
 	//角度分算出ベクトル(回転軸)で回転する行列を作成
 	m_rotMat = Math::Matrix::CreateFromAxisAngle(_rotAxis, _angle);
 
-	/*m_trail = std::make_shared<KdTrailPolygon>();
-	m_trail->SetMaterial(PATH);
-	m_trail->SetPattern(KdTrailPolygon::Trail_Pattern::eBillboard);
-	m_trail->SetLength(20);*/
-	
+
 
 }
 

@@ -1,6 +1,10 @@
 ﻿#pragma once
 #include"../BaseGimmick/BaseGimmick.h"
 
+#define ROTATE_ONCE_RIMIT 90
+#define STOP_FRAME		120
+#define ADD_ANGLE 1
+
 class RotateBridge :public BaseGimmick
 {
 public:
@@ -26,7 +30,8 @@ private:
 
 	Math::Matrix m_mGear =Math::Matrix::Identity;
 
-	int m_ang = 0;;
-	int m_spin = 0;
-
+	int m_ang = 0;				//角度
+	int m_spin = 0;				//90度分までの回転量計測
+	int m_stopFrame = 0;		//停止時間
+	bool m_rotFlg = false;		//稼働フラグ
 };

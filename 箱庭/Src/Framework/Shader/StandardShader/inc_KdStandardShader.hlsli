@@ -11,6 +11,11 @@ cbuffer cbObject : register(b0)
 	float g_dissolveValue;		// ディゾルブの閾値
 	float g_dissolveEdgeRange;	// ディゾルブの境界線の太さ
 	float3 g_dissolveEmissive;	// 境界の色
+
+	//水面表現5		GPU側の定数バッファ
+	int g_waterEnable; //有効か
+	float4x4 g_mR; //回転行列
+	float2 g_waterUVOffset; //オフセット
 };
 
 // 定数バッファ(メッシュ単位)

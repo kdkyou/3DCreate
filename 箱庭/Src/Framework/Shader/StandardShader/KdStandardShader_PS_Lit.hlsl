@@ -2,19 +2,23 @@
 #include "../inc_KdCommon.hlsli"
 
 // モデル描画用テクスチャ
-Texture2D g_baseTex : register(t0);			// ベースカラーテクスチャ
-Texture2D g_metalRoughTex : register(t1);	// メタリック/ラフネステクスチャ
-Texture2D g_emissiveTex : register(t2);		// 発光テクスチャ
-Texture2D g_normalTex : register(t3);		// 法線マップ
+Texture2D g_baseTex : register(t0); // ベースカラーテクスチャ
+Texture2D g_metalRoughTex : register(t1); // メタリック/ラフネステクスチャ
+Texture2D g_emissiveTex : register(t2); // 発光テクスチャ
+Texture2D g_normalTex : register(t3); // 法線マップ
+
+//水面表現7 GPUから転送されたテクスチャをGPUで受け取る用
+Texture2D g_WaterNormalTex : register(t9); // 水面表現用法線マップ
+
 
 // 特殊処理用テクスチャ
-Texture2D g_dirShadowMap : register(t10);	// 平行光シャドウマップ
-Texture2D g_dissolveTex : register(t11);	// ディゾルブマップ
+Texture2D g_dirShadowMap : register(t10); // 平行光シャドウマップ
+Texture2D g_dissolveTex : register(t11); // ディゾルブマップ
 Texture2D g_environmentTex : register(t12); // 反射景マップ
 
 // サンプラ
-SamplerState g_ss : register(s0);				// 通常のテクスチャ描画用
-SamplerComparisonState g_ssCmp : register(s1);	// 補間用比較機能付き
+SamplerState g_ss : register(s0); // 通常のテクスチャ描画用
+SamplerComparisonState g_ssCmp : register(s1); // 補間用比較機能付き
 
 float BlinnPhong(float3 lightDir, float3 vCam, float3 normal, float specPower)
 {
@@ -25,27 +29,6 @@ float BlinnPhong(float3 lightDir, float3 vCam, float3 normal, float specPower)
 	// 正規化Blinn-Phong
 	return spec * ((specPower + 2) / (2 * 3.1415926535));
 }
-
-static const int BayerMatrix[4][4] =
-{
-	{0,8,2,10},
-	{12,4,14,6},
-	{3,11,1,9},
-	{15,7,13,5}
-};
-
-static const int spraMatrix[8][8] =
-{
-	{ 0, 0, 0, 1, 1, 0, 0, 0 },
-	{ 0, 0, 1, 2, 2, 1, 0, 0 },
-	{ 0, 1, 2, 3, 3, 2, 1, 0 },
-	{ 1, 2, 3, 4, 4, 3, 2, 1 },
-	{ 1, 2, 3, 4, 4, 3, 2, 1 },
-	{ 0, 1, 2, 3, 3, 2, 1, 0 },
-	{ 0, 0, 1, 2, 2, 1, 0, 0 },
-	{ 0, 0, 0, 1, 1, 0, 0, 0 }
-};
-
 
 //================================
 // ピクセルシェーダ
@@ -65,7 +48,7 @@ float4 main(VSOutput In) : SV_Target0
 	float4 baseColor = g_baseTex.Sample(g_ss, In.UV) * g_BaseColor * In.Color;
 	
 	// Alphaテスト
-	if( baseColor.a < 0.05f )
+	if (baseColor.a < 0.05f)
 	{
 		discard;
 	}
@@ -75,27 +58,54 @@ float4 main(VSOutput In) : SV_Target0
 	float camDist = length(vCam); // カメラ - ピクセル距離
 	vCam = normalize(vCam);
 
-	// 法線マップから法線ベクトル取得
-	float3 wN = g_normalTex.Sample(g_ss, In.UV).rgb;
+	
+	//水面シェーダ8
+	float3 wN = 0;
+	if (g_waterEnable)
+	{
+		float4 n1 = g_WaterNormalTex.Sample(g_ss, In.UV + g_waterUVOffset);
+		//0 ～1の値が-1～1になる
+		n1 = n1 * 2.0 - 1.0;
 
-	// UV座標（0～1）から 射影座標（-1～1）へ変換
-	wN = wN * 2.0 - 1.0;
+		float4 n2 = g_WaterNormalTex.Sample(g_ss, In.UV - g_waterUVOffset);
+		//0 ～1の値が-1～1になる
+		n2 = n2 * 2.0 - 1.0;
+
+		//取ってきた色（法線ベクトル）を90度回転させる
+		wN = mul(n1 + n2, g_mR).rgb;
+
+		//水底
+		baseColor = g_baseTex.Sample(g_ss, In.UV + wN.xz / 100) * g_BaseColor * In.Color;
+
+		baseColor.r = baseColor.r / 20.0;
+		baseColor.g = baseColor.g / 10.0;
+		baseColor.b = baseColor.b / 5.0;
+
+	}
+	else
+	{
+		// 法線マップから法線ベクトル取得
+		float3 wN = g_normalTex.Sample(g_ss, In.UV).rgb;
+
+		// UV座標（0～1）から 射影座標（-1～1）へ変換
+		wN = wN * 2.0 - 1.0;
 	
 	{
-		// 3種の法線から法線行列を作成
-		row_major float3x3 mTBN =
-		{
-			normalize(In.wT),
+			// 3種の法線から法線行列を作成
+			row_major float3x3 mTBN =
+			{
+				normalize(In.wT),
 			normalize(In.wB),
 			normalize(In.wN),
-		};
+			};
 	
-		// 法線ベクトルをこのピクセル空間へ変換
-		wN = mul(wN, mTBN);
-	}
+			// 法線ベクトルをこのピクセル空間へ変換
+			wN = mul(wN, mTBN);
+		}
 
-	// 法線正規化
-	wN = normalize(wN);
+		// 法線正規化
+		wN = normalize(wN);
+	}
 
 	float4 mr = g_metalRoughTex.Sample(g_ss, In.UV);
 	// 金属性
@@ -103,7 +113,7 @@ float4 main(VSOutput In) : SV_Target0
 	// 粗さ
 	float roughness = mr.g * g_Roughness;
 	// ラフネスを逆転させ「滑らか」さにする
-	float smoothness = 1.0 - roughness; 
+	float smoothness = 1.0 - roughness;
 	float specPower = pow(2, 11 * smoothness); // 1～2048
 	
 	//------------------------------------------
@@ -113,9 +123,9 @@ float4 main(VSOutput In) : SV_Target0
 	float3 outColor = 0;
 	
 		// 材質の拡散色　非金属ほど材質の色になり、金属ほど拡散色は無くなる
-	const float3 baseDiffuse = lerp( baseColor.rgb, float3( 0, 0, 0 ), metallic );
+	const float3 baseDiffuse = lerp(baseColor.rgb, float3(0, 0, 0), metallic);
 		// 材質の反射色　非金属ほど光の色をそのまま反射し、金属ほど材質の色が乗る
-	const float3 baseSpecular = lerp( 0.04, baseColor.rgb, metallic );
+	const float3 baseSpecular = lerp(0.04, baseColor.rgb, metallic);
 
 	//-------------------------------
 	// シャドウマッピング(影判定)
@@ -158,8 +168,8 @@ float4 main(VSOutput In) : SV_Target0
 	// Diffuse(拡散光)
 	{
 		// 光の方向と法線の方向との角度さが光の強さになる
-		float lightDiffuse = dot( -g_DL_Dir, wN );
-		lightDiffuse = saturate( lightDiffuse ); // マイナス値は0にする　0(暗)～1(明)になる
+		float lightDiffuse = dot(-g_DL_Dir, wN);
+		lightDiffuse = saturate(lightDiffuse); // マイナス値は0にする　0(暗)～1(明)になる
 
 		// 正規化Lambert
 		lightDiffuse /= 3.1415926535;
@@ -172,7 +182,7 @@ float4 main(VSOutput In) : SV_Target0
 	{
 		// 反射した光の強さを求める
 		// Blinn-Phong NDF
-		float spec = BlinnPhong( g_DL_Dir, vCam, wN, specPower );
+		float spec = BlinnPhong(g_DL_Dir, vCam, wN, specPower);
 
 		// 光の色 * 反射光の強さ * 材質の反射色 * 透明率 * 適当な調整値
 		outColor += (g_DL_Color * spec) * baseSpecular * baseColor.a * 0.5 * shadow;
@@ -185,25 +195,25 @@ float4 main(VSOutput In) : SV_Target0
 	//-------------------------
 	// 点光
 	//-------------------------
-	for( int i = 0; i < g_PointLightNum.x; i++ )
+	for (int i = 0; i < g_PointLightNum.x; i++)
 	{
 		// ピクセルから点光への方向
-		float3 dir = g_PointLights[ i ].Pos - In.wPos;
+		float3 dir = g_PointLights[i].Pos - In.wPos;
 		
 		// 距離を算出
-		float dist = length( dir );
+		float dist = length(dir);
 		
 		// 正規化
 		dir /= dist;
 		
 		// 点光の判定以内
-		if( dist < g_PointLights[ i ].Radius )
+		if (dist < g_PointLights[i].Radius)
 		{
 			// 半径をもとに、距離の比率を求める
-			float atte = 1.0 - saturate( dist / g_PointLights[ i ].Radius );
+			float atte = 1.0 - saturate(dist / g_PointLights[i].Radius);
 			
 			// 明度の追加
-			totalBrightness += (1 - pow( 1 - atte, 2 )) * g_PointLights[ i ].IsBright;
+			totalBrightness += (1 - pow(1 - atte, 2)) * g_PointLights[i].IsBright;
 			
 			// 逆２乗の法則
 			atte *= atte;
@@ -211,8 +221,8 @@ float4 main(VSOutput In) : SV_Target0
 			// Diffuse(拡散光)
 			{
 				// 光の方向と法線の方向との角度さが光の強さになる
-				float lightDiffuse = dot( dir, wN );
-				lightDiffuse = saturate( lightDiffuse ); // マイナス値は0にする　0(暗)～1(明)になる
+				float lightDiffuse = dot(dir, wN);
+				lightDiffuse = saturate(lightDiffuse); // マイナス値は0にする　0(暗)～1(明)になる
 
 				lightDiffuse *= atte; // 減衰
 
@@ -227,12 +237,64 @@ float4 main(VSOutput In) : SV_Target0
 			{
 				// 反射した光の強さを求める
 				// Blinn-Phong NDF
-				float spec = BlinnPhong( -dir, vCam, wN, specPower );
+				float spec = BlinnPhong(-dir, vCam, wN, specPower);
 
 				spec *= atte; // 減衰
 				
 				// 光の色 * 反射光の強さ * 材質の反射色 * 透明率 * 適当な調整値
 				outColor += (g_PointLights[i].Color * spec) * baseSpecular * baseColor.a * 0.5;
+			}
+		}
+	}
+
+	//コーンライト
+	{
+		//光源に向いたベクトルを算出
+		float3 toDir = g_ConeLight.pos - In.wPos;
+		//光源の距離
+		float len = length(toDir);
+		if (len < g_ConeLight.range)
+		{
+			//距離内
+			//光源内に向いたベクトルを方向ベクトルに変換
+			toDir = normalize(toDir);
+
+			//光源に向いたベクトルと光源の逆ベクトルで角度を算出
+			//内積・・・丸め誤差
+			float rad = acos(saturate(dot(toDir, -g_ConeLight.dir)));
+
+			if (rad < g_ConeLight.angle)
+			{
+				//コーンライト内確定
+
+				//減衰率（サイド）
+				float angleIn = g_ConeLight.angle * 0.8f;
+				float side = 1 - (rad - angleIn) / (g_ConeLight.angle - angleIn);
+				
+				
+				//減衰率
+				float atte = saturate(1 - len / g_ConeLight.range) * side;
+				
+				//拡散
+				float lightDiffuse = saturate(dot(normalize(wN), toDir));
+
+				//ディフューズ減衰
+				lightDiffuse *= atte;
+				
+				outColor += (g_ConeLight.color * lightDiffuse) * baseDiffuse * baseColor.a;
+
+				// Specular(反射色)
+				//スぺキュラ
+				{
+				// 反射した光の強さを求める
+				// Blinn-Phong NDF
+					float spec = BlinnPhong(-toDir, vCam, wN, specPower);
+
+					spec *= atte; // 減衰
+				
+				// 光の色 * 反射光の強さ * 材質の反射色 * 透明率
+					outColor += (g_ConeLight.color * spec) * baseSpecular * baseColor.a;
+				}
 			}
 		}
 	}
@@ -291,7 +353,7 @@ float4 main(VSOutput In) : SV_Target0
 		}
 	}
 	
-	totalBrightness = saturate( totalBrightness );
+	totalBrightness = saturate(totalBrightness);
 	outColor *= totalBrightness;
 	
 	//------------------------------------------

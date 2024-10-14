@@ -2,6 +2,9 @@
 
 struct PointLight;
 
+//黒崎授業
+struct ConeLight;
+
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 // ゲーム内の空間環境をコントロールするパラメータ群
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -23,6 +26,15 @@ struct KdAmbientParameter
 	float			m_heightFogTopValue = 0.0f;			// フォグを開始する上限の高さ
 	float			m_heightFogBottomValue = 0.0f;		// フォグ色に染まる下限の高さ
 	float			m_heightFogBeginDistance = 0.0f;	// フォグの開始する距離
+
+	//黒崎授業
+	//コーンライト
+	Math::Vector3	m_coneLightPos;
+	Math::Vector3	m_coneLightDir;
+	float			m_coneLightRange = 0.0f;
+	float			m_coneLightAngle = 0.0f;
+	Math::Vector3	m_coneLightColor;
+
 };
 
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
@@ -65,9 +77,15 @@ public:
 	// 高さフォグの設定
 	void SetheightFog(const Math::Vector3& col, float topValue, float bottomValue, float distance);
 
+	//黒崎授業
+	//コーンライト有効化
+	void SetConeLightEnable(bool _enable);
+	void SetConeLight(const Math::Vector3& _pos, const Math::Vector3& _dir, float _range, float _angle, const Math::Vector3& _color);
+
+
 private:
 
-	void WriteLightParams(); 
+	void WriteLightParams();
 	void WriteFogParams();
 
 	KdAmbientParameter m_parameter;
@@ -85,4 +103,7 @@ private:
 	bool m_dirtyLightDir = true;
 	bool m_dirtyFogDist = true;
 	bool m_dirtyFogHeight = true;
+
+	//黒崎授業
+	bool m_dirtyConeLight = true;
 };

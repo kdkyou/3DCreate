@@ -8,8 +8,7 @@
 		{
 			"name":"Scene",
 			"nodes":[
-				0,
-				1
+				0
 			]
 		}
 	],
@@ -17,24 +16,28 @@
 		{
 			"mesh":0,
 			"name":"Cube",
+			"scale":[
+				3.9921071529388428,
+				1,
+				4.011662006378174
+			],
 			"translation":[
 				0,
 				0.17829209566116333,
 				0
 			]
-		},
-		{
-			"mesh":1,
-			"name":"COL"
 		}
 	],
 	"materials":[
 		{
 			"doubleSided":true,
 			"name":"Material",
+			"normalTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":0
+					"index":1
 				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
@@ -56,32 +59,28 @@
 					"material":0
 				}
 			]
-		},
-		{
-			"name":"\u7acb\u65b9\u4f53.002",
-			"primitives":[
-				{
-					"attributes":{
-						"POSITION":5,
-						"NORMAL":6,
-						"TEXCOORD_0":7
-					},
-					"indices":8
-				}
-			]
 		}
 	],
 	"textures":[
 		{
 			"sampler":0,
 			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
 		}
 	],
 	"images":[
 		{
+			"mimeType":"image/png",
+			"name":"normalstone3",
+			"uri":"normalstone3.png"
+		},
+		{
 			"mimeType":"image/jpeg",
-			"name":"sunahekiL02",
-			"uri":"sunahekiL02.jpg"
+			"name":"stone3",
+			"uri":"stone3.jpg"
 		}
 	],
 	"accessors":[
@@ -96,7 +95,7 @@
 			],
 			"min":[
 				-1,
-				-0.1801719069480896,
+				-0.6672511100769043,
 				-1
 			],
 			"type":"VEC3"
@@ -123,40 +122,6 @@
 			"bufferView":4,
 			"componentType":5123,
 			"count":132,
-			"type":"SCALAR"
-		},
-		{
-			"bufferView":5,
-			"componentType":5126,
-			"count":24,
-			"max":[
-				1,
-				0.16370642185211182,
-				1
-			],
-			"min":[
-				-1,
-				-0.004588305950164795,
-				-1
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":6,
-			"componentType":5126,
-			"count":24,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":7,
-			"componentType":5126,
-			"count":24,
-			"type":"VEC2"
-		},
-		{
-			"bufferView":8,
-			"componentType":5123,
-			"count":36,
 			"type":"SCALAR"
 		}
 	],
@@ -190,30 +155,6 @@
 			"byteLength":264,
 			"byteOffset":2880,
 			"target":34963
-		},
-		{
-			"buffer":0,
-			"byteLength":288,
-			"byteOffset":3144,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":288,
-			"byteOffset":3432,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":192,
-			"byteOffset":3720,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":72,
-			"byteOffset":3912,
-			"target":34963
 		}
 	],
 	"samplers":[
@@ -224,7 +165,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":3984,
+			"byteLength":3144,
 			"uri":"Tail.bin"
 		}
 	]

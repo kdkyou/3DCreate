@@ -7,10 +7,8 @@
 class KdStandardShader
 {
 public:
-	//スキンメッシュ対応
+	// スキンメッシュ対応
 	static const int maxBoneBufferSize = 300;
-
-
 
 	// 定数バッファ(オブジェクト単位更新)
 	struct cbObject
@@ -25,7 +23,7 @@ public:
 		// エミッシブのみの描画
 		int				OnlyEmissie = 0;
 
-		//スキンメッシュオブジェクトかどうか（スキンメッシュ対応）
+		// スキンメッシュオブジェクトかどうか(スキンメッシュ対応)
 		int				IsSkinMeshObj = 0;
 
 		// ディゾルブ関連
@@ -33,6 +31,17 @@ public:
 		float			DissolveEdgeRange = 0.03f;	// 0 ～ 1
 
 		Math::Vector3	DissolveEmissive = { 0.0f, 1.0f, 1.0f };
+	
+	
+		//水面表現3　定数バッファ作成
+		int WaterEnable = 0;
+		float _dummy3[3] = { 0.0f,0.0f,0.0f };
+
+		Math::Matrix mR;	//90度回転
+
+		Math::Vector2 WaterUVOffset = { 0,0 }; //オフセット：補正値
+		float _dummy2[2] = { 0,0 };
+
 	};
 
 	// 定数バッファ(メッシュ単位更新)
@@ -59,10 +68,38 @@ public:
 		Math::Matrix mBones[300];
 	};
 
-
 	//================================================
 	// 設定・取得
 	//================================================
+
+	//水面表現4　セッターを作成
+	//テクスチャを転送する関数
+	void SetWaterNormalTexture(KdTexture& _normalTex)
+	{
+		KdDirect3D::Instance().WorkDevContext()->PSSetShaderResources(
+			9,	//スロット番号 4-9なら空いている
+			1,	//個数
+			_normalTex.WorkSRViewAddress()	//転送するテクスチャ
+		);
+	}
+
+	//有効か
+	void SetWaterEnable(bool _enable)
+	{
+		m_cb0_Obj.Work().WaterEnable = _enable;
+		m_cb0_Obj.Work().mR = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(90));
+
+		m_dirtyCBObj = true;
+	}
+
+	//水面のUV設定
+	void SetWaterUVOffset(const Math::Vector2& _offset)
+	{
+		m_cb0_Obj.Work().WaterUVOffset = _offset;
+
+		m_dirtyCBObj = true;
+	}
+
 
 	// UVタイリング設定
 	void SetUVTiling(const Math::Vector2& tiling)
@@ -141,7 +178,7 @@ public:
 
 	const cbMaterial& WorkMaterialCB() const { return m_cb2_Material.Get(); }
 
-	//スキンメッシュ対応
+	// スキンメッシュ対応
 	const cbBone& WorkBoneCB() const { return m_cb3_Bone.Get(); }
 
 	//================================================
@@ -209,17 +246,15 @@ private:
 	// 定数バッファを初期状態に戻す
 	void ResetCBObject();
 
-	//スキンメッシュ有効かどうか（スキンメッシュ対応）
+	// スキンメッシュ有効かどうか(スキンメッシュ対応)
 	void SetIsSkinMeshObj(bool isSkinMeshObj)
 	{
-		if (m_cb0_Obj.Work().IsSkinMeshObj != isSkinMeshObj)
+		if (m_cb0_Obj.Work().IsSkinMeshObj != static_cast<int>(isSkinMeshObj))
 		{
 			m_cb0_Obj.Work().IsSkinMeshObj = isSkinMeshObj;
 			m_dirtyCBObj = true;
 		}
-
 	}
-
 
 	// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 	// Lit：陰影をつけるオブジェクトの描画用（不透明な物体やキャラクタの板ポリなど
@@ -248,12 +283,11 @@ private:
 	// テクスチャ
 	std::shared_ptr<KdTexture>	m_dissolveTex = nullptr;	// ディゾルブで使用するデフォルトテクスチャ
 
-
 	// 定数バッファ
 	KdConstantBuffer<cbObject>		m_cb0_Obj;				// オブジェクト単位で更新
 	KdConstantBuffer<cbMesh>		m_cb1_Mesh;				// メッシュ毎に更新
 	KdConstantBuffer<cbMaterial>	m_cb2_Material;			// マテリアル毎に更新
-	KdConstantBuffer<cbBone>		m_cb3_Bone;				//ボーン毎に更新(スキンメッシュ対応)
+	KdConstantBuffer<cbBone>		m_cb3_Bone;				// ボーン毎に更新(スキンメッシュ対応)
 
 	KdRenderTargetPack	m_depthMapFromLightRTPack;
 	KdRenderTargetChanger m_depthMapFromLightRTChanger;
