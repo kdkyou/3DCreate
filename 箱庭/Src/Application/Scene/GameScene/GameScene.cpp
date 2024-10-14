@@ -1,6 +1,8 @@
 ﻿#include "GameScene.h"
 #include"../SceneManager.h"
 
+#include"json.hpp"
+
 #include "../../GameObject/Character/Player/Character.h"
 
 #include "../../GameObject/Camera/FPSCamera/FPSCamera.h"
@@ -15,8 +17,7 @@
 
 #include"../../GameObject/Dice/DiceManager.h"
 
-#include"json.hpp"
-
+#include"../../GameObject/Noise/Noise.h"
 
 void GameScene::Init()
 {
@@ -47,7 +48,7 @@ void GameScene::Init()
 
 	DiceManager::GetInstance().SetCamera(_camera);
 
-	nlohmann::json j;
+	/*nlohmann::json j;
 	std::ifstream inFile("Asset/Data/GameObject/enemy.json");
 	inFile >> j;
 
@@ -74,9 +75,11 @@ void GameScene::Init()
 		_megaro->SetTarget(_character);
 		AddObject(_megaro);
 
-	}
+	}*/
 
-
+	std::shared_ptr<Noise> noise = std::make_shared<Noise>();
+	noise->Init();
+	AddObject(noise);
 
 
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav", true);

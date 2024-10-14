@@ -55,6 +55,9 @@ public :
 	{
 		// 開始シーンに切り替え
 		ChangeScene(m_currentSceneType);
+
+		//レンダーターゲット初期化
+		m_rtPack.CreateRenderTarget(1280, 720, true);
 	}
 
 	//レンダーターゲット切り替え関連
@@ -66,6 +69,8 @@ public :
 	{
 		return m_rtPack.m_RTTexture;
 	}
+
+	const int GetLength()const { return length; }
 
 
 private :
@@ -142,7 +147,7 @@ private :
 	std::list<std::shared_ptr<MapObject>> m_mapList;
 	std::list<std::shared_ptr<MapObject>> m_gimmickList;
 
-
+	int length = 1;
 
 	
 	// シーン切り替え関数

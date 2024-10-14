@@ -671,6 +671,9 @@ void SceneManager::Controll()
 	{
 		m_spNow->NowObject();
 	}
+
+
+	ImGui::SliderInt("NoiseLength",&length,1,120);
 }
 
 void SceneManager::SaveMap()
