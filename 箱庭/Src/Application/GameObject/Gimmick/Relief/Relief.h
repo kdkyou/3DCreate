@@ -21,6 +21,7 @@ public:
 private:
 
 	std::shared_ptr<KdTexture>		m_fTexture		= nullptr;
+	std::shared_ptr<KdTexture>      m_cthlhuTex = nullptr;
 	bool							m_drawFkeyFlg	= false;
 	bool							m_createFlg		= false;
 };

@@ -5,6 +5,8 @@
 #include"../../Cutin/Cutin.h"
 #include"../../Information/Information.h"
 
+#include"../../Noise/Noise.h"
+
 #include"../../../Scene/SceneManager.h"
 
 #include"../../../AssetRepository/AssetRepository.h"
@@ -36,8 +38,12 @@ void Character::Init()
 
 	m_moveLevel = 1;
 	m_time = 0;
+	m_deathConut = 0;
 
 	m_nextType = SelectType::Break;
+
+	m_tex = std::make_shared<KdTexture>();
+	m_tex->Load("Asset/Textures/GameObject/Apotheosis/Nyarlathotep.png");
 
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 }
@@ -55,6 +61,7 @@ void Character::Update()
 		{
 			m_mWorld = m_localMatFromRideObject * _spParent->GetMatrix();
 			m_pos = m_mWorld.Translation();
+			m_pos.y += m_ajustHeight;
 		}
 	}
 
@@ -120,8 +127,8 @@ void Character::Update()
 		m_pos + Math::Vector3{ 0,1,0 },
 		m_mWorld.Backward(),
 		10,
-		DirectX::XMConvertToRadians(20),
-		{ 1,2,2 }
+		DirectX::XMConvertToRadians(30),
+		{ 1,1.5f,2.0f }
 	);
 
 }
@@ -168,6 +175,10 @@ void Character::PostUpdate()
 			if (obj->IsRideable())
 			{
 				m_wpRideObject = obj;
+			}
+			else
+			{
+				m_wpRideObject.reset();
 			}
 		}
 	}
@@ -397,6 +408,12 @@ void Character::SetSkill(const Skill& skill)
 void Character::OnHit()
 {
 	m_pos = {};
+	m_deathConut++;
+
+	std::shared_ptr<Noise> noise = std::make_shared<Noise>();
+	noise->Init();
+	noise->SetTexture(m_tex,TEN*m_deathConut);
+	SceneManager::Instance().AddNoise(noise);
 }
 
 void Character::CoolTime()

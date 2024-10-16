@@ -2,6 +2,8 @@
 
 #include"../../Information/Information.h"
 
+#include"../../Noise/Noise.h"
+
 #include"../../../Scene/SceneManager.h"
 
 void Relief::SetModel(const std::shared_ptr<KdModelData>& model)
@@ -13,17 +15,14 @@ void Relief::SetModel(const std::shared_ptr<KdModelData>& model)
 	m_fTexture = std::make_shared<KdTexture>();
 	m_fTexture->Load(RELIEFPATH"F.png");
 
+	m_cthlhuTex = std::make_shared<KdTexture>();
+	m_cthlhuTex->Load("Asset/Textures/GameObject/Apotheosis/Cthlhu.png");
+
+	m_createFlg = false;
 }
 
 void Relief::Update()
 {
-	m_brightTime--;
-	if (m_brightTime < 0)
-	{
-		m_brightTime = 0;
-	}
-
-	m_drawFkeyFlg = false;
 }
 
 void Relief::OnHit()
@@ -60,29 +59,34 @@ void Relief::OnHit()
 			SceneManager::Instance().AddReliefCount();
 			m_isOnes = true;
 		}
+
+		std::shared_ptr<Noise> noise = std::make_shared<Noise>();
+		noise->Init();
+		noise->SetTexture(m_cthlhuTex,180);
+		SceneManager::Instance().AddNoise(noise);
 	}
 }
 
 void Relief::OnEncount()
 {
 	/*m_drawFkeyFlg = true;
+	*/
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
 		if (!m_createFlg)
 		{
-			m_createFlg = true;
 			OnHit();
 		}
 	}
 	else
 	{
 		m_createFlg = false;
-	}*/
+	}
 }
 
 void Relief::DrawSprite()
 {
 	if (!m_drawFkeyFlg)return;
 	
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_fTexture, 0, 0);
+//	KdShaderManager::Instance().m_spriteShader.DrawTex(m_fTexture, 0, 0);
 }

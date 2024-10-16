@@ -14,8 +14,10 @@ void Arrow::SetModel(const std::shared_ptr<KdModelData>& model)
 	m_pCollider->RegisterCollisionShape("Arrow", m_spDModel, KdCollider::TypeDamage);
 
 	const KdModelData::Node* _pNode = m_spDModel->FindNode("AttachPoint");
-
-	m_attach = _pNode->m_worldTransform;
+	if (_pNode)
+	{
+		m_attach = _pNode->m_worldTransform;
+	}
 
 }
 
@@ -107,9 +109,10 @@ void Arrow::GenerateDepthMapFromLight()
 }
 
 
-void Arrow::SetParam(const Math::Vector3& _pos, const Math::Vector3& _dir, float _spd)
+void Arrow::SetParam(const Math::Matrix& _mat, const Math::Vector3& _dir, float _spd)
 {
-	m_pos = _pos;
+	m_mWorld = _mat;
+	m_pos = _mat.Translation();
 	m_moveDir = _dir;
 	m_moveDir.Normalize();
 	m_moveSpd = _spd;
@@ -132,7 +135,10 @@ void Arrow::SetParam(const Math::Vector3& _pos, const Math::Vector3& _dir, float
 	Math::Vector3 _rotAxis = _vecA.Cross(_vecB);
 	
 	//角度分算出ベクトル(回転軸)で回転する行列を作成
-	m_rotMat = Math::Matrix::CreateFromAxisAngle(_rotAxis, _angle);
+	if (_angle != 0)
+	{
+		m_rotMat = Math::Matrix::CreateFromAxisAngle(_rotAxis, _angle);
+	}
 
 
 

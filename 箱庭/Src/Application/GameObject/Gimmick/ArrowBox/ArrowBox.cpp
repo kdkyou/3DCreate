@@ -28,23 +28,24 @@ void ArrowBox::OnEncount()
 		m_cooltime = COOL_TIME;
 		m_shotflg = true;
 
-		const static KdModelData::Node* _p1Node = m_spModel->FindNode("1");
-		const static KdModelData::Node* _p2Node = m_spModel->FindNode("2");
-		const static KdModelData::Node* _p3Node = m_spModel->FindNode("3");
-		const static KdModelData::Node* _p4Node = m_spModel->FindNode("4");
-		const static KdModelData::Node* _p5Node = m_spModel->FindNode("5");
-		const static KdModelData::Node* _p6Node = m_spModel->FindNode("6");
-		const static KdModelData::Node* _p7Node = m_spModel->FindNode("7");
-		const static KdModelData::Node* _p8Node = m_spModel->FindNode("8");
-		const static KdModelData::Node* _p9Node = m_spModel->FindNode("9");
-		const static KdModelData::Node* _p10Node = m_spModel->FindNode("10");
+		const  KdModelData::Node* _p1Node = m_spModel->FindNode("1");
+		const  KdModelData::Node* _p2Node = m_spModel->FindNode("2");
+		const  KdModelData::Node* _p3Node = m_spModel->FindNode("3");
+		const  KdModelData::Node* _p4Node = m_spModel->FindNode("4");
+		const  KdModelData::Node* _p5Node = m_spModel->FindNode("5");
+		const  KdModelData::Node* _p6Node = m_spModel->FindNode("6");
+		const  KdModelData::Node* _p7Node = m_spModel->FindNode("7");
+		const  KdModelData::Node* _p8Node = m_spModel->FindNode("8");
+		const  KdModelData::Node* _p9Node = m_spModel->FindNode("9");
+		const  KdModelData::Node* _p10Node = m_spModel->FindNode("10");
 
-		Math::Matrix one;
-		Math::Matrix two;
-		Math::Matrix three;
-		Math::Matrix four;
+		Math::Matrix one = Math::Matrix::Identity;
+		Math::Matrix two = Math::Matrix::Identity;
+		Math::Matrix three = Math::Matrix::Identity;
+		Math::Matrix four = Math::Matrix::Identity;
 
-		switch (m_random.GetInt(1,5))
+		int num = m_random.GetInt(1, 5);
+		switch (num)
 		{
 		case 1:
 			m_nowPattern = ArrowBox::One;
@@ -105,25 +106,25 @@ void ArrowBox::OnEncount()
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * one).Translation(), one.Backward(), 0.1f);
+			_arrow->SetParam((m_mWorld * one), one.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * two).Translation(), two.Backward(), 0.1f);
+			_arrow->SetParam((m_mWorld * two), two.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * three).Translation(), three.Backward(), 0.1f);
+			_arrow->SetParam((m_mWorld * three), three.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * four).Translation(), four.Backward(), 0.1f);
+			_arrow->SetParam((m_mWorld * four), four.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 	}

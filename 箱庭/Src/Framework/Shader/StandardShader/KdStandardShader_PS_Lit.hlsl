@@ -79,7 +79,7 @@ float4 main(VSOutput In) : SV_Target0
 
 		baseColor.r = baseColor.r / 20.0;
 		baseColor.g = baseColor.g / 10.0;
-		baseColor.b = baseColor.b / 5.0;
+		baseColor.b = baseColor.b / 2.0;
 
 	}
 	else

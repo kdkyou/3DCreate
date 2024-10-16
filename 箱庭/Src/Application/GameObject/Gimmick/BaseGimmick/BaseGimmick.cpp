@@ -45,5 +45,5 @@ void BaseGimmick::DrawLit()
 
 void BaseGimmick::OnBright()
 {
-	m_brightTime = BRIGHT_TIME;
+	m_coolTime = COOL_TIME;
 }

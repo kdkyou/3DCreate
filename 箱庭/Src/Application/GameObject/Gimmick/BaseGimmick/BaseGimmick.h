@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#define BRIGHT_TIME 120
+#define COOL_TIME 120
 
 class BaseGimmick :public KdGameObject
 {
@@ -26,7 +26,7 @@ protected:
 
 	Math::Vector3					m_pos;
 
-	int								m_brightTime=0;
+	int								m_coolTime=0;
 
 	//一度切りのギミック
 	bool							m_isOnes = false;

@@ -23,7 +23,7 @@ private:
 	
 	std::shared_ptr<KdModelData> m_spModel = nullptr;
 
-	std::shared_ptr<KdTexture>  m_spnormalTex = nullptr;
+//	std::shared_ptr<KdTexture>  m_spnormalTex = nullptr;
 
 	bool						 m_drawFlg = false;
 

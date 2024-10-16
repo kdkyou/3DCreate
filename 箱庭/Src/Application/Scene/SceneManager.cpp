@@ -6,6 +6,7 @@
 #include"MapScene/MapScene.h"
 #include"GimmickScene/GimmickScene.h"
 #include"DiceScene/DiceScene.h"
+#include"NoiseScene/NoiseScene.h"
 
 #include"../AssetRepository/AssetRepository.h"
 #include"../GameObject/Terrain/Terrain.h"
@@ -18,6 +19,7 @@
 #include"../GameObject/Gimmick/ArrowBox/ArrowBox.h"
 #include"../GameObject/Gimmick/PitFall/PitFall.h"
 #include"../GameObject/Gimmick/SlideDoor/SlideDoor.h"
+#include"../GameObject/Gimmick/Relief/Relief.h"
 
 #include"json.hpp"
 #include"../main.h"
@@ -40,6 +42,10 @@ void SceneManager::PreUpdate()
 	{
 		m_gimmickScene->PreUpdate();
 	}
+	if (m_noiseScene)
+	{
+		m_noiseScene->PreUpdate();
+	}
 }
 
 void SceneManager::Update()
@@ -51,6 +57,11 @@ void SceneManager::Update()
 		if (m_gimmickScene)
 		{
 			m_gimmickScene->Update();
+		}
+
+		if (m_noiseScene)
+		{
+			m_noiseScene->Update();
 		}
 	}
 }
@@ -69,19 +80,10 @@ void SceneManager::PostUpdate()
 
 void SceneManager::PreDraw()
 {
+
 	m_currentScene->PreDraw();
 
-	//描画先をテクスチャに変更
 	ChangeRenderTarget();
-
-	m_mapScene->Draw();
-
-	//元に戻す
-	UndoRenderTarget();
-}
-
-void SceneManager::Draw()
-{
 	if (m_mapScene)
 	{
 		m_mapScene->Draw();
@@ -89,6 +91,28 @@ void SceneManager::Draw()
 	if (m_gimmickScene)
 	{
 		m_gimmickScene->Draw();
+	}
+	if (m_noiseScene)
+	{
+		m_noiseScene->PreDraw();
+	}
+	UndoRenderTarget();
+}
+
+void SceneManager::Draw()
+{
+	
+	if (m_mapScene)
+	{
+		m_mapScene->Draw();
+	}
+	if (m_gimmickScene)
+	{
+		m_gimmickScene->Draw();
+	}
+	if (m_noiseScene)
+	{
+		m_noiseScene->Draw();
 	}
 	m_currentScene->Draw();
 }
@@ -99,8 +123,13 @@ void SceneManager::DrawSprite()
 	{
 		m_gimmickScene->DrawSprite();
 	}
-	m_currentScene->DrawSprite();
 
+	if (m_noiseScene)
+	{
+		m_noiseScene->DrawSprite();
+	}
+
+	m_currentScene->DrawSprite();
 }
 
 void SceneManager::DrawDebug()
@@ -156,6 +185,11 @@ void SceneManager::AddGimmick(const std::shared_ptr<KdGameObject>& obj)
 	m_gimmickScene->AddObject(obj);
 }
 
+void SceneManager::AddNoise(const std::shared_ptr<KdGameObject>& obj)
+{
+	m_noiseScene->AddObject(obj);
+}
+
 void SceneManager::Imgui()
 {
 	ImGui::Begin("Create");
@@ -201,11 +235,12 @@ void SceneManager::ChangeScene(SceneType sceneType)
 		break;
 	case SceneType::Game:
 		m_currentScene = std::make_shared<GameScene>();
-		if (!m_gimmickScene)m_gimmickScene = std::make_shared<GimmickScene>();
 		break;
 	}
 
 	if (!m_mapScene)m_mapScene = std::make_shared<MapScene>();
+	if (!m_gimmickScene)m_gimmickScene = std::make_shared<GimmickScene>();
+	if (!m_noiseScene)m_noiseScene = std::make_shared<NoiseScene>();
 
 	// 現在のシーン情報を更新
 	m_currentSceneType = sceneType;
@@ -435,6 +470,26 @@ void SceneManager::CreateGimmick()
 		m_scale = { 1,1,1 };
 		m_ang = {};
 
+	}
+
+	if (ImGui::Button("Reliefed"))
+	{
+		std::shared_ptr<Relief> _relief = std::make_shared<Relief>();
+		std::shared_ptr<KdModelData> _model = std::make_shared<KdModelData>();
+		_model = AssetRepository::Instance().GetModel("Relief");
+		_relief->SetPos(m_pos);
+		_relief->SetModel(_model);
+		AddGimmick(_relief);
+
+		std::shared_ptr<MapObject> _map;
+		_map = std::make_shared<MapObject>();
+		_map->m_name = "Relief";
+		_map->m_obj = _relief;
+		m_gimmickList.push_back(_map);
+		m_spNow = _relief;
+
+		m_scale = { 1,1,1 };
+		m_ang = {};
 	}
 
 	if (ImGui::Button("FallPillar"))
@@ -673,7 +728,7 @@ void SceneManager::Controll()
 	}
 
 
-	ImGui::SliderInt("NoiseLength",&length,1,120);
+	ImGui::SliderInt("NoiseLen",&length,1,120);
 }
 
 void SceneManager::SaveMap()
@@ -686,7 +741,7 @@ void SceneManager::SaveMap()
 		{
 			auto it = m_mapList.begin();
 			std::advance(it, i);
-			if ((*it)->m_obj)
+			if ((*it)->m_obj!=nullptr)
 			{
 				j["name"] = (*it)->m_name;
 				j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
@@ -914,8 +969,8 @@ void SceneManager::LoadGimmick()
 		{
 			std::shared_ptr<SlideDoor>_slide = std::make_shared<SlideDoor>();
 			std::shared_ptr<KdModelData> _model = std::make_shared<KdModelData>();
-			_slide->Init();
 			_slide->SetMatrix(_mat);
+			_slide->Init();
 			_slide->SetRot(rot);
 			AddGimmick(_slide);
 			_map->m_obj = _slide;
@@ -963,7 +1018,7 @@ void SceneManager::List()
 
 	if (ImGui::Combo("Gimmck", &_gCurrent, ItemGetter, &_names, _names.size()))
 	{
-		auto it = m_mapList.begin();
+		auto it = m_gimmickList.begin();
 		std::advance(it, _gCurrent);
 		m_spNow = (*it)->m_obj;
 	}

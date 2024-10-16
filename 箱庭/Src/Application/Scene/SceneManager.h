@@ -44,6 +44,7 @@ public :
 	// 現在のシーンにオブジェクトを追加
 	void AddObject(const std::shared_ptr<KdGameObject>& obj);
 	void AddGimmick(const std::shared_ptr<KdGameObject>& obj);
+	void AddNoise(const std::shared_ptr<KdGameObject>& obj);
 
 	//imgui関連
 	void Imgui();
@@ -69,6 +70,7 @@ public :
 	{
 		return m_rtPack.m_RTTexture;
 	}
+	//void ChangeRenderStage();
 
 	const int GetLength()const { return length; }
 
@@ -160,6 +162,8 @@ private :
 	std::shared_ptr<BaseScene> m_mapScene	  = nullptr;
 	//ギミックオブジェクトを入れたシーン
 	std::shared_ptr<BaseScene> m_gimmickScene = nullptr;
+
+	std::shared_ptr<BaseScene> m_noiseScene = nullptr;
 
 	// 現在のシーンの種類を保持している変数
 	SceneType m_currentSceneType = SceneType::Title;

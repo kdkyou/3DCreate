@@ -12,5 +12,7 @@ private:
 
 	void Init()override;
 	
+	std::shared_ptr<KdTexture>  m_spnormalTex = nullptr;
+
 };
 

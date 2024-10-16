@@ -18,7 +18,7 @@ public:
 	void DrawLit()override;
 	void GenerateDepthMapFromLight()override;
 	
-	void SetParam(const Math::Vector3& _pos,const Math::Vector3& _dir, float _spd);
+	void SetParam(const Math::Matrix& _mat,const Math::Vector3& _dir, float _spd);
 	
 	void OnHit()override;
 

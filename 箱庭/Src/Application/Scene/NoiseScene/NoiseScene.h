@@ -6,7 +6,7 @@ class NoiseScene:public BaseScene
 {
 public:
 	NoiseScene() { Init(); }
-	~NoiseScene()override;
+	~NoiseScene(){}
 
 private:
 	void Init()override;

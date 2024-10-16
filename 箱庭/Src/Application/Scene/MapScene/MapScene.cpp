@@ -44,11 +44,18 @@ void MapScene::Init()
 	AddObject(_cal);
 
 	//平行光(ディレクショナルライト)								↓方向			↓RGB
-	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ -0.2,-1,-0.5f }, { 0.8f,0.8f,0.8f });
+	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ 0.1f,-1,0.f }, { 0.2f,0.2f,0.25f });
 
 	//環境光(アンビエントライト)											↓色RGBA　デフォルト0.3
-	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight({ 0.3f, 0.3f, 0.4f, 1 });
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight({ 0.3f, 0.3f, 0.35f, 1 });
 
-	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.25f);
+	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.15f);
+
+	//水面表現２　テクスチャを読み込む
+	m_spnormalTex = std::make_shared<KdTexture>();
+	m_spnormalTex->Load("Asset/Textures/GameObject/Shader/water3.png");
+
+	//水面表現6 PGUにテクスチャを転送
+	KdShaderManager::Instance().m_StandardShader.SetWaterNormalTexture(*m_spnormalTex);
 
 }

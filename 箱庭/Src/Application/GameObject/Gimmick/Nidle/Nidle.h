@@ -2,6 +2,8 @@
 
 #include"../BaseGimmick/BaseGimmick.h"
 
+
+
 class Nidle :public BaseGimmick
 {
 public:

@@ -17,7 +17,6 @@
 
 #include"../../GameObject/Dice/DiceManager.h"
 
-#include"../../GameObject/Noise/Noise.h"
 
 void GameScene::Init()
 {
@@ -77,10 +76,7 @@ void GameScene::Init()
 
 	}*/
 
-	std::shared_ptr<Noise> noise = std::make_shared<Noise>();
-	noise->Init();
-	AddObject(noise);
-
+	
 
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav", true);
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav", true);

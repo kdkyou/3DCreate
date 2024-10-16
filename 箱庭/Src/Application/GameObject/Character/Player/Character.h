@@ -60,6 +60,10 @@ private:
 
 	Math::Vector3						m_worldRot;
 
+	std::shared_ptr<KdTexture> m_tex = nullptr;
+
+	int									m_deathConut;
+
 	float								m_ajustHeight = 0.5f;
 
 	float								m_gravity		= 0;
