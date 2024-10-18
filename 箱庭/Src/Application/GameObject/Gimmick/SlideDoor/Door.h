@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include"../BaseGimmick/BaseGimmick.h"
 
-#define RIMIT_HEIGHT 6.0
+#define RIMIT_HEIGHT 
 
 
 class Door :public BaseGimmick

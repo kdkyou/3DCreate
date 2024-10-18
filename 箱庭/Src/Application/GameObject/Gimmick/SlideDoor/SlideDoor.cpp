@@ -1,6 +1,5 @@
 ﻿#include "SlideDoor.h"
 
-#include"Door.h"
 #include"../../Dice/DiceManager.h"
 
 #include"../../../AssetRepository/AssetRepository.h"

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include"../BaseGimmick/BaseGimmick.h"
 
-class BreakWall :public BaseGimmick
+class BreakWall :public GimmickBase
 {
 public:
 	BreakWall(){}

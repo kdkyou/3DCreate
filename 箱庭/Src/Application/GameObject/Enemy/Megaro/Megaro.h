@@ -6,7 +6,7 @@
 
 class Character;
 
-class Megaro:public BaseGimmick
+class Megaro:public GimmickBase
 {
 public:
 	Megaro(){}

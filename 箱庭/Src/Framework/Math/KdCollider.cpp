@@ -390,8 +390,11 @@ bool KdBoxCollision::Intersects(const DirectX::BoundingSphere& target, const Mat
 	if (!m_enable) { return false; }
 
 	DirectX::BoundingBox myBox;
+	DirectX::BoundingOrientedBox myOBox;
 
 	m_Abox.Transform(myBox, world);
+
+	m_Obox.Transform(myOBox, world);
 
 	float hitDistance = 0.0f;
 
@@ -409,12 +412,15 @@ bool KdBoxCollision::Intersects(const DirectX::BoundingBox& target, const Math::
 	if (!m_enable) { return false; }
 
 	DirectX::BoundingBox myBox;
+	DirectX::BoundingOrientedBox myOBox;
 
 	m_Abox.Transform(myBox, world);
+	m_Obox.Transform(myOBox, world);
 
 	float hitDistance = 0.0f;
 
 	bool isHit = myBox.Intersects(target);
+	bool isHits = myOBox.Intersects(target);
 
 	// 詳細リザルトが必要無ければ即結果を返す
 	if (!pRes) { return isHit; }
@@ -430,6 +436,10 @@ bool KdBoxCollision::Intersects(const DirectX::BoundingOrientedBox& target, cons
 	DirectX::BoundingBox myBox;
 
 	m_Abox.Transform(myBox, world);
+
+	DirectX::BoundingOrientedBox myOBox;
+
+	m_Obox.Transform(myOBox, world);
 
 	float hitDistance = 0.0f;
 

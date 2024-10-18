@@ -110,6 +110,10 @@
     {
 	"Name":"BreakWall",
         "Path":"Asset/Models/Terrains/Gimmick/BreakWall/BreakWall.gltf"
+    },
+    {
+	"Name":"Stone",
+        "Path":"Asset/Models/Terrains/Gimmick/Stone/Stone.gltf"
     }
 
 ]

@@ -4,7 +4,7 @@
 
 
 
-class Nidle :public BaseGimmick
+class Nidle :public GimmickBase
 {
 public:
 	Nidle(){}

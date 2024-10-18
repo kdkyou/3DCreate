@@ -25,10 +25,8 @@ void TPSCamera::Init()
 	//	m_mWorld.Translation().x - 30,		//手前のぼかし距離
 	//	m_mWorld.Translation().x + 30);		//奥のぼかし距離
 
-	//フォグ(霧)
-	//KdShaderManager::Instance().WorkAmbientController().SetFogEnable(false, true);
 
-	KdEffekseerManager::GetInstance().Create(1280,720);
+
 	KdEffekseerManager::GetInstance().SetCamera(m_spCamera);
 }
 
@@ -72,8 +70,6 @@ void TPSCamera::PostUpdate()
 	m_mWorld =  m_mLocalPos * m_mRotation  * _targetMat;
 
 
-	//高さフォグ														↓色	上の上限　下の上限　カメラとの距離
-	//KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1f,0.1f,0.3f }, m_mWorld.Translation().y + 70, m_mWorld.Translation().y - 40, 0);
 
 	//// ↓めり込み防止の為の座標補正計算↓
 	//// ①当たり判定(レイ判定)用の情報作成

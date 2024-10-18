@@ -57,13 +57,14 @@ void Character::Update()
 
 	{
 		const std::shared_ptr<const KdGameObject> _spParent = m_wpRideObject.lock();
+		Math::Matrix _parentMat = Math::Matrix::Identity;
 		if (_spParent)
 		{
-			m_mWorld = m_localMatFromRideObject * _spParent->GetMatrix();
-			m_pos = m_mWorld.Translation();
-			m_pos.y += m_ajustHeight;
+			_parentMat = _spParent->GetMatrix();
+			m_mWorld = m_localMatFromRideObject *_parentMat;
 		}
 	}
+	m_pos = m_mWorld.Translation();
 
 	Math::Vector3 _moveVec = Math::Vector3::Zero;
 
@@ -100,7 +101,6 @@ void Character::Update()
 		m_controlKey = false;
 	}
 
-	//Dice();
 
 	const std::shared_ptr<const CameraBase> _spCamera = m_wpCamera.lock();
 	if (_spCamera)
@@ -136,12 +136,13 @@ void Character::Update()
 void Character::PostUpdate()
 {
 	m_spAnimetor->AdvanceTime(m_spModelWork->WorkNodes());
-
+	
+	m_wpRideObject.reset();
 
 	KdCollider::SphereInfo _sphereInfo;
 	std::list<KdCollider::CollisionResult> retList;
 	float maxOverLap = 0;	//	はみ出た球の長さ
-	Math::Vector3 hitDir;	//当たった方向
+	Math::Vector3 hitDir = {};	//当たった方向
 	bool isHit = false;		//	当たっていたらtrue
 
 
@@ -176,10 +177,6 @@ void Character::PostUpdate()
 			{
 				m_wpRideObject = obj;
 			}
-			else
-			{
-				m_wpRideObject.reset();
-			}
 		}
 	}
 	//レイに当たったリストから一番近いオブジェクトを検出
@@ -199,6 +196,7 @@ void Character::PostUpdate()
 		m_pos =hitDir;
 		m_pos.y += m_ajustHeight;
 		m_gravity = 0.0f;
+		SetPos(m_pos);
 
 		//プレイヤーが何かに乗っていれば
 		//乗り物から見たプレイヤーのローカル行列を保存
@@ -224,9 +222,10 @@ void Character::PostUpdate()
 	isHit = false;
 
 	//球判定
-	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.f,0.3f,0.f };
+	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.0f,0.3f,0.0f };
 	_sphereInfo.m_sphere.Radius = 0.3f;
 	_sphereInfo.m_type = KdCollider::TypeGround;
+
 	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius);
 
 	//マップリストの地面との判定
@@ -258,6 +257,7 @@ void Character::PostUpdate()
 		hitDir.Normalize();
 		//	地面に当たっている
 		m_pos += hitDir * maxOverLap;
+		SetPos(m_pos);
 	}
 
 	
@@ -407,12 +407,14 @@ void Character::SetSkill(const Skill& skill)
 
 void Character::OnHit()
 {
-	m_pos = {};
+	Math::Vector3 _vec = { 0,m_ajustHeight,0 };
+	SetPos(_vec);
 	m_deathConut++;
 
+	Math::Color colr = Math::Color{ 1.0f + 0.05f * m_deathConut,1.0f,1.0f,1.0f };
+
 	std::shared_ptr<Noise> noise = std::make_shared<Noise>();
-	noise->Init();
-	noise->SetTexture(m_tex,TEN*m_deathConut);
+	noise->SetParam(m_tex,TEN*m_deathConut,100,colr);
 	SceneManager::Instance().AddNoise(noise);
 }
 
@@ -570,6 +572,7 @@ void Character::CoolTime()
 
 }
 */
+
 void Character::Judge()
 {
 

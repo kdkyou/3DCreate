@@ -8,24 +8,25 @@ public:
 	Noise(){}
 	~Noise(){}
 
-	void Init()override;
 	void Update()override;
-//	void PostUpdate()override;
 
 	void PreDraw()override;
 	void DrawUnLit()override;
 	void DrawLit()override;
 	void DrawSprite()override;
 
-	void SetTexture(const std::shared_ptr<KdTexture>& _tex, int _aliveTime = 60);
+	void SetParam(const std::shared_ptr<KdTexture>& _tex, int _aliveTime = 60,int _drawLength = 100,const Math::Color& _colr=kWhiteColor,bool _isPlay=true);
 
 private:
-
-	void Render();
 
 	Math::Vector2	 m_pos;
 	int m_ang = 0;
 	float	m_waveLength =0.0f;
+
+	Math::Color m_color =kWhiteColor;
+
+	//BGMON
+	bool    m_isPlayMusic = false;
 
 	std::shared_ptr<KdTexture> m_renderTex = nullptr;
 	std::shared_ptr<KdTexture> m_apotheosisTex = nullptr;
@@ -34,7 +35,7 @@ private:
 
 	int							 m_drawLength = 0;
 
-	int							m_aliveTime;
+	int							m_aliveTime = 0;
 
 	KdRandomGenerator		gene;
 

@@ -5,7 +5,7 @@
 #define STOP_FRAME		120
 #define ADD_ANGLE 1
 
-class RotateBridge :public BaseGimmick
+class RotateBridge :public GimmickBase
 {
 public:
 	RotateBridge() {}
@@ -23,7 +23,7 @@ public:
 	void DrawLit()override;
 	//void OnHit()override;
 
-	bool IsRideable()const { return true; }
+	bool IsRideable()const  override { return true; }
 
 private:
 

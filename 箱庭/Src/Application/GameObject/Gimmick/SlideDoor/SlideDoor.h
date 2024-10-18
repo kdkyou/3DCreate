@@ -2,9 +2,9 @@
 
 #include"../BaseGimmick/BaseGimmick.h"
 
-class Door;
+#define RIMIT_HEIGHT 6.0
 
-class SlideDoor :public BaseGimmick
+class SlideDoor :public GimmickBase
 {
 public:
 	SlideDoor(){}
@@ -48,10 +48,6 @@ private:
 	float			m_speed = 0.0f;
 	float			m_ang = 0;
 
-	//std::weak_ptr<Door>	m_right;
-	//std::weak_ptr<Door>	m_left;
-
-	
 	//
 	LR	m_lrFlg =LR::None;
 };

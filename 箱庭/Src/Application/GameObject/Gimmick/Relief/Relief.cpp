@@ -62,7 +62,7 @@ void Relief::OnHit()
 
 		std::shared_ptr<Noise> noise = std::make_shared<Noise>();
 		noise->Init();
-		noise->SetTexture(m_cthlhuTex,180);
+		noise->SetParam(m_cthlhuTex,180);
 		SceneManager::Instance().AddNoise(noise);
 	}
 }

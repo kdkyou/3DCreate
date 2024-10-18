@@ -34,7 +34,6 @@ void Arrow::Update()
 			{
 				m_trail->AddPoint(_mat);
 			}
-			KdEffekseerManager::GetInstance().Play("Babul.efkefc", m_pos, 0.1f, 2.0f, nullptr, false);
 		}
 	}
 	else
@@ -50,6 +49,7 @@ void Arrow::Update()
 			m_isExpired = true;
 		}
 	}
+	KdEffekseerManager::GetInstance().Play("Babul.efkefc", m_pos, 0.1f, 2.0f, nullptr, false);
 
 	m_mWorld = m_rotMat * Math::Matrix::CreateTranslation(m_pos);
 }

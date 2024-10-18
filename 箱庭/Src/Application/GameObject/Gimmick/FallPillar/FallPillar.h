@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include"../BaseGimmick/BaseGimmick.h"
 
-class FallPillar :public BaseGimmick
+class FallPillar :public GimmickBase
 {
 public:
 	FallPillar(){}

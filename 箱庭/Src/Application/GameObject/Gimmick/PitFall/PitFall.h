@@ -2,12 +2,13 @@
 #include"../BaseGimmick/BaseGimmick.h"
 
 #define RECAST_TIME  180 
+#define CREATE_CAST 10
 
-class PitFall :public BaseGimmick
+class PitFall :public GimmickBase
 {
 public:
 
-	enum InOut
+	enum OpenClose
 	{
 		None,
 		Open,
@@ -27,9 +28,14 @@ public:
 
 private:
 
-	InOut	m_type = InOut::None;
+	void CreateStone();
+
+	OpenClose	m_type = OpenClose::None;
 
 	int		m_coolTime = 0;
+	int		m_stoneCool = 0;
 	bool	m_coolFlg = false;
+
+	KdRandomGenerator randGene;
 
 };

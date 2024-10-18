@@ -2,7 +2,7 @@
 
 #include"../BaseGimmick/BaseGimmick.h"
 
-class Relief:public BaseGimmick
+class Relief:public GimmickBase
 {
 public:
 	Relief(){}

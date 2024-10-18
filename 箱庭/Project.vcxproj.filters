@@ -199,6 +199,9 @@
     <Filter Include="Src\Application\GameObject\Noise">
       <UniqueIdentifier>{f6435aa6-0b9e-4b34-93b0-4748bc023bf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Stone">
+      <UniqueIdentifier>{c5a2f59d-93e9-44d7-b0b5-5efaaa82c10c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -477,14 +480,14 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.h">
       <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\Door.h">
-      <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Framework\Shader\MyShader\KdMyShader.h">
       <Filter>Src\Framework\Shader\MyShader</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Noise\Noise.h">
       <Filter>Src\Application\GameObject\Noise</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Stone\Stone.h">
+      <Filter>Src\Application\GameObject\Gimmick\Stone</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -737,14 +740,14 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.cpp">
       <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\Door.cpp">
-      <Filter>Src\Application\GameObject\Gimmick\SlideDoor</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Framework\Shader\MyShader\KdMyShader.cpp">
       <Filter>Src\Framework\Shader\MyShader</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Noise\Noise.cpp">
       <Filter>Src\Application\GameObject\Noise</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Stone\Stone.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Stone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -54,11 +54,16 @@ public :
 	// インスタンス生成(アプリ起動)時にコンストラクタで自動実行
 	void Init()
 	{
+		//レンダーターゲット初期化
+		m_rtPack.CreateRenderTarget(1280, 720, true);
+		//エフェクシア初期化
+		KdEffekseerManager::GetInstance().Create(1280, 720);
+
+		AssetLoad();
+
 		// 開始シーンに切り替え
 		ChangeScene(m_currentSceneType);
 
-		//レンダーターゲット初期化
-		m_rtPack.CreateRenderTarget(1280, 720, true);
 	}
 
 	//レンダーターゲット切り替え関連
@@ -74,8 +79,9 @@ public :
 
 	const int GetLength()const { return length; }
 
-
 private :
+
+	void AssetLoad();
 
 	struct MapObject
 	{

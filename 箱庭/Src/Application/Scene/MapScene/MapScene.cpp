@@ -47,15 +47,21 @@ void MapScene::Init()
 	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ 0.1f,-1,0.f }, { 0.2f,0.2f,0.25f });
 
 	//環境光(アンビエントライト)											↓色RGBA　デフォルト0.3
-	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight({ 0.3f, 0.3f, 0.35f, 1 });
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight({ 0.2f, 0.2f, 0.25f, 1 });
 
-	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.15f);
+	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.35f);
 
 	//水面表現２　テクスチャを読み込む
 	m_spnormalTex = std::make_shared<KdTexture>();
-	m_spnormalTex->Load("Asset/Textures/GameObject/Shader/water3.png");
+	m_spnormalTex->Load("Asset/Textures/GameObject/Shader/water.png");
 
 	//水面表現6 PGUにテクスチャを転送
 	KdShaderManager::Instance().m_StandardShader.SetWaterNormalTexture(*m_spnormalTex);
+
+	//フォグ(霧)
+	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(false, true);
+	//高さフォグ														↓色	上の上限　下の上限　カメラとの距離
+	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1f,0.1f,0.15f },80,- 100, 0);
+
 
 }

@@ -5,6 +5,7 @@ class AssetRepository
 public:
 
 	std::shared_ptr<KdModelData> GetModel(std::string _modelName);
+	std::list<std::string> GetSoundList(){ return m_soundList; }
 
 private:
 
@@ -14,6 +15,7 @@ private:
 
 	std::unordered_map<std::string, std::shared_ptr<KdModelData>> m_modelMap;
 
+	std::list<std::string> m_soundList;
 
 
 public:

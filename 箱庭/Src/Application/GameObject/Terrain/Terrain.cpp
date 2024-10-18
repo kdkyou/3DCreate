@@ -50,7 +50,7 @@ void Terrain::DrawLit()
 		KdShaderManager::Instance().m_StandardShader.SetWaterUVOffset(offset);
 
 		//板ポリに張るテクスチャの数を増やす
-//		KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 2,2 });
+		KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 4,4 });
 
 		KdShaderManager::Instance().m_StandardShader.SetWaterEnable(true);
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel,m_mWorld);
@@ -62,18 +62,11 @@ void Terrain::SetModel(std::shared_ptr<KdModelData>& model)
 	m_spModel = model;
 	m_pCollider = std::make_unique<KdCollider>();
 	m_pCollider->RegisterCollisionShape("Ground", m_spModel, KdCollider::TypeGround);
-
-	////水面表現２　テクスチャを読み込む
-	//m_spnormalTex = std::make_shared<KdTexture>();
-	//m_spnormalTex->Load("Asset/Textures/GameObject/Shader/water3.png");
-
-	////水面表現6 GPUにテクスチャを転送
-	//KdShaderManager::Instance().m_StandardShader.SetWaterNormalTexture(*m_spnormalTex);
 }
 
 void Terrain::OnHit()
 {
-	//m_drawFlg = true;
+
 }
 
 void Terrain::Release()

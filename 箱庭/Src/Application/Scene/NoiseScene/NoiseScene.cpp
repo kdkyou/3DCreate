@@ -5,10 +5,5 @@
 
 void NoiseScene::Init()
 {
-
-	//std::shared_ptr<Noise> noise = std::make_shared<Noise>();
-	//noise->Init();
-	//AddObject(noise);
-
 }
 

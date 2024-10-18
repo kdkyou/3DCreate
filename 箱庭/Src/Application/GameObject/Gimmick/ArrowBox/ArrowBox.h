@@ -3,7 +3,7 @@
 
 #define COOL_TIME 120
 
-class ArrowBox :public BaseGimmick
+class ArrowBox :public GimmickBase
 {
 public:
 	ArrowBox(){}

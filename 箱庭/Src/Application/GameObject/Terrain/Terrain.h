@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#define WATER_SPEED 0.00002
+#define WATER_SPEED 0.00002f
 
 class Terrain : public KdGameObject
 {

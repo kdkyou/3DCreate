@@ -2,11 +2,11 @@
 
 #define COOL_TIME 120
 
-class BaseGimmick :public KdGameObject
+class GimmickBase :public KdGameObject
 {
 public:
-	BaseGimmick(){}
-	~BaseGimmick()override{}
+	GimmickBase(){}
+	~GimmickBase()override{}
 
 	virtual void SetModel(const std::shared_ptr<KdModelData>& model){}
 	virtual void SetModel(const std::shared_ptr<KdModelWork>& model){}

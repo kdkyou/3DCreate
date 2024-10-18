@@ -1,6 +1,6 @@
 ﻿#include "BaseGimmick.h"
 
-void BaseGimmick::GenerateDepthMapFromLight()
+void GimmickBase::GenerateDepthMapFromLight()
 {
 	if (m_spModel)
 	{
@@ -12,7 +12,7 @@ void BaseGimmick::GenerateDepthMapFromLight()
 	}
 }
 
-void BaseGimmick::DrawLit()
+void GimmickBase::DrawLit()
 {
 	if (m_spModel)
 	{
@@ -43,7 +43,7 @@ void BaseGimmick::DrawLit()
 //	}
 //}
 
-void BaseGimmick::OnBright()
+void GimmickBase::OnBright()
 {
 	m_coolTime = COOL_TIME;
 }

@@ -19,6 +19,7 @@ private:
 	Math::Matrix			m_rotY;
 	Math::Matrix			m_rotZ;
 
+	std::shared_ptr<KdTexture> m_tex = nullptr;
 	bool					m_flg=false;
 
 };

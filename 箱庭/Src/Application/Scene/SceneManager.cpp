@@ -52,17 +52,18 @@ void SceneManager::Update()
 {
 	if (!m_settingFlg)
 	{
-		m_currentScene->Update();
-
 		if (m_gimmickScene)
 		{
 			m_gimmickScene->Update();
 		}
+	
+		m_currentScene->Update();
 
 		if (m_noiseScene)
 		{
 			m_noiseScene->Update();
 		}
+
 	}
 }
 
@@ -110,10 +111,10 @@ void SceneManager::Draw()
 	{
 		m_gimmickScene->Draw();
 	}
-	if (m_noiseScene)
+	/*if (m_noiseScene)
 	{
 		m_noiseScene->Draw();
-	}
+	}*/
 	m_currentScene->Draw();
 }
 
@@ -217,6 +218,22 @@ void SceneManager::ChangeRenderTarget()
 void SceneManager::UndoRenderTarget()
 {
 	m_rtChanger.UndoRenderTarget();
+}
+
+void SceneManager::AssetLoad()
+{
+	Math::Vector3 pos = {};
+	KdEffekseerManager::GetInstance().Play("Baios.efkefc", pos, 0.0f, 5.0f, false);
+	KdEffekseerManager::GetInstance().Play("Babul.efkefc", pos, 0.0f, 5.0f, false);
+
+	KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/BGM/Carol.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Critical.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Success.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Fail.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Fumble.wav");
+	KdAudioManager::Instance().StopAllSound();
 }
 
 void SceneManager::AddMapObject(const std::shared_ptr<KdGameObject>& obj)
@@ -875,6 +892,18 @@ void SceneManager::LoadGimmick()
 			_nidle->SetRot(rot);
 			AddGimmick(_nidle);
 			_map->m_obj = _nidle;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "Relief")
+		{
+			std::shared_ptr<Relief> relief = std::make_shared<Relief>();
+			_model = AssetRepository::Instance().GetModel("Relief");
+			relief->Init();
+			relief->SetMatrix(_mat);
+			relief->SetModel(_model);
+			relief->SetRot(rot);
+			AddGimmick(relief);
+			_map->m_obj = relief;
 			m_gimmickList.push_back(_map);
 		}
 		else if (_map->m_name == "Fall")
