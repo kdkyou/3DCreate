@@ -20,10 +20,13 @@ public:
 	
 private:
 
+	//int m_coolTime = 0;
+
 	std::shared_ptr<KdTexture>		m_fTexture		= nullptr;
 	std::shared_ptr<KdTexture>      m_cthlhuTex = nullptr;
 	bool							m_drawFkeyFlg	= false;
 	bool							m_createFlg		= false;
+	bool							m_isInfor = false;
 };
 
 #define RELIEFPATH "Asset/Textures/GameObject/Relief/"

@@ -142,6 +142,7 @@ void GimmickScene::Event()
 		time++;
 		if (time > 180)
 		{
+			
 			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
 			KdAudioManager::Instance().StopAllSound();
 		}

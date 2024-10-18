@@ -36,6 +36,7 @@ void RotateBridge::Update()
 	{
 		m_rotFlg = true;
 		m_stopFrame = 0;
+		m_isOnes = false;
 	}
 
 	//回転
@@ -48,12 +49,18 @@ void RotateBridge::Update()
 			//回転計測
 			m_spin++;
 			m_ang+=ADD_ANGLE;
+			KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundN.wav", m_pos);
 		}
 		else
 		{
 			m_spin = 0;
 			m_stopFrame = STOP_FRAME;
 			m_rotFlg = false;
+			if (!m_isOnes)
+			{
+				m_isOnes = true;
+				KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundE.wav", m_pos);
+			}
 		}
 	}
 	Math::Matrix rotMat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_ang));

@@ -30,6 +30,7 @@ void Wall::OnEncount()
 	case Wall::None:
 		if (m_spAnimator->IsAnimationEnd())
 		{
+			KdAudioManager::Instance().Play3D("Asset/Sounds/SE/Wall.wav", m_pos);
 			m_spAnimator->SetAnimation(m_spWkModel->GetAnimation("CloseIn"), false);
 			m_type = InOut::In;
 		}
@@ -37,6 +38,7 @@ void Wall::OnEncount()
 	case Wall::In:
 		if (m_spAnimator->IsAnimationEnd())
 		{
+			KdAudioManager::Instance().Play3D("Asset/Sounds/SE/Wall.wav", m_pos);
 			m_spAnimator->SetAnimation(m_spWkModel->GetAnimation("CloseOut"), false);
 			m_type = InOut::Out;
 		}

@@ -226,6 +226,7 @@ void SceneManager::AssetLoad()
 	KdEffekseerManager::GetInstance().Play("Baios.efkefc", pos, 0.0f, 5.0f, false);
 	KdEffekseerManager::GetInstance().Play("Babul.efkefc", pos, 0.0f, 5.0f, false);
 
+	KdAudioManager::Instance().Init();
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav");
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/Carol.wav");
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav");
@@ -233,6 +234,9 @@ void SceneManager::AssetLoad()
 	KdAudioManager::Instance().Play("Asset/Sounds/SE/Success.wav");
 	KdAudioManager::Instance().Play("Asset/Sounds/SE/Fail.wav");
 	KdAudioManager::Instance().Play("Asset/Sounds/SE/Fumble.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Wall.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Nidle.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/AroundN.wav");
 	KdAudioManager::Instance().StopAllSound();
 }
 

@@ -202,6 +202,9 @@
     <Filter Include="Src\Application\GameObject\Gimmick\Stone">
       <UniqueIdentifier>{c5a2f59d-93e9-44d7-b0b5-5efaaa82c10c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\SkeltonTail">
+      <UniqueIdentifier>{cca46e04-a1df-4b0e-8735-9da52605b3e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">

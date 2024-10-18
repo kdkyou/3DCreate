@@ -44,7 +44,7 @@ void MapScene::Init()
 	AddObject(_cal);
 
 	//平行光(ディレクショナルライト)								↓方向			↓RGB
-	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ 0.1f,-1,0.f }, { 0.2f,0.2f,0.25f });
+	KdShaderManager::Instance().WorkAmbientController().SetDirLight({ 0.f,-1,0.f }, { 0.2f,0.2f,0.2f });
 
 	//環境光(アンビエントライト)											↓色RGBA　デフォルト0.3
 	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight({ 0.2f, 0.2f, 0.25f, 1 });

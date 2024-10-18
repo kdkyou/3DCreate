@@ -41,6 +41,7 @@ void Nidle::OnEncount()
 			m_spAnimator->SetAnimation(m_spWkModel->GetAnimation("Action"), false);
 			m_isOnes = true;
 			m_coolTime = COOL_TIME;
+			KdAudioManager::Instance().Play3D("Asset/Sounds/SE/Nidle.wav", m_pos);
 		}
 	}
 }

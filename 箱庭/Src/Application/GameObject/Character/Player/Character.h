@@ -59,6 +59,7 @@ private:
 	std::shared_ptr<KdGameObject>		m_now			= nullptr;
 
 	Math::Vector3						m_worldRot;
+	Math::Vector3						m_color;
 
 	std::shared_ptr<KdTexture> m_tex = nullptr;
 
@@ -68,9 +69,8 @@ private:
 
 	float								m_gravity		= 0;
 
-	int									m_hobber		= 0;
-
-	const float							m_moveSpd=0.08f;
+	
+	const float							m_moveSpd=0.1f;
 	float								m_moveLevel = 1;
 
 	int									m_time			= 0;
@@ -79,6 +79,8 @@ private:
 
 	float								m_sphereRadius	= 0;
 	
+	int									m_SAN = 0;
+
 	//ダイス関係
 	bool								m_diceFlg = false;
 	bool								m_listeingFlg = false;

@@ -2,7 +2,7 @@
 
 #include"../BaseScene/BaseScene.h"
 
-#define RELIEFCOUNT 4
+#define RELIEFCOUNT 11
 
 class GimmickScene:public BaseScene
 {

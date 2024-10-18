@@ -39,6 +39,7 @@ void Character::Init()
 	m_moveLevel = 1;
 	m_time = 0;
 	m_deathConut = 0;
+	m_SAN = m_randGen.GetInt(40, 60);
 
 	m_nextType = SelectType::Break;
 
@@ -107,6 +108,7 @@ void Character::Update()
 	{
 		_moveVec = _moveVec.TransformNormal(_moveVec, _spCamera->GetRotationYMatrix());
 	}
+
 	_moveVec.Normalize();
 	_moveVec *= m_moveSpd;
 	m_pos += _moveVec;
@@ -128,8 +130,10 @@ void Character::Update()
 		m_mWorld.Backward(),
 		10,
 		DirectX::XMConvertToRadians(30),
-		{ 1,1.5f,2.0f }
+		Math::Vector3{ 1.5f,1.5f,2.0f }+m_color
 	);
+
+	KdAudioManager::Instance().SetListnerMatrix(m_mWorld);
 
 }
 
@@ -330,6 +334,7 @@ void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
 
 	float rotateAng = std::clamp(_betweenAng, -8.0f, 8.0f);
 	m_worldRot.y += rotateAng;
+
 }
 
 /*void Character::DiceSkill()
@@ -410,8 +415,12 @@ void Character::OnHit()
 	Math::Vector3 _vec = { 0,m_ajustHeight,0 };
 	SetPos(_vec);
 	m_deathConut++;
+	static float san = m_SAN;
+	san -= m_deathConut;
+	float num = 1.0f - (float)(san / m_SAN);
 
-	Math::Color colr = Math::Color{ 1.0f + 0.05f * m_deathConut,1.0f,1.0f,1.0f };
+	m_color = Math::Vector3{ 1.0f,1.0f-num,1.0f-num };
+	Math::Color colr = Math::Color{ 1.0f,1.0f-num,1.0f-num,1.0f };
 
 	std::shared_ptr<Noise> noise = std::make_shared<Noise>();
 	noise->SetParam(m_tex,TEN*m_deathConut,100,colr);

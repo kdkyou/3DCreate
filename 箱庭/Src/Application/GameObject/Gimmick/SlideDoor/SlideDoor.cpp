@@ -49,6 +49,7 @@ void SlideDoor::Update()
 		{
 			if (m_rightPos.y < m_rightIniPos.y + RIMIT_HEIGHT)
 			{
+				KdAudioManager::Instance().Play3D("Asset/Sounds/SE/Wall.wav",m_rightIniPos);
 				m_rightPos.z = m_rightIniPos.z + sin(DirectX::XMConvertToRadians(m_ang)) * 0.1f;
 				m_rightPos.y += m_speed;
 				m_mRight = m_mRot * Math::Matrix::CreateTranslation(m_rightPos) * m_mWorld;
@@ -63,6 +64,7 @@ void SlideDoor::Update()
 		{
 			if (m_leftPos.y < m_leftIniPos.y + RIMIT_HEIGHT)
 			{
+				KdAudioManager::Instance().Play3D("Asset/Sounds/SE/Wall.wav",m_leftIniPos);
 				m_leftPos.z = m_leftIniPos.z + sin(DirectX::XMConvertToRadians(m_ang)) * 0.1f;
 				m_leftPos.y += m_speed;
 				m_mLeft = m_mRot * Math::Matrix::CreateTranslation(m_leftPos) * m_mWorld;
