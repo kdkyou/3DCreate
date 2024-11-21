@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include"../BaseGimmick/BaseGimmick.h"
+#include"../GimmickBase/GimmickBase.h"
 
 class Relief:public GimmickBase
 {
@@ -8,8 +8,8 @@ public:
 	Relief(){}
 	~Relief()override{}
 
-	void SetModel(const std::shared_ptr<KdModelData>& model)override;
-
+	void Init();
+	
 	void Update()override;
 
 	void OnHit()override;
@@ -17,10 +17,11 @@ public:
 
 	void DrawSprite()override;
 
+	void SetNum(int _num) { m_number = _num; }
 	
 private:
 
-	//int m_coolTime = 0;
+	int m_number = 0;
 
 	std::shared_ptr<KdTexture>		m_fTexture		= nullptr;
 	std::shared_ptr<KdTexture>      m_cthlhuTex = nullptr;

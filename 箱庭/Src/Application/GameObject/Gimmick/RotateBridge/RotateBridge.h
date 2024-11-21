@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"../BaseGimmick/BaseGimmick.h"
+#include"../GimmickBase/GimmickBase.h"
 
 #define ROTATE_ONCE_RIMIT 90
 #define STOP_FRAME		120

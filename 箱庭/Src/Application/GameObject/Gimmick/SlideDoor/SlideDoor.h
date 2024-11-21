@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include"../BaseGimmick/BaseGimmick.h"
+#include"../GimmickBase/GimmickBase.h"
 
 #define RIMIT_HEIGHT 6.0
 
@@ -16,6 +16,7 @@ public:
 	void DrawUnLit()override;
 	void GenerateDepthMapFromLight()override;
 	void DrawLit()override;
+	void DrawSprite()override;
 
 	void OnEncount()override;
 

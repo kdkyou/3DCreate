@@ -9,25 +9,7 @@ void Terrain::Update()
 void Terrain::GenerateDepthMapFromLight()
 {
 	if (!m_spModel) return;
-//	if (!m_drawFlg)return;
-	//static Math::Vector2 offset = { 0,0 };
-	//offset.x += WATER_SPEED;
-	//offset.y += WATER_SPEED;
-	//if (offset.x > 1)
-	//{
-	//	offset.x -= 1;
-	//}
-	//if (offset.y > 1)
-	//{
-	//	offset.x -= 1;
-	//}
-	//KdShaderManager::Instance().m_StandardShader.SetWaterUVOffset(offset);
-
-	////テクスチャの数を増やす
-	//KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 2,2 });
-
-	//KdShaderManager::Instance().m_StandardShader.SetWaterEnable(true);
-	//KdShaderManager::Instance().m_StandardShader.SetWaterEnable(false);
+	if (!m_drawFlg)return;
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);
 
 }
@@ -49,8 +31,8 @@ void Terrain::DrawLit()
 	}
 		KdShaderManager::Instance().m_StandardShader.SetWaterUVOffset(offset);
 
-		//板ポリに張るテクスチャの数を増やす
-		KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 4,4 });
+		//モデルに張るテクスチャの数を増やす
+		KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 6,6 });
 
 		KdShaderManager::Instance().m_StandardShader.SetWaterEnable(true);
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel,m_mWorld);

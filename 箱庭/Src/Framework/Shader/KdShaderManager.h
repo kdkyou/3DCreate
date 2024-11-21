@@ -17,7 +17,6 @@ struct PointLight
 	int		IsBright = 0;	// 明度用ライトかどうか
 };
 
-//黒崎授業
 //コーンライト
 struct ConeLight
 {
@@ -218,7 +217,7 @@ public:
 	void WriteCBShadowArea(const Math::Matrix& proj, float dirLightHeight);
 	void WriteCBPointLight(const std::list<PointLight>& pointLights);
 
-	//黒崎授業
+	//コーンライト
 	void WriteCBConeLightEnable(bool _enable);
 	void WriteCBConeLight(const Math::Vector3& _pos, const Math::Vector3& _dir, float _range, float _angle, const Math::Vector3& _color);
 

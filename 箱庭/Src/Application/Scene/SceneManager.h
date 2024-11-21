@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 class BaseScene;
+class GameScene;
 
 class SceneManager
 {
@@ -11,6 +12,7 @@ public :
 	{
 		Title,
 		Game,
+		Result,
 	};
 
 	void PreUpdate();
@@ -77,8 +79,14 @@ public :
 	}
 	//void ChangeRenderStage();
 
-	const int GetLength()const { return length; }
+	const bool SetCameraTarget(const std::shared_ptr<KdGameObject>& _target);
+	const std::weak_ptr<GameScene> GetGameScene() { return m_wpGameScene; }
 
+	void OnSetting() { m_isSetting = true; }
+	void OffSetting() { m_isSetting = false; }
+
+	void OnMapGimmick();
+	void OffMapGimmick();
 private :
 
 	void AssetLoad();
@@ -136,6 +144,7 @@ private :
 	void CreateGimmick();
 
 	void Controll();
+	void Ambient();
 
 	void SaveMap();
 	void LoadMap();
@@ -146,16 +155,18 @@ private :
 	void List();
 	//
 	Math::Vector3	m_pos;
-	bool m_settingFlg = false;
+	bool m_isSetting = false;
 	Math::Vector3	m_scale;
 	Math::Vector3	m_ang;
 	// オブジェクトポインタ
 	std::shared_ptr<KdGameObject> m_spNow = nullptr;
 	int num = 0;
 	std::list<std::shared_ptr<MapObject>> m_mapList;
+	bool m_isDrawMap = true;
 	std::list<std::shared_ptr<MapObject>> m_gimmickList;
 
 	int length = 1;
+
 
 	
 	// シーン切り替え関数
@@ -163,6 +174,7 @@ private :
 
 	// 現在のシーンのインスタンスを保持しているポインタ
 	std::shared_ptr<BaseScene> m_currentScene = nullptr;
+	std::weak_ptr<GameScene> m_wpGameScene;
 
 	//マップオブジェクトを入れたシーン
 	std::shared_ptr<BaseScene> m_mapScene	  = nullptr;

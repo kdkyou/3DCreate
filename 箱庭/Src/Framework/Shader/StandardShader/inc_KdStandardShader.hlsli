@@ -14,8 +14,12 @@ cbuffer cbObject : register(b0)
 
 	//水面表現5		GPU側の定数バッファ
 	int g_waterEnable; //有効か
-	float4x4 g_mR; //回転行列
 	float2 g_waterUVOffset; //オフセット
+	float4x4 g_mR; //回転行列
+
+	int g_limLightEnable;		//リムライト有効化
+	float3 g_limLightColor;		//カラー
+	float g_limLightPow;		//強さ
 };
 
 // 定数バッファ(メッシュ単位)

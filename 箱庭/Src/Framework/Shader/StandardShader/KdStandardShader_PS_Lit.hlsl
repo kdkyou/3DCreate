@@ -352,6 +352,15 @@ float4 main(VSOutput In) : SV_Target0
 			outColor += g_dissolveEmissive;
 		}
 	}
+
+	//リムライト処理
+	if (g_limLightEnable)
+	{
+		float limLightPow = dot(normalize(In.wPos - g_CamPos), wN);
+		limLightPow = 1 - abs(limLightPow);
+
+		outColor.rgb += g_limLightColor * pow(limLightPow, g_limLightPow);
+	}
 	
 	totalBrightness = saturate(totalBrightness);
 	outColor *= totalBrightness;

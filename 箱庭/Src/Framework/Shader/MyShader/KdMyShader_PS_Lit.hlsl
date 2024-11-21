@@ -62,28 +62,28 @@ float4 main(VSOutput In) : SV_Target0
 
 	////水面シェーダ8
 	float3 wN = 0;
-	//if(g_waterEnable)
-	//{
-	//	float4 n1 = g_WaterNormalTex.Sample(g_ss,In.UV+g_waterUVOffset);
-	//	//0 ～1の値が-1～1になる
-	//	n1 = n1 * 2.0 - 1.0;
+	if (g_waterEnable)
+	{
+		float4 n1 = g_WaterNormalTex.Sample(g_ss, In.UV + g_waterUVOffset);
+		//0 ～1の値が-1～1になる
+		n1 = n1 * 2.0 - 1.0;
 
-	//	float4 n2 = g_WaterNormalTex.Sample(g_ss, In.UV - g_waterUVOffset);
-	//	//0 ～1の値が-1～1になる
-	//	n2 = n2 * 2.0 - 1.0;
+		float4 n2 = g_WaterNormalTex.Sample(g_ss, In.UV - g_waterUVOffset);
+		//0 ～1の値が-1～1になる
+		n2 = n2 * 2.0 - 1.0;
 
-	//	//取ってきた色（法線ベクトル）を90度回転させる
-	//	wN = mul(n1+n2, g_mR).rgb;
+		//取ってきた色（法線ベクトル）を90度回転させる
+		wN = mul(n1 + n2, g_mR).rgb;
 
-	//	//水底
-	//	baseColor = g_baseTex.Sample(g_ss, In.UV + wN.xz / 100) * g_BaseColor * In.Color;
+		//水底
+		baseColor = g_baseTex.Sample(g_ss, In.UV + wN.xz / 100) * g_BaseColor * In.Color;
 
-	//	baseColor.r = baseColor.r / 20.0;
-	//	baseColor.g = baseColor.g / 10.0;
-	//	baseColor.b = baseColor.b / 2.0;
+		baseColor.r = baseColor.r / 20.0;
+		baseColor.g = baseColor.g / 10.0;
+		baseColor.b = baseColor.b / 2.0;
 
-	//}
-	//else
+	}
+	else
 	{
 	// 法線マップから法線ベクトル取得
 		 wN = g_normalTex.Sample(g_ss, In.UV).rgb;

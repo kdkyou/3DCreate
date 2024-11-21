@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"../BaseGimmick/BaseGimmick.h"
+#include"../GimmickBase/GimmickBase.h"
 
 class BreakWall :public GimmickBase
 {

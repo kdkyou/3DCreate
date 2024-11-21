@@ -2,7 +2,7 @@
 
 void Texture::Init()
 {
-	m_addAlpha = 0.02;
+	m_addAlpha = 0.02f;
 	m_alpha = 1.0f;
 	m_color = { 1,1,1,1};
 }

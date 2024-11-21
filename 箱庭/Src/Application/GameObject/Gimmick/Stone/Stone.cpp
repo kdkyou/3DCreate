@@ -14,8 +14,8 @@ void Stone::SetModel(const std::shared_ptr<KdModelData>& model)
 	m_pCollider = std::make_unique<KdCollider>();
 	m_pCollider->RegisterCollisionShape("Stone", m_spModel, KdCollider::TypeDamage);
 
-	m_trail = std::make_shared<KdTrailPolygon>();
-	m_trail->SetMaterial("Asset/Textures/GameObject/Trail/Babul.png");
+	/*m_trail = std::make_shared<KdTrailPolygon>();
+	m_trail->SetMaterial("Asset/Textures/GameObject/Trail/Babul.png");*/
 
 }
 
@@ -36,7 +36,10 @@ void Stone::Update()
 	}
 	else
 	{
-		m_trail->ClearPoints();
+		if (m_trail)
+		{
+			m_trail->ClearPoints();
+		}
 		m_dissolveFlg = true;
 	}
 

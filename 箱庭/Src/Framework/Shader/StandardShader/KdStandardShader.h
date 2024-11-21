@@ -35,12 +35,17 @@ public:
 	
 		//水面表現3　定数バッファ作成
 		int WaterEnable = 0;
-		float _dummy3[3] = { 0.0f,0.0f,0.0f };
+		Math::Vector2 WaterUVOffset = { 0,0 }; //オフセット：補正値
+		float dimmy1 = 0.0f;
 
 		Math::Matrix mR;	//90度回転
 
-		Math::Vector2 WaterUVOffset = { 0,0 }; //オフセット：補正値
-		float _dummy2[2] = { 0,0 };
+		//リムライト有効化
+		int LimLightEnable = 0;
+		Math::Vector3	LimLightColor = { 1.0f,1.0f,1.0f };
+
+		float			LimLightPow = 1;
+		float dimmy[3] = { 0.0f,0.0f,0.0f };
 
 	};
 
@@ -72,7 +77,23 @@ public:
 	// 設定・取得
 	//================================================
 
-	//水面表現4　セッターを作成
+	//リムライト設定
+	void SetLimLightEnable(bool _enable)
+	{
+		m_cb0_Obj.Work().LimLightEnable = _enable;
+
+		m_dirtyCBObj = true;
+	}
+
+	void SetLimlightParam(Math::Vector3 _color, float _pow)
+	{
+		m_cb0_Obj.Work().LimLightColor = _color;
+		m_cb0_Obj.Work().LimLightPow = _pow;
+
+		m_dirtyCBObj = true;
+	}
+
+
 	//テクスチャを転送する関数
 	void SetWaterNormalTexture(KdTexture& _normalTex)
 	{
@@ -87,15 +108,16 @@ public:
 	void SetWaterEnable(bool _enable)
 	{
 		m_cb0_Obj.Work().WaterEnable = _enable;
-		m_cb0_Obj.Work().mR = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(90));
 
 		m_dirtyCBObj = true;
 	}
 
 	//水面のUV設定
-	void SetWaterUVOffset(const Math::Vector2& _offset)
+	void SetWaterUVOffset(const Math::Vector2& _offset,int _mR=90)
 	{
 		m_cb0_Obj.Work().WaterUVOffset = _offset;
+		m_cb0_Obj.Work().mR = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(_mR));
+
 
 		m_dirtyCBObj = true;
 	}

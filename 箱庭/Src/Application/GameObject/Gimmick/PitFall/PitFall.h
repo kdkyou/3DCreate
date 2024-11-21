@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"../BaseGimmick/BaseGimmick.h"
+#include"../GimmickBase/GimmickBase.h"
 
 #define RECAST_TIME  180 
 #define CREATE_CAST 10

@@ -23,7 +23,7 @@ void FreeCamera::Init()
 	////距離フォグ														↓色　　　↓密度
 	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog({ 0.1f,0.1f,0.2f }, 0.1f);
 	////高さフォグ														↓色	上の上限　下の上限　カメラとの距離
-	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1,0.1,0.2 }, m_pos.y+2, m_pos.y-5, 2);
+	KdShaderManager::Instance().WorkAmbientController().SetheightFog({ 0.1f,0.1f,0.2f }, m_pos.y+2, m_pos.y-5, 2);
 
 }
 

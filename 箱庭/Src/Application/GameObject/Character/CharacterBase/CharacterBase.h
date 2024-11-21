@@ -1,5 +1,15 @@
 ﻿#pragma once
 
+//キータイプのマクロ
+#define UPDOWN		KeyType::Up | KeyType::Down
+#define LEFTRIGHT	KeyType::Left | KeyType::Right
+#define AROUND		KeyType::Forward | KeyType::Backward
+
+//イージング時間のマクロ
+#define HALF_SECOND 1.0f/30.0f
+#define ONE_SECOND 1.0f/60.0f
+#define TWO_SECOND 1.0f/120.0f
+
 class CharacterBase :public KdGameObject
 {
 public:
@@ -9,6 +19,30 @@ public:
 		None,
 		Break,
 		Push,
+	};
+
+	enum class EasingType
+	{
+		Normal,
+		SlowIn,
+		In,
+		FastIn,
+		SlowOut,
+		Out,
+		FastOut
+
+	};
+
+	enum KeyType	//ビット
+	{
+		Flat,
+		Up			= 1 << 0,		//上
+		Down		= 1 << 1,		//下
+		Left		= 1 << 2,		//左
+		Right		= 1 << 3,		//右
+		Forward		= 1 << 4,		//前
+		Backward	= 1 << 5,		//後
+		Max,
 	};
 
 	CharacterBase() {}
@@ -41,3 +75,4 @@ protected:
 	SelectType						m_nextType = SelectType::None;
 
 };
+

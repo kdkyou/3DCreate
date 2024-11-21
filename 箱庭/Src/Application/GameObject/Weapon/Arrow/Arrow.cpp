@@ -82,11 +82,7 @@ void Arrow::DrawLit()
 	{
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spDModel, m_mWorld);
 	}
-
-	if (m_trail)
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trail);
-	}
+	
 }
 
 void Arrow::GenerateDepthMapFromLight()
@@ -94,6 +90,7 @@ void Arrow::GenerateDepthMapFromLight()
 	if (m_dissolveFlg)
 	{
 		Math::Vector3 _colr(1.f, 0.5f, 0.4f);
+		const float range = 0.01f;
 		KdShaderManager::Instance().m_StandardShader.SetDissolve(m_dissolve, nullptr, &_colr);
 	}
 
@@ -102,10 +99,6 @@ void Arrow::GenerateDepthMapFromLight()
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spDModel, m_mWorld);
 	}
 
-	if (m_trail)
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_trail);
-	}
 }
 
 

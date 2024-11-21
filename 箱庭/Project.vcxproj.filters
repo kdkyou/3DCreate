@@ -124,9 +124,6 @@
     <Filter Include="Src\Application\GameObject\Gimmick\Nidle">
       <UniqueIdentifier>{266b8e94-749f-4e12-bb65-eac9b1436e66}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Gimmick\BaseGimmick">
-      <UniqueIdentifier>{7f98d58d-bdff-49f7-af86-83ea07219a4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Gimmick\Relief">
       <UniqueIdentifier>{72cdfefc-05ff-4b92-961f-7c63743bd2da}</UniqueIdentifier>
     </Filter>
@@ -202,8 +199,38 @@
     <Filter Include="Src\Application\GameObject\Gimmick\Stone">
       <UniqueIdentifier>{c5a2f59d-93e9-44d7-b0b5-5efaaa82c10c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Gimmick\SkeltonTail">
-      <UniqueIdentifier>{cca46e04-a1df-4b0e-8735-9da52605b3e1}</UniqueIdentifier>
+    <Filter Include="Src\Application\Scene\ResultScene">
+      <UniqueIdentifier>{027ba8a9-b28a-46f7-a908-75c84e417f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Camera\AnimationCamera">
+      <UniqueIdentifier>{04ea9888-8772-4b6f-9364-c7c46494d66d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Gate">
+      <UniqueIdentifier>{4d36aaf5-3657-4f09-a763-b3773c8ec99d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Fade">
+      <UniqueIdentifier>{8452dfc8-5767-40f1-94f6-defab935b601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Close">
+      <UniqueIdentifier>{159d1a86-edc6-4aab-bfca-e2e691213a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle">
+      <UniqueIdentifier>{bd4ad3c4-7e04-4789-af6b-ef439fae82e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Light">
+      <UniqueIdentifier>{2c72e6a1-e1b1-4326-b650-05ccfa8f125b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\GimmickBase">
+      <UniqueIdentifier>{7f98d58d-bdff-49f7-af86-83ea07219a4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Turret">
+      <UniqueIdentifier>{d4d6360d-5349-40b7-a868-0a427fe29413}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserSystem">
+      <UniqueIdentifier>{57934e2d-0104-499d-81bc-dab6070098cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser">
+      <UniqueIdentifier>{e6dd4947-e1a8-4501-82f3-4f5e3d65f5d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -420,9 +447,6 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\Relief\Relief.h">
       <Filter>Src\Application\GameObject\Gimmick\Relief</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Gimmick\BaseGimmick\BaseGimmick.h">
-      <Filter>Src\Application\GameObject\Gimmick\BaseGimmick</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Information\Information.h">
       <Filter>Src\Application\GameObject\Information</Filter>
     </ClInclude>
@@ -491,6 +515,36 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Gimmick\Stone\Stone.h">
       <Filter>Src\Application\GameObject\Gimmick\Stone</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Camera\AnimationCamera\AnimationCamera.h">
+      <Filter>Src\Application\GameObject\Camera\AnimationCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Gate\Gate.h">
+      <Filter>Src\Application\GameObject\Gimmick\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h">
+      <Filter>Src\Application\Scene\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Fade\Fade.h">
+      <Filter>Src\Application\GameObject\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Close\Close.h">
+      <Filter>Src\Application\GameObject\Gimmick\Close</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.h">
+      <Filter>Src\Application\GameObject\Gimmick\GimmickBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Turret\Turret.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserSystem\LaserSystem.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\LaserSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser\Laser.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Laser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -680,9 +734,6 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\Relief\Relief.cpp">
       <Filter>Src\Application\GameObject\Gimmick\Relief</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Gimmick\BaseGimmick\BaseGimmick.cpp">
-      <Filter>Src\Application\GameObject\Gimmick\BaseGimmick</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Information\Information.cpp">
       <Filter>Src\Application\GameObject\Information</Filter>
     </ClCompile>
@@ -751,6 +802,36 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Gimmick\Stone\Stone.cpp">
       <Filter>Src\Application\GameObject\Gimmick\Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Camera\AnimationCamera\AnimationCamera.cpp">
+      <Filter>Src\Application\GameObject\Camera\AnimationCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Gate\Gate.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp">
+      <Filter>Src\Application\Scene\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Fade\Fade.cpp">
+      <Filter>Src\Application\GameObject\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Close\Close.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Close</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\GimmickBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Turret\Turret.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserSystem\LaserSystem.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\LaserSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser\Laser.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Laser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,17 +6,16 @@
 
 #include"../../../Scene/SceneManager.h"
 
-void Relief::SetModel(const std::shared_ptr<KdModelData>& model)
+void Relief::Init()
 {
-	m_spModel = model;
+	m_spModel = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Terrains/R'lyeh/Relief/Relief.gltf");
 	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("Relief", m_spModel, KdCollider::TypeEvent);
+	m_pCollider->RegisterCollisionShape("Relief", m_spModel, KdCollider::TypeEvent|KdCollider::TypeGround);
 
-	m_fTexture = std::make_shared<KdTexture>();
-	m_fTexture->Load(RELIEFPATH"F.png");
 
-	m_cthlhuTex = std::make_shared<KdTexture>();
-	m_cthlhuTex->Load("Asset/Textures/GameObject/Apotheosis/Cthlhu.png");
+	m_fTexture=KdAssets::Instance().m_textures.GetData(RELIEFPATH"F.png");
+
+	m_cthlhuTex=KdAssets::Instance().m_textures.GetData("Asset/Textures/GameObject/Apotheosis/Cthlhu.png");
 
 	m_createFlg = false;
 }
@@ -29,6 +28,12 @@ void Relief::Update()
 		m_coolTime = 0;
 		m_createFlg = false;
 	}
+	m_drawFkeyFlg = false;
+
+	Math::Vector3 vec = (Math::Matrix::CreateTranslation(Math::Vector3{ -2,5,0 }) * m_mWorld).Translation();
+
+	KdShaderManager::Instance().WorkAmbientController().AddPointLight({ 3,3,3 }, 5.0f, vec);
+
 }
 
 void Relief::OnHit()
@@ -42,8 +47,8 @@ void Relief::OnHit()
 		std::string _path;
 		m_isInfor = false;
 
-		int num = SceneManager::Instance().GetReliefCount();
-		switch (num)
+
+		switch (m_number)
 		{
 		case 0:
 			_path = RELIEFPATH"before1.png";
@@ -106,8 +111,8 @@ void Relief::OnHit()
 
 void Relief::OnEncount()
 {
-	/*m_drawFkeyFlg = true;
-	*/
+	m_drawFkeyFlg = true;
+	
 	if (GetAsyncKeyState(VK_LBUTTON))
 	{
 		if (!m_createFlg)
@@ -122,5 +127,5 @@ void Relief::DrawSprite()
 {
 	if (!m_drawFkeyFlg)return;
 	
-//	KdShaderManager::Instance().m_spriteShader.DrawTex(m_fTexture, 0, 0);
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_fTexture, 0, 0);
 }

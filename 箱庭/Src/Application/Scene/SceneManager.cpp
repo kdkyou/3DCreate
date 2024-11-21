@@ -7,6 +7,7 @@
 #include"GimmickScene/GimmickScene.h"
 #include"DiceScene/DiceScene.h"
 #include"NoiseScene/NoiseScene.h"
+#include"ResultScene/ResultScene.h"
 
 #include"../AssetRepository/AssetRepository.h"
 #include"../GameObject/Terrain/Terrain.h"
@@ -20,6 +21,8 @@
 #include"../GameObject/Gimmick/PitFall/PitFall.h"
 #include"../GameObject/Gimmick/SlideDoor/SlideDoor.h"
 #include"../GameObject/Gimmick/Relief/Relief.h"
+#include"../GameObject/Gimmick/Pazzle/Light/Turret/Turret.h"
+#include"../GameObject/Gimmick/Pazzle/Light/Laser/Laser.h"
 
 #include"json.hpp"
 #include"../main.h"
@@ -36,6 +39,7 @@ void SceneManager::PreUpdate()
 	m_currentScene->PreUpdate();
 	if (m_mapScene)
 	{
+		if (!m_isDrawMap)return;
 		m_mapScene->PreUpdate();
 	}
 	if (m_gimmickScene)
@@ -50,13 +54,17 @@ void SceneManager::PreUpdate()
 
 void SceneManager::Update()
 {
-	if (!m_settingFlg)
+	if (GetAsyncKeyState('1') & 0x8000) { OnSetting(); }
+	if (GetAsyncKeyState('2') & 0x8000) { OffSetting(); }
+
+
+	if (!m_isSetting)
 	{
 		if (m_gimmickScene)
 		{
 			m_gimmickScene->Update();
 		}
-	
+
 		m_currentScene->Update();
 
 		if (m_noiseScene)
@@ -69,13 +77,15 @@ void SceneManager::Update()
 
 void SceneManager::PostUpdate()
 {
-	if (!m_settingFlg)
+	if (!m_isSetting)
 	{
 		m_currentScene->PostUpdate();
+	
 		if (m_gimmickScene)
 		{
 			m_gimmickScene->PostUpdate();
 		}
+
 	}
 }
 
@@ -87,6 +97,8 @@ void SceneManager::PreDraw()
 	ChangeRenderTarget();
 	if (m_mapScene)
 	{
+		if (!m_isDrawMap)return;
+
 		m_mapScene->Draw();
 	}
 	if (m_gimmickScene)
@@ -102,19 +114,17 @@ void SceneManager::PreDraw()
 
 void SceneManager::Draw()
 {
-	
+
 	if (m_mapScene)
 	{
+		if (!m_isDrawMap)return;
 		m_mapScene->Draw();
 	}
 	if (m_gimmickScene)
 	{
 		m_gimmickScene->Draw();
 	}
-	/*if (m_noiseScene)
-	{
-		m_noiseScene->Draw();
-	}*/
+	
 	m_currentScene->Draw();
 }
 
@@ -135,14 +145,19 @@ void SceneManager::DrawSprite()
 
 void SceneManager::DrawDebug()
 {
-	m_currentScene->DrawDebug();
-	if (m_mapScene)
+	if (m_isSetting)
 	{
-		m_mapScene->DrawDebug();
-	}
-	if (m_gimmickScene)
-	{
-		m_gimmickScene->DrawDebug();
+
+		m_currentScene->DrawDebug();
+		if (m_mapScene)
+		{
+			if (!m_isDrawMap)return;
+			m_mapScene->DrawDebug();
+		}
+		if (m_gimmickScene)
+		{
+			m_gimmickScene->DrawDebug();
+		}
 	}
 }
 
@@ -193,19 +208,25 @@ void SceneManager::AddNoise(const std::shared_ptr<KdGameObject>& obj)
 
 void SceneManager::Imgui()
 {
-	ImGui::Begin("Create");
-	CreateObject();
-	CreateGimmick();
-	ImGui::End();
+	if (m_isSetting)
+	{
+		ImGui::Begin("Create");
+		CreateObject();
+		CreateGimmick();
+		ImGui::End();
 
-	ImGui::Begin("Controll");
-	Controll();
-	ImGui::End();
+		ImGui::Begin("Controll");
+		Controll();
+		ImGui::End();
 
-	ImGui::Begin("List");
-	List();
-	ImGui::End();
+		ImGui::Begin("Ambient");
+		Ambient();
+		ImGui::End();
 
+		ImGui::Begin("List");
+		List();
+		ImGui::End();
+	}
 }
 
 //レンダーターゲット切り替え用
@@ -219,6 +240,34 @@ void SceneManager::UndoRenderTarget()
 {
 	m_rtChanger.UndoRenderTarget();
 }
+
+const bool SceneManager::SetCameraTarget(const std::shared_ptr<KdGameObject>& _target)
+{
+	const std::shared_ptr<GameScene> spGame = m_wpGameScene.lock();
+
+	if (spGame)
+	{
+		return spGame->SetCameraTarget(_target);
+	}
+	return false;
+}
+
+void SceneManager::OnMapGimmick()
+{
+	m_isDrawMap = true;
+	if (!m_gimmickScene) {
+		m_gimmickScene = std::make_shared<GimmickScene>();
+		m_gimmickScene->Init();
+	}
+
+}
+
+void SceneManager::OffMapGimmick()
+{
+//		m_isDrawMap = false;
+		m_gimmickScene = nullptr;
+}
+
 
 void SceneManager::AssetLoad()
 {
@@ -237,6 +286,8 @@ void SceneManager::AssetLoad()
 	KdAudioManager::Instance().Play("Asset/Sounds/SE/Wall.wav");
 	KdAudioManager::Instance().Play("Asset/Sounds/SE/Nidle.wav");
 	KdAudioManager::Instance().Play("Asset/Sounds/SE/AroundN.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Arm.wav");
+	KdAudioManager::Instance().Play("Asset/Sounds/SE/Reb.wav");
 	KdAudioManager::Instance().StopAllSound();
 }
 
@@ -248,20 +299,26 @@ void SceneManager::AddMapObject(const std::shared_ptr<KdGameObject>& obj)
 void SceneManager::ChangeScene(SceneType sceneType)
 {
 	// 次のシーンを作成し、現在のシーンにする
+	std::shared_ptr<GameScene> game;
 	switch (sceneType)
 	{
 	case SceneType::Title:
 		m_currentScene = std::make_shared<TitleScene>();
-		m_gimmickScene = nullptr;
 		break;
 	case SceneType::Game:
-		m_currentScene = std::make_shared<GameScene>();
+		game = std::make_shared<GameScene>();
+		m_wpGameScene = game;
+		m_currentScene = game;
+		break;
+	case SceneType::Result:
+		m_currentScene = std::make_shared<ResultScene>();
+		break;
+	default:
 		break;
 	}
 
-	if (!m_mapScene)m_mapScene = std::make_shared<MapScene>();
-	if (!m_gimmickScene)m_gimmickScene = std::make_shared<GimmickScene>();
-	if (!m_noiseScene)m_noiseScene = std::make_shared<NoiseScene>();
+	if (!m_mapScene) m_mapScene = std::make_shared<MapScene>();
+	if (!m_noiseScene)	m_noiseScene = std::make_shared<NoiseScene>();
 
 	// 現在のシーン情報を更新
 	m_currentSceneType = sceneType;
@@ -660,12 +717,43 @@ void SceneManager::CreateGimmick()
 		m_ang = {};
 	}
 
+	if (ImGui::Button("Turret"))
+	{
+		std::shared_ptr<Turret> turret = std::make_shared<Turret>();
+		turret->Init();
+		AddGimmick(turret);
+		std::shared_ptr<MapObject> _map;
+		_map = std::make_shared<MapObject>();
+		_map->m_name = "Turret";
+		_map->m_obj = turret;
+		m_gimmickList.push_back(_map);
+		m_spNow = turret;
+
+		m_scale = { 1,1,1 };
+		m_ang = {};
+	}
+
+	if (ImGui::Button("Laser"))
+	{
+		std::shared_ptr<Laser> rayser = std::make_shared<Laser>();
+		rayser->Init();
+		AddGimmick(rayser);
+		std::shared_ptr<MapObject> _map;
+		_map = std::make_shared<MapObject>();
+		_map->m_name = "Laser";
+		_map->m_obj = rayser;
+		m_gimmickList.push_back(_map);
+		m_spNow = rayser;
+
+		m_scale = { 1,1,1 };
+		m_ang = {};
+	}
 }
 
 void SceneManager::Controll()
 {
-	ImGui::Checkbox("Setting", &m_settingFlg);
-	if (m_settingFlg)
+	ImGui::Checkbox("Setting", &m_isSetting);
+	if (m_isSetting)
 	{
 		ShowCursor(true);
 	}
@@ -749,7 +837,54 @@ void SceneManager::Controll()
 	}
 
 
-	ImGui::SliderInt("NoiseLen",&length,1,120);
+	ImGui::SliderInt("NoiseLen", &length, 1, 120);
+}
+
+void SceneManager::Ambient()
+{
+	static Math::Vector3 dirLightDir = {0.0f,-1.0f,0.0f};
+	static Math::Vector3 dirLightcolr = { 0.3f,0.3f,0.3f };
+	static Math::Vector3 ambiLightcolr = { 0.3f,0.3f,0.3f };
+	static Math::Vector3 distFogColr = {0.3f,0.3f,0.3f};
+	static Math::Vector3 heightFogColr = {0.3f,0.3f,0.3f};
+	static int distUp = 0;
+	static int distDown = 0;
+
+	if (ImGui::SliderFloat("dirLightDir.x", &dirLightDir.x, -1.0f, 1.0f));
+	if (ImGui::SliderFloat("dirLightDir.y", &dirLightDir.y, -1.0f, 1.0f));
+	if (ImGui::SliderFloat("dirLightDir.z", &dirLightDir.z, -1.0f, 1.0f));
+	if (ImGui::SliderFloat("dirLightCol.x", &dirLightcolr.x, 0.0f, 5.0f));
+	if (ImGui::SliderFloat("dirLightCol.y", &dirLightcolr.y, 0.0f, 5.0f));
+	if (ImGui::SliderFloat("dirLightCol.z", &dirLightcolr.z, 0.0f, 5.0f));
+	if (ImGui::SliderFloat("ambiLightCol.x", &ambiLightcolr.x, 0.0f, 5.0f));
+	if (ImGui::SliderFloat("ambiLightCol.y", &ambiLightcolr.y, 0.0f, 5.0f));
+	if (ImGui::SliderFloat("ambiLightCol.z", &ambiLightcolr.z, 0.0f, 5.0f));
+	if (ImGui::SliderFloat("distFogCol.x", &distFogColr.x, 0.0f, 3.0f));
+	if (ImGui::SliderFloat("distFogCol.y", &distFogColr.y, 0.0f, 3.0f));
+	if (ImGui::SliderFloat("distFogCol.z", &distFogColr.z, 0.0f, 3.0f));
+	if (ImGui::SliderFloat("heightFogCol.x", &heightFogColr.x, 0.0f, 3.0f));
+	if (ImGui::SliderFloat("heightFogCol.y", &heightFogColr.y, 0.0f, 3.0f));
+	if (ImGui::SliderFloat("heightFogCol.z", &heightFogColr.z, 0.0f, 3.0f));
+	if (ImGui::SliderInt("heightUp", &distUp, 0, 200));
+	if (ImGui::SliderInt("heightDown", &distDown, 0, 200));
+
+
+	////平行光(ディレクショナルライト)								↓方向			↓RGB
+	KdShaderManager::Instance().WorkAmbientController().SetDirLight(dirLightDir,dirLightcolr);
+
+	////環境光(アンビエントライト)											↓色RGBA　デフォルト0.3
+	KdShaderManager::Instance().WorkAmbientController().SetAmbientLight({ ambiLightcolr.x, ambiLightcolr.y,ambiLightcolr.z, 1 });
+
+	KdShaderManager::Instance().m_postProcessShader.SetBrightThreshold(0.4f);
+
+//	KdShaderManager::Instance().WorkAmbientController().
+
+	//フォグ(霧)
+	KdShaderManager::Instance().WorkAmbientController().SetFogEnable(true, true);
+	KdShaderManager::Instance().WorkAmbientController().SetDistanceFog(distFogColr);
+	////高さフォグ														↓色	上の上限　下の上限　カメラとの距離
+	KdShaderManager::Instance().WorkAmbientController().SetheightFog(heightFogColr,distUp,-distDown, 0);
+
 }
 
 void SceneManager::SaveMap()
@@ -758,11 +893,11 @@ void SceneManager::SaveMap()
 	std::ofstream outFile("map.json");
 	if (outFile.is_open()) {
 		outFile << "[";
-		for(size_t i=0;i< m_mapList.size();++i)
+		for (size_t i = 0; i < m_mapList.size(); ++i)
 		{
 			auto it = m_mapList.begin();
 			std::advance(it, i);
-			if ((*it)->m_obj!=nullptr)
+			if ((*it)->m_obj != nullptr)
 			{
 				j["name"] = (*it)->m_name;
 				j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
@@ -807,8 +942,8 @@ void SceneManager::LoadMap()
 		Math::Vector3 rot = { item["rot"]["X"],item["rot"]["Y"],item["rot"]["Z"] };
 
 		model = AssetRepository::Instance().GetModel(item["name"]);
-		Math::Matrix transMat = Math::Matrix::CreateTranslation({ item["pos"]["X"],item["pos"]["Y"] ,item["pos"]["Z"]});
-		Math::Matrix scaleMat = Math::Matrix::CreateScale({ item["scale"]["X"],item["scale"]["Y"] ,item["scale"]["Z"]});
+		Math::Matrix transMat = Math::Matrix::CreateTranslation({ item["pos"]["X"],item["pos"]["Y"] ,item["pos"]["Z"] });
+		Math::Matrix scaleMat = Math::Matrix::CreateScale({ item["scale"]["X"],item["scale"]["Y"] ,item["scale"]["Z"] });
 		Math::Matrix rotMat = Math::Matrix::CreateFromYawPitchRoll(rot);
 
 		_map->m_name = item["name"];
@@ -906,6 +1041,9 @@ void SceneManager::LoadGimmick()
 			relief->SetMatrix(_mat);
 			relief->SetModel(_model);
 			relief->SetRot(rot);
+			static int num = 0;
+			relief->SetNum(num);
+			num++;
 			AddGimmick(relief);
 			_map->m_obj = relief;
 			m_gimmickList.push_back(_map);
@@ -937,7 +1075,7 @@ void SceneManager::LoadGimmick()
 			_bridge->SetRot(rot);
 			_bridge->SetModel(_Model);
 			_bridge->SetModel(_model);
-			
+
 			AddGimmick(_bridge);
 			_map->m_obj = _bridge;
 			m_gimmickList.push_back(_map);

@@ -140,3 +140,11 @@ inline Math::Vector3 ConvertToRadian(const Math::Vector3& _degree)
 	vec3.z = _degree.z * (3.141592f / 180.0f);
 	return vec3;
 }
+
+//===========================================
+//
+// マクロ関係
+//
+//===========================================
+
+#define WATER_SPEED 0.00002f

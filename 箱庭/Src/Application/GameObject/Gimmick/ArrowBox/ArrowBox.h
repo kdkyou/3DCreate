@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"../BaseGimmick/BaseGimmick.h"
+#include"../GimmickBase/GImmickBase.h"
 
 #define COOL_TIME 120
 

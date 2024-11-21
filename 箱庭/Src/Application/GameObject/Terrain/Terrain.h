@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#define WATER_SPEED 0.00002f
 
 class Terrain : public KdGameObject
 {
@@ -23,7 +22,8 @@ private:
 	
 	std::shared_ptr<KdModelData> m_spModel = nullptr;
 
-//	std::shared_ptr<KdTexture>  m_spnormalTex = nullptr;
+	Math::Vector2 m_offset;
+
 
 	bool						 m_drawFlg = false;
 

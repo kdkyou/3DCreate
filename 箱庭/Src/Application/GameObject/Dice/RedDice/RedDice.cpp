@@ -4,7 +4,7 @@
 
 void RedDice::Init()
 {
-	m_pos = { 0.2,-0.0f,1.0f };
+	m_pos = { 0.2f,-0.0f,1.0f };
 	m_moveDir = {};
 	m_rotDir = {};
 	m_rot = {};

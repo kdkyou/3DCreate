@@ -6,7 +6,7 @@ class BaseScene
 {
 public :
 
-	BaseScene() { Init(); }
+	BaseScene() {}
 	virtual ~BaseScene() {}
 
 	virtual void PreUpdate();
@@ -36,15 +36,15 @@ public :
 
 	void SetChara(std::shared_ptr<Character> chara);
 
+	virtual void Init();
 
 protected :
 
 	// 継承先シーンで必要ならオーバーライドする
 	virtual void Event();
-	virtual void Init();
 
 	// 全オブジェクトのアドレスをリストで管理
 	std::list<std::shared_ptr<KdGameObject>> m_objList;
 
-	int										 m_count;
+	int										 m_count = 0;
 };

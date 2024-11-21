@@ -49,20 +49,30 @@ void RotateBridge::Update()
 			//回転計測
 			m_spin++;
 			m_ang+=ADD_ANGLE;
-			KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundN.wav", m_pos);
+			m_num = ADD_ANGLE;
+//			KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundN.wav", m_pos);
 		}
 		else
 		{
 			m_spin = 0;
+			m_num = 0;
 			m_stopFrame = STOP_FRAME;
 			m_rotFlg = false;
 			if (!m_isOnes)
 			{
 				m_isOnes = true;
-				KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundE.wav", m_pos);
+//				KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundE.wav", m_pos);
 			}
 		}
 	}
+
+	if (m_ang>360)
+	{
+		m_ang -= 360;
+	}
+
+	
+	
 	Math::Matrix rotMat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_ang));
 	Math::Matrix transMat = Math::Matrix::CreateTranslation(m_mWorld.Translation());
 	m_mWorld = rotMat * transMat;
@@ -88,6 +98,25 @@ void RotateBridge::GenerateDepthMapFromLight()
 
 void RotateBridge::DrawLit()
 {
+	static Math::Vector2 offset = { 0.0f,0.0f };
+
+	offset.x += WATER_SPEED;
+	offset.y += WATER_SPEED;
+	if (offset.x > 1.0f)
+	{
+		offset.x -= 1.0f;
+	}
+	if (offset.y > 1.0f)
+	{
+		offset.x -= 1.0f;
+	}
+	KdShaderManager::Instance().m_StandardShader.SetWaterUVOffset(offset);
+
+	//モデルに張るテクスチャの数を増やす
+	KdShaderManager::Instance().m_StandardShader.SetUVTiling({ 4,4 });
+
+	KdShaderManager::Instance().m_StandardShader.SetWaterEnable(true);
+
 
 	if (m_spModel)
 	{
@@ -97,6 +126,8 @@ void RotateBridge::DrawLit()
 	{
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spWkModel, m_mGear);
 	}
+
+	KdShaderManager::Instance().m_StandardShader.SetWaterEnable(false);
 }
 
 

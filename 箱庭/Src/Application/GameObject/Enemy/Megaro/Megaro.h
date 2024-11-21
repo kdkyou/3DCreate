@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include"../../Gimmick/BaseGimmick/BaseGimmick.h"
+#include"../../Gimmick/GimmickBase/GimmickBase.h"
 
 #define MOVE_FRAME 600
 

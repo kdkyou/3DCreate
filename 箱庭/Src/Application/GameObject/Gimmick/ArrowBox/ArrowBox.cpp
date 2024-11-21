@@ -19,6 +19,7 @@ void ArrowBox::Update()
 		m_cooltime = 0;
 		m_shotflg = false;
 	}
+
 }
 
 void ArrowBox::OnEncount()
@@ -106,25 +107,25 @@ void ArrowBox::OnEncount()
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * one), one.Backward(), 0.1f);
+			_arrow->SetParam((one*m_mWorld ), one.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * two), two.Backward(), 0.1f);
+			_arrow->SetParam((two * m_mWorld), two.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * three), three.Backward(), 0.1f);
+			_arrow->SetParam((three * m_mWorld ), three.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
-			_arrow->SetParam((m_mWorld * four), four.Backward(), 0.1f);
+			_arrow->SetParam((four * m_mWorld), four.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 	}

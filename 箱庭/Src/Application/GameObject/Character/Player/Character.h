@@ -13,17 +13,10 @@ class DiceBase;
 #define PENALTH 		120
 
 
+
 class Character : public CharacterBase
 {
 public:
-
-	enum Skill
-	{
-		None,
-		Search,
-		Listeing,
-		Max,
-	};
 	
 	Character()							{}
 	~Character()			override	{}
@@ -36,10 +29,6 @@ public:
 	{
 		m_wpCamera = camera;
 	}
-	
-	void DiceSkill();
-	void SetSkill(const Skill& skill);
-
 
 	void OnHit()override;
 
@@ -47,9 +36,9 @@ private:
 
 	void CoolTime();
 
-	void Dice();
-
 	void Judge();
+
+	Math::Vector3 Accelerate(UINT srcMoveKey);
 
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
 
@@ -62,17 +51,23 @@ private:
 	Math::Vector3						m_color;
 
 	std::shared_ptr<KdTexture> m_tex = nullptr;
+	std::shared_ptr<KdTexture> tex = nullptr;
 
-	int									m_deathConut;
+
+
+	int									m_deathConut = 0;
 
 	float								m_ajustHeight = 0.5f;
 
 	float								m_gravity		= 0;
 
+	float								m_rotY = 0.0f;
 	
-	const float							m_moveSpd=0.1f;
-	float								m_moveLevel = 1;
+	Math::Vector3						m_moveVec = Math::Vector3::Zero;
+	const Math::Vector3					m_maxVec = {0.15f,0.15f,0.15f};
 
+	const float							m_acceleration = 0.05f;
+	
 	int									m_time			= 0;
 
 	bool								m_controlKey = false;
@@ -80,15 +75,9 @@ private:
 	float								m_sphereRadius	= 0;
 	
 	int									m_SAN = 0;
+	int									m_iniSAN = 0;
 
-	//ダイス関係
-	bool								m_diceFlg = false;
-	bool								m_listeingFlg = false;
-	
-	//技能関係
-	int									m_skillParam	= 0;
-	Skill								m_skill			= Skill::None;
-	Math::Vector3						m_boxExtents	= {};
+
 	
 	KdRandomGenerator					m_randGen;
 };
