@@ -116,6 +116,8 @@ private :
 		Pillar,
 		Relief,
 		Stairs,
+		OxtTail,
+		OxtBox,
 		Tail,
 		Temple,
 		Box,

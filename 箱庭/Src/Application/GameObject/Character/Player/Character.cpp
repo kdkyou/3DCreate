@@ -11,6 +11,10 @@
 
 #include"../../../AssetRepository/AssetRepository.h"
 
+
+
+
+
 void Character::Init()
 {
 	if (!m_spModelWork)
@@ -97,6 +101,8 @@ void Character::Update()
 		{
 			KdAudioManager::Instance().Play("Asset/Sounds/SE/Arm.wav");
 			m_spAnimetor->SetAnimation(m_spModelWork->GetData()->GetAnimation("Action"), false);
+			std::wstring str = L"Asset/Textures/GameObject/Gimmick/Arrangement1.png";
+			ScreenShot(KdDirect3D::Instance().WorkDev(), KdDirect3D::Instance().WorkDevContext(), SceneManager::Instance().GetRenderTargetTexture()->WorkResource(), str);
 			m_type = m_nextType;
 		}
 	}
@@ -147,14 +153,13 @@ void Character::Update()
 		Math::Vector3{ 1.5f,1.5f,2.0f } + m_color
 	);
 
-	KdEffekseerManager::GetInstance().Play("Babul.efkefc", m_pos, 0.1f, 2.0f, nullptr, false);
-
-	KdAudioManager::Instance().SetListnerMatrix(m_mWorld);
+	
+//	KdAudioManager::Instance().SetListnerMatrix(m_mWorld);
 }
 
 void Character::PostUpdate()
 {
-	m_spAnimetor->AdvanceTime(m_spModelWork->WorkNodes());
+	m_spAnimetor->AdvanceTime(m_spModelWork->WorkNodes(),1.25f);
 
 	m_wpRideObject.reset();
 
@@ -163,7 +168,6 @@ void Character::PostUpdate()
 	float maxOverLap = 0;	//	はみ出た球の長さ
 	Math::Vector3 hitDir = {};	//当たった方向
 	bool isHit = false;		//	当たっていたらtrue
-
 
 	//レイ判定用に変数を作成
 	KdCollider::RayInfo ray;
@@ -187,6 +191,8 @@ void Character::PostUpdate()
 	{
 		obj->Intersects(ray, &retList);
 	}
+
+	int i = 0;
 	//ギミックリストのレイと判定
 	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
 	{
@@ -296,13 +302,13 @@ void Character::PostUpdate()
 		}
 	}
 
-	for (auto& obj : SceneManager::Instance().GetObjList())
+	/*for (auto& obj : SceneManager::Instance().GetObjList())
 	{
 		if (obj->Intersects(_sphereInfo, nullptr))
 		{
 			OnHit();
 		}
-	}
+	}*/
 	if (m_pos.y < -2.0f)
 	{
 		OnHit();
@@ -358,6 +364,7 @@ void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
 
 
 }
+
 
 
 void Character::OnHit()

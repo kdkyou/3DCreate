@@ -28,9 +28,8 @@ public:
 
 private:
 
-	int m_cooltime = 0;
-	bool m_shotflg = false;
-
+	const int Count = 1;
+	
 	Pattern m_nowPattern = Pattern::None;
 
 	KdRandomGenerator m_random;

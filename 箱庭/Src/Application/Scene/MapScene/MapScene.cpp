@@ -24,33 +24,37 @@ void MapScene::Init()
 	_cal->SetModel(_model);
 	AddObject(_cal);
 
-	for (auto& item : j)
-	{
-		test = std::make_shared<Terrain>();
-		test->Init();
-		model = std::make_shared<KdModelData>();
-//		_map = std::make_shared<MapObject>();
+//	for (auto& item : j)
+//	{
+//		test = std::make_shared<Terrain>();
+//		test->Init();
+//		model = std::make_shared<KdModelData>();
+////		_map = std::make_shared<MapObject>();
+//
+//		Math::Vector3 rot = { item["rot"]["X"],item["rot"]["Y"],item["rot"]["Z"] };
+//
+//		model = AssetRepository::Instance().GetModel(item["name"]);
+//		Math::Matrix transMat = Math::Matrix::CreateTranslation({ item["pos"]["X"],item["pos"]["Y"] ,item["pos"]["Z"] });
+//		Math::Matrix scaleMat = Math::Matrix::CreateScale({ item["scale"]["X"],item["scale"]["Y"] ,item["scale"]["Z"] });
+//		Math::Matrix rotMat = Math::Matrix::CreateFromYawPitchRoll(rot);
+//
+////		_map->m_name = item["name"];
+//
+//		Math::Matrix mat = scaleMat * rotMat * transMat;
+//		test->SetMatrix(mat);
+//
+//		test->SetModel(model);
+//		test->SetRot(rot);
+//		AddObject(test);
+////		_map->m_obj = test;
+////		m_mapList.push_back(_map);
+//	}
 
-		Math::Vector3 rot = { item["rot"]["X"],item["rot"]["Y"],item["rot"]["Z"] };
-
-		model = AssetRepository::Instance().GetModel(item["name"]);
-		Math::Matrix transMat = Math::Matrix::CreateTranslation({ item["pos"]["X"],item["pos"]["Y"] ,item["pos"]["Z"] });
-		Math::Matrix scaleMat = Math::Matrix::CreateScale({ item["scale"]["X"],item["scale"]["Y"] ,item["scale"]["Z"] });
-		Math::Matrix rotMat = Math::Matrix::CreateFromYawPitchRoll(rot);
-
-//		_map->m_name = item["name"];
-
-		Math::Matrix mat = scaleMat * rotMat * transMat;
-		test->SetMatrix(mat);
-
-		test->SetModel(model);
-		test->SetRot(rot);
-		AddObject(test);
-//		_map->m_obj = test;
-//		m_mapList.push_back(_map);
-	}
-
-	
+	test = std::make_shared<Terrain>();
+	test->Init();
+	model = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Terrains/R'lyeh/OxtaTail/OxtaTail.gltf");
+	test->SetModel(model);
+	AddObject(test);
 
 	/*mat = Math::Matrix::CreateTranslation({ 10.f,0.5f,0.f });
 	_model = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Terrains/Gimmick/Grint/Grint.gltf");

@@ -148,3 +148,13 @@ inline Math::Vector3 ConvertToRadian(const Math::Vector3& _degree)
 //===========================================
 
 #define WATER_SPEED 0.00002f
+
+
+//===========================================
+//
+// スクリーンショット
+//
+//===========================================
+void SaveScreenShot(const char* fileName, int width, int height);
+//void SaveScreenShot(const KdTexture& _texture, const char* _fileName, int width, int height);
+void ScreenShot(ID3D11Device* device,ID3D11DeviceContext* context,ID3D11Texture2D* texture,const std::wstring& fileName);

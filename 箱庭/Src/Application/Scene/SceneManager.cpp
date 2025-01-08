@@ -304,6 +304,7 @@ void SceneManager::ChangeScene(SceneType sceneType)
 	{
 	case SceneType::Title:
 		m_currentScene = std::make_shared<TitleScene>();
+		OnMapGimmick();
 		break;
 	case SceneType::Game:
 		game = std::make_shared<GameScene>();
@@ -312,6 +313,7 @@ void SceneManager::ChangeScene(SceneType sceneType)
 		break;
 	case SceneType::Result:
 		m_currentScene = std::make_shared<ResultScene>();
+		OffMapGimmick();
 		break;
 	default:
 		break;
@@ -364,6 +366,7 @@ void SceneManager::CreateObject()
 	{
 		CreateMapObject(SceneManager::ObjectName::FenceBreaked);
 	}
+	ImGui::Text("Etc");
 	if (ImGui::Button("Pillar"))
 	{
 		CreateMapObject(SceneManager::ObjectName::Pillar);
@@ -379,6 +382,14 @@ void SceneManager::CreateObject()
 	if (ImGui::Button("Tail"))
 	{
 		CreateMapObject(SceneManager::ObjectName::Tail);
+	}
+	if (ImGui::Button("OxtTail"))
+	{
+		CreateMapObject(SceneManager::ObjectName::OxtTail);
+	}
+	if (ImGui::Button("OxtBox"))
+	{
+		CreateMapObject(SceneManager::ObjectName::OxtBox);
 	}
 	if (ImGui::Button("Temple"))
 	{
@@ -479,6 +490,14 @@ void SceneManager::CreateMapObject(ObjectName name)
 	case SceneManager::ObjectName::Tail:
 		model = AssetRepository::Instance().GetModel("Tail");
 		_map->m_name = "Tail";
+		break;
+	case SceneManager::ObjectName::OxtTail:
+		model = AssetRepository::Instance().GetModel("OxtaTail");
+		_map->m_name = "OxtaTail";
+		break;
+	case SceneManager::ObjectName::OxtBox:
+		model = AssetRepository::Instance().GetModel("OxtaBox");
+		_map->m_name = "OxtaBox";
 		break;
 	case SceneManager::ObjectName::Temple:
 		model = AssetRepository::Instance().GetModel("Temple");
@@ -850,23 +869,23 @@ void SceneManager::Ambient()
 	static int distUp = 0;
 	static int distDown = 0;
 
-	if (ImGui::SliderFloat("dirLightDir.x", &dirLightDir.x, -1.0f, 1.0f));
-	if (ImGui::SliderFloat("dirLightDir.y", &dirLightDir.y, -1.0f, 1.0f));
-	if (ImGui::SliderFloat("dirLightDir.z", &dirLightDir.z, -1.0f, 1.0f));
-	if (ImGui::SliderFloat("dirLightCol.x", &dirLightcolr.x, 0.0f, 5.0f));
-	if (ImGui::SliderFloat("dirLightCol.y", &dirLightcolr.y, 0.0f, 5.0f));
-	if (ImGui::SliderFloat("dirLightCol.z", &dirLightcolr.z, 0.0f, 5.0f));
-	if (ImGui::SliderFloat("ambiLightCol.x", &ambiLightcolr.x, 0.0f, 5.0f));
-	if (ImGui::SliderFloat("ambiLightCol.y", &ambiLightcolr.y, 0.0f, 5.0f));
-	if (ImGui::SliderFloat("ambiLightCol.z", &ambiLightcolr.z, 0.0f, 5.0f));
-	if (ImGui::SliderFloat("distFogCol.x", &distFogColr.x, 0.0f, 3.0f));
-	if (ImGui::SliderFloat("distFogCol.y", &distFogColr.y, 0.0f, 3.0f));
-	if (ImGui::SliderFloat("distFogCol.z", &distFogColr.z, 0.0f, 3.0f));
-	if (ImGui::SliderFloat("heightFogCol.x", &heightFogColr.x, 0.0f, 3.0f));
-	if (ImGui::SliderFloat("heightFogCol.y", &heightFogColr.y, 0.0f, 3.0f));
-	if (ImGui::SliderFloat("heightFogCol.z", &heightFogColr.z, 0.0f, 3.0f));
-	if (ImGui::SliderInt("heightUp", &distUp, 0, 200));
-	if (ImGui::SliderInt("heightDown", &distDown, 0, 200));
+	if (ImGui::SliderFloat("dirLightDir.x", &dirLightDir.x, -1.0f, 1.0f)){}
+	if (ImGui::SliderFloat("dirLightDir.y", &dirLightDir.y, -1.0f, 1.0f)){}
+	if (ImGui::SliderFloat("dirLightDir.z", &dirLightDir.z, -1.0f, 1.0f)){}
+	if (ImGui::SliderFloat("dirLightCol.x", &dirLightcolr.x, 0.0f, 5.0f)){}
+	if (ImGui::SliderFloat("dirLightCol.y", &dirLightcolr.y, 0.0f, 5.0f)){}
+	if (ImGui::SliderFloat("dirLightCol.z", &dirLightcolr.z, 0.0f, 5.0f)){}
+	if (ImGui::SliderFloat("ambiLightCol.x", &ambiLightcolr.x, 0.0f, 5.0f)){}
+	if (ImGui::SliderFloat("ambiLightCol.y", &ambiLightcolr.y, 0.0f, 5.0f)){}
+	if (ImGui::SliderFloat("ambiLightCol.z", &ambiLightcolr.z, 0.0f, 5.0f)){}
+	if (ImGui::SliderFloat("distFogCol.x", &distFogColr.x, 0.0f, 3.0f)){}
+	if (ImGui::SliderFloat("distFogCol.y", &distFogColr.y, 0.0f, 3.0f)){}
+	if (ImGui::SliderFloat("distFogCol.z", &distFogColr.z, 0.0f, 3.0f)){}
+	if (ImGui::SliderFloat("heightFogCol.x", &heightFogColr.x, 0.0f, 3.0f)){}
+	if (ImGui::SliderFloat("heightFogCol.y", &heightFogColr.y, 0.0f, 3.0f)){}
+	if (ImGui::SliderFloat("heightFogCol.z", &heightFogColr.z, 0.0f, 3.0f)){}
+	if (ImGui::SliderInt("heightUp", &distUp, 0, 200)){}
+	if (ImGui::SliderInt("heightDown", &distDown, 0, 200)){}
 
 
 	////平行光(ディレクショナルライト)								↓方向			↓RGB
@@ -890,7 +909,7 @@ void SceneManager::Ambient()
 void SceneManager::SaveMap()
 {
 	nlohmann::json j;
-	std::ofstream outFile("map.json");
+	std::ofstream outFile("Asset/Data/GameObject/map.json");
 	if (outFile.is_open()) {
 		outFile << "[";
 		for (size_t i = 0; i < m_mapList.size(); ++i)
@@ -926,7 +945,7 @@ void SceneManager::SaveMap()
 void SceneManager::LoadMap()
 {
 	nlohmann::json j;
-	std::ifstream inFile("map.json");
+	std::ifstream inFile("Asset/Data/GameObject/map.json");
 	inFile >> j;
 
 	std::shared_ptr<Terrain> test;

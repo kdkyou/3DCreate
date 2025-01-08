@@ -47,7 +47,6 @@ void Relief::OnHit()
 		std::string _path;
 		m_isInfor = false;
 
-
 		switch (m_number)
 		{
 		case 0:

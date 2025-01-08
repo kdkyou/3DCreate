@@ -268,7 +268,7 @@ float4 main(VSOutput In) : SV_Target0
 				//コーンライト内確定
 
 				//減衰率（サイド）
-				float angleIn = g_ConeLight.angle * 0.8f;
+				float angleIn = g_ConeLight.angle * 0.78f;
 				float side = 1 - (rad - angleIn) / (g_ConeLight.angle - angleIn);
 				
 				

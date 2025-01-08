@@ -21,11 +21,6 @@ void Laser::Init()
 void Laser::Update()
 {
 	LaserObject::Update();
-
-	if (!m_isShot)return;
-
-	m_isOnes=false;
-
 	/*Math::Matrix trans =Math::Matrix::CreateTranslation(m_mWorld.Translation());
 	m_mWorld = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_angle)) * trans;*/
 }

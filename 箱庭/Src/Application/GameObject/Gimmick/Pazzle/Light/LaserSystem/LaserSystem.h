@@ -24,19 +24,12 @@ public:
 	//全てのオブジェクトの状態を確認
 	void CheckAlignment();
 
-	//オブジェクトの状態を更新
-	void UpdateObject(size_t index, float newAngle);
-
-	//更新・描画
-	void Update()override;
-	void PostUpdate()override;
-
-	void GenerateDepthMapFromLight()override;
-	void DrawLit()override;
-	void DrawUnLit()override;
-
 
 private:
+
+	//オブジェクト破壊時にコールバック関数を呼び出す
+	void BreakCallBack();
+
 
 	std::vector<std::weak_ptr<LaserObject>> m_objects;		//管理するオブジェクトのリスト
 	std::function<void()> m_callback = nullptr;				//状態変化時のコールバック

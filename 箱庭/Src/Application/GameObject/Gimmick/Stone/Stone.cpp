@@ -5,7 +5,7 @@
 
 void Stone::Init()
 {
-	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
+//	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 }
 
 void Stone::SetModel(const std::shared_ptr<KdModelData>& model)

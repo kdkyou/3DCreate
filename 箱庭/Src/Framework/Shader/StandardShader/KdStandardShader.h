@@ -113,7 +113,7 @@ public:
 	}
 
 	//水面のUV設定
-	void SetWaterUVOffset(const Math::Vector2& _offset,int _mR=90)
+	void SetWaterUVOffset(const Math::Vector2& _offset,float _mR=90.0f)
 	{
 		m_cb0_Obj.Work().WaterUVOffset = _offset;
 		m_cb0_Obj.Work().mR = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(_mR));

@@ -40,11 +40,9 @@ void CCTVCamera::Update()
 			_fade->SetFade(Fade::FadeOut, 30, false);
 			SceneManager::Instance().AddNoise(_fade);
 
-			
-
 			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Game);
 		}
-		KdEffekseerManager::GetInstance().Play("Baios.efkefc", m_pos, 1.0f, 2.0f,false);
+//		KdEffekseerManager::GetInstance().Play("Baios.efkefc", m_pos, 1.0f, 2.0f,false);
 	}
 
 	m_mLocalPos = Math::Matrix::CreateTranslation(m_pos);

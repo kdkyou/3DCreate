@@ -232,6 +232,21 @@
     <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser">
       <UniqueIdentifier>{e6dd4947-e1a8-4501-82f3-4f5e3d65f5d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Qube">
+      <UniqueIdentifier>{32982e03-93cd-494c-b1a9-9a543495d89d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Arrangement">
+      <UniqueIdentifier>{d6978e48-82f8-4b45-807a-bc58d757937c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Direction">
+      <UniqueIdentifier>{d5a1b501-072b-4d68-8f7b-140bb49a8dde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject">
+      <UniqueIdentifier>{a590b108-6925-4abf-849e-f8a9a3b8939d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem">
+      <UniqueIdentifier>{f57b73e2-b0b2-498c-8c2c-b56068cf7196}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -531,9 +546,6 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\Close\Close.h">
       <Filter>Src\Application\GameObject\Gimmick\Close</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.h">
-      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.h">
       <Filter>Src\Application\GameObject\Gimmick\GimmickBase</Filter>
     </ClInclude>
@@ -545,6 +557,21 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser\Laser.h">
       <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Qube\Qube.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Qube</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\PuzzleObject.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject\DirectionObject.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.h">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -818,9 +845,6 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\Close\Close.cpp">
       <Filter>Src\Application\GameObject\Gimmick\Close</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.cpp">
-      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.cpp">
       <Filter>Src\Application\GameObject\Gimmick\GimmickBase</Filter>
     </ClCompile>
@@ -832,6 +856,18 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser\Laser.cpp">
       <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Qube\Qube.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light\Qube</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject\DirectionObject.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -849,6 +885,9 @@
     </None>
     <None Include="Src\Framework\Shader\MyShader\inc_KdMyShader.hlsli">
       <Filter>Src\Framework\Shader\MyShader</Filter>
+    </None>
+    <None Include="Src\Application\AssetRepository\ModelRepository.json">
+      <Filter>Src\Application\AssetRepository</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

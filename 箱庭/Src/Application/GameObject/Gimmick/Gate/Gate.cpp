@@ -25,6 +25,8 @@ void Gate::Init()
 	Math::Matrix _rotMat = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(45)) * Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(90));
 	Math::Matrix _transMat = Math::Matrix::CreateTranslation({ -7.0f,7.0f,0.0f });
 	m_mlocalCamera = _rotMat * _transMat;
+
+	KdEffekseerManager::GetInstance().Play("Gate.efkefc", m_mWorld.Translation(), 1.0f, 0.2f, true);
 }
 
 

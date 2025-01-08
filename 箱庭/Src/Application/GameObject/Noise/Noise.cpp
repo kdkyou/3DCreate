@@ -2,21 +2,6 @@
 
 #include"../../Scene/SceneManager.h"
 
-//void Noise::Init()
-//{
-//	m_renderTex = std::make_shared<KdTexture>();
-//	m_apotheosisTex = std::make_shared<KdTexture>();
-//	m_totalTex = std::make_shared<KdTexture>();
-//
-//	m_noisePoly= std::make_shared<KdSquarePolygon>();
-//	//座標
-//	Math::Matrix transMat = Math::Matrix::CreateTranslation(0, 5, 0);
-//
-//	Math::Matrix scaleMat = Math::Matrix::CreateScale(10, 10, 1);
-//
-//	m_mWorld = scaleMat * transMat;
-//
-//}
 
 void Noise::Update()
 {
@@ -38,18 +23,11 @@ void Noise::Update()
 		}
 	}
 
-//	m_noisePoly->SetMaterial(SceneManager::Instance().GetRenderTargetTexture());
 }
 
 void Noise::PreDraw()
 {
-	/*m_renderTex = SceneManager::Instance().GetRenderTargetTexture();
-	SceneManager::Instance().ChangeRenderTarget();
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_renderTex, 0, 0);
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_apotheosisTex, 0, 0);
-	SceneManager::Instance().UndoRenderTarget();
-	m_totalTex = SceneManager::Instance().GetRenderTargetTexture();*/
-
+	
 	int height = m_apotheosisTex->GetHeight();
 	for (int i = 0; i < height; i += m_drawLength)
 	{
@@ -101,7 +79,7 @@ void Noise::SetParam(const std::shared_ptr<KdTexture>& _tex,int _aliveTime, int 
 		KdAudioManager::Instance().Play("Asset/Sounds/BGM/Carol.wav");
 	}
 
-	m_drawLength = 1;
+	m_drawLength = 4;
 }
 
 

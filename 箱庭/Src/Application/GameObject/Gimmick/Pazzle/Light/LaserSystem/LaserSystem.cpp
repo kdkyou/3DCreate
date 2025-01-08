@@ -3,6 +3,7 @@
 #include"../LaserObject.h"
 #include"../Laser/Laser.h"
 #include"../Turret/Turret.h"
+#include"../Qube/Qube.h"
 
 #include"../../../../../Scene/SceneManager.h"
 
@@ -23,21 +24,29 @@ bool LaserSystem::SetParam(const std::string& fileName)
 		Math::Matrix rotMat = Math::Matrix::CreateFromYawPitchRoll({item["rot"]["X"],item["rot"]["Y"],item["rot"]["Z"] });
 		Math::Matrix mat = scaleMat * rotMat * transMat;
 
-		if (item["LorT"]=="L") {
+		if (item["LTB"]=="L") {
 			std::shared_ptr<Laser>laser = std::make_shared<Laser>();
-			laser->SetAngle(DirectX::XMConvertToDegrees(item["rot"]["Y"]));
+			laser->SetAngles(DirectX::XMConvertToDegrees(item["rot"]["Y"]),0);
 			laser->SetMatrix(mat);
 			laser->Init();
 			SceneManager::Instance().AddGimmick(laser);
 			m_objects.push_back(laser);
 		}
-		else
+		else if(item["LTB"]=="T")
 		{
 			std::shared_ptr<Turret> turret = std::make_shared<Turret>();
 			turret->SetMatrix(mat);
 			turret->Init();
 			SceneManager::Instance().AddGimmick(turret);
 			m_objects.push_back(turret);
+		}
+		else
+		{
+			std::shared_ptr<Qube> qube = std::make_shared<Qube>();
+			qube->SetMatrix(mat);
+			qube->Init();
+			SceneManager::Instance().AddGimmick(qube);
+			m_objects.push_back(qube);
 		}
 	}
 
@@ -63,62 +72,23 @@ void LaserSystem::CheckAlignment()
 	}
 }
 
-void LaserSystem::UpdateObject(size_t index, float newAngle)
+//void LaserSystem::UpdateObject(size_t index, float newAngle)
+//{
+//	if (index < m_objects.size()) {
+//		std::shared_ptr<LaserObject> lasr = m_objects[index].lock();
+//		if (!lasr)return;;
+//		lasr->SetAngles(newAngle,);
+//		CheckAlignment();
+//	}
+//}
+void LaserSystem::BreakCallBack()
 {
-	if (index < m_objects.size()) {
-		std::shared_ptr<LaserObject> lasr = m_objects[index].lock();
-		if (!lasr)return;;
-		lasr->SetAngle(newAngle);
-		CheckAlignment();
+	for (const auto& obj : m_objects){
+		std::shared_ptr<LaserObject> lasr = obj.lock();
+		if (!lasr)continue;
+		if (lasr->IsExpired()) {
+			m_callback;
+		}
 	}
 }
 
-void LaserSystem::Update()
-{
-	for (const auto& obj : m_objects)
-	{
-		std::shared_ptr<LaserObject> lasr = obj.lock();
-		if (!lasr)continue;
-		lasr->Update();
-	}
-}
-
-void LaserSystem::PostUpdate()
-{
-	for (const auto& obj : m_objects)
-	{
-		std::shared_ptr<LaserObject> lasr = obj.lock();
-		if (!lasr)continue;
-		lasr->PostUpdate();
-	}
-}
-
-void LaserSystem::GenerateDepthMapFromLight()
-{
-	for (const auto& obj : m_objects)
-	{
-		std::shared_ptr<LaserObject> lasr = obj.lock();
-		if (!lasr)continue;
-		lasr->GenerateDepthMapFromLight();
-	}
-}
-
-void LaserSystem::DrawLit()
-{
-	for (const auto& obj : m_objects)
-	{
-		std::shared_ptr<LaserObject> lasr = obj.lock();
-		if (!lasr)continue;
-		lasr->DrawLit();
-	}
-}
-
-void LaserSystem::DrawUnLit()
-{
-	for (const auto& obj : m_objects)
-	{
-		std::shared_ptr<LaserObject> lasr = obj.lock();
-		if (!lasr)continue;
-		lasr->DrawUnLit();
-	}
-}

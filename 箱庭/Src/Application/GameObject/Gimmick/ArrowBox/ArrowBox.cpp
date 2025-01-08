@@ -7,27 +7,27 @@
 void ArrowBox::Init()
 {
 	m_nowPattern = Pattern::None;
-	m_cooltime = 0;
-	m_shotflg = false;
+	m_coolTime = 0;
+	m_isOnes = false;
 }
 
 void ArrowBox::Update()
 {
-	m_cooltime--;
-	if (m_cooltime < 0)
+	m_coolTime-=Count;
+	if (m_coolTime < 0)
 	{
-		m_cooltime = 0;
-		m_shotflg = false;
+		m_coolTime = 0;
+		m_isOnes = false;
 	}
 
 }
 
 void ArrowBox::OnEncount()
 {
-	if (!m_shotflg)
-	{
-		m_cooltime = COOL_TIME;
-		m_shotflg = true;
+	if (m_isOnes)return;
+	
+	  m_coolTime = COOL_TIME;
+		m_isOnes = true;
 
 		const  KdModelData::Node* _p1Node = m_spModel->FindNode("1");
 		const  KdModelData::Node* _p2Node = m_spModel->FindNode("2");
@@ -106,29 +106,28 @@ void ArrowBox::OnEncount()
 		std::shared_ptr<Arrow> _arrow;
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
+			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
 			_arrow->SetParam((one*m_mWorld ), one.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
+			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
 			_arrow->SetParam((two * m_mWorld), two.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
+			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
 			_arrow->SetParam((three * m_mWorld ), three.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
-			_arrow->SetModel(AssetRepository::Instance().GetModel("Arrow"));
+			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
 			_arrow->SetParam((four * m_mWorld), four.Backward(), 0.1f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
-	}
 
 }
 

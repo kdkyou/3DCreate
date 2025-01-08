@@ -6,13 +6,11 @@ class CameraBase;
 
 class DiceBase;
 
-#define TEN	10
+constexpr int TEN = 10;
 
-#define CRITICAL_RANGE	5
-#define FUMBLE_RANGE	96
-#define PENALTH 		120
-
-
+constexpr int CRITICAL_RANGE = 5;
+constexpr int FUMBLE_RANGE = 96;
+constexpr int PENALTH = 120;
 
 class Character : public CharacterBase
 {
@@ -42,10 +40,9 @@ private:
 
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
 
+
 	
 	std::weak_ptr<CameraBase>			m_wpCamera;
-
-	std::shared_ptr<KdGameObject>		m_now			= nullptr;
 
 	Math::Vector3						m_worldRot;
 	Math::Vector3						m_color;

@@ -14,7 +14,7 @@ std::shared_ptr<KdModelData> AssetRepository::GetModel(std::string _modelName)
 void AssetRepository::Init()
 {
 	nlohmann::json j;
-	std::ifstream inFile("Asset/Data/GameObject/ModelRepository.json");
+	std::ifstream inFile("Src/Application/AssetRepository/ModelRepository.json");
 	inFile >> j;
 
 	std::shared_ptr<KdModelData> model = nullptr;

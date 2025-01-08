@@ -30,7 +30,7 @@
 		},
 		{
 			"mesh":1,
-			"name":"COL",
+			"name":"COL01",
 			"scale":[
 				1,
 				13.422381401062012,
@@ -101,13 +101,13 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"normalstone2",
-			"uri":"normalstone2.png"
+			"name":"normalstone1",
+			"uri":"normalstone1.png"
 		},
 		{
 			"mimeType":"image/jpeg",
-			"name":"stone2",
-			"uri":"stone2.jpg"
+			"name":"stone1",
+			"uri":"stone1.jpg"
 		}
 	],
 	"accessors":[

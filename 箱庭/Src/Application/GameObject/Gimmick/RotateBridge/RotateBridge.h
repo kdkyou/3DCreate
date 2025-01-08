@@ -3,7 +3,7 @@
 
 #define ROTATE_ONCE_RIMIT 90
 #define STOP_FRAME		120
-#define ADD_ANGLE 1
+constexpr int ADD_ANGLE = 1;
 
 class RotateBridge :public GimmickBase
 {
@@ -21,8 +21,7 @@ public:
 
 	void GenerateDepthMapFromLight()override;
 	void DrawLit()override;
-	//void OnHit()override;
-
+	
 	bool IsRideable()const  override { return true; }
 
 private:

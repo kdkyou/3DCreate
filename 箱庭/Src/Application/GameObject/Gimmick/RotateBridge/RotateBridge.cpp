@@ -50,7 +50,6 @@ void RotateBridge::Update()
 			m_spin++;
 			m_ang+=ADD_ANGLE;
 			m_num = ADD_ANGLE;
-//			KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundN.wav", m_pos);
 		}
 		else
 		{
@@ -61,7 +60,6 @@ void RotateBridge::Update()
 			if (!m_isOnes)
 			{
 				m_isOnes = true;
-//				KdAudioManager::Instance().Play3D("Asset/Sounds/SE/AroundE.wav", m_pos);
 			}
 		}
 	}

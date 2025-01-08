@@ -82,6 +82,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalLibraryDirectories>..\Library\DirectXTK\Lib\$(Platform)\$(Configuration)\Audio;..\Library\DirectXTK\Lib\$(Platform)\$(Configuration);..\Library\DirectXTex\Lib\$(Platform)\$(Configuration);..\Library\Effekseer\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderType>
@@ -127,6 +128,7 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>..\Library\DirectXTK\Lib\$(Platform)\$(Configuration)\Audio;..\Library\DirectXTK\Lib\$(Platform)\$(Configuration);..\Library\DirectXTex\Lib\$(Platform)\$(Configuration);..\Library\Effekseer\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderType>
@@ -181,10 +183,14 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\Gate\Gate.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject\DirectionObject.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserSystem\LaserSystem.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser\Laser.h" />
-    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Qube\Qube.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Turret\Turret.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\PuzzleObject.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Relief\Relief.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\RotateBridge\RotateBridge.h" />
@@ -280,9 +286,12 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\Gate\Gate.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject\DirectionObject.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserSystem\LaserSystem.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Laser\Laser.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\LaserObject.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Qube\Qube.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Turret\Turret.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Relief\Relief.cpp" />
@@ -350,6 +359,7 @@
     <ClCompile Include="src\Framework\Window\KdWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Src\Application\AssetRepository\ModelRepository.json" />
     <None Include="Src\Framework\Shader\inc_KdCommon.hlsli" />
     <None Include="Src\Framework\Shader\MyShader\inc_KdMyShader.hlsli" />
     <None Include="Src\Framework\Shader\PostProcessShader\inc_KdPostProcessShader.hlsli" />

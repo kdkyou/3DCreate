@@ -16,6 +16,7 @@ void FPSCamera::Init()
 	//	m_mWorld.Translation().z - 10,		//手前のぼかし距離
 	//	m_mWorld.Translation().z + 10);		//奥のぼかし距離
 
+	KdEffekseerManager::GetInstance().SetCamera(m_spCamera);
 }
 
 void FPSCamera::PostUpdate()

@@ -7,7 +7,7 @@ constexpr int RELIEFCOUNT = 11;
 class GimmickScene:public BaseScene
 {
 public:
-	GimmickScene() {  }
+	GimmickScene() { }
 	~GimmickScene(){}
 
 private:

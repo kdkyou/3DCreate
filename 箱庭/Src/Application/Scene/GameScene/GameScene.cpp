@@ -99,10 +99,10 @@ void GameScene::Init()
 	AddObject(_axe);
 
 
-	std::shared_ptr<Gate> _gate = std::make_shared<Gate>();
-	_gate->Init();
-	_gate->SetTarget(_character);
-	AddObject(_gate);
+	//std::shared_ptr<Gate> _gate = std::make_shared<Gate>();
+	//_gate->Init();
+	//_gate->SetTarget(_character);
+	//AddObject(_gate);
 
 	//===================================================================
 	// カメラ初期化

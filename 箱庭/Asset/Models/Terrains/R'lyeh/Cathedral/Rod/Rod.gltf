@@ -16,7 +16,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"COL.002",
+			"name":"COL01",
 			"scale":[
 				1,
 				12.043006896972656,
@@ -144,7 +144,7 @@
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":6712,
+			"count":6246,
 			"max":[
 				14.025338172912598,
 				39.84226989746094,
@@ -160,25 +160,25 @@
 		{
 			"bufferView":5,
 			"componentType":5126,
-			"count":6712,
+			"count":6246,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":6712,
+			"count":6246,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":7,
 			"componentType":5126,
-			"count":6712,
+			"count":6246,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":8,
 			"componentType":5123,
-			"count":16224,
+			"count":12936,
 			"type":"SCALAR"
 		}
 	],
@@ -209,32 +209,32 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":80544,
+			"byteLength":74952,
 			"byteOffset":5160,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":80544,
-			"byteOffset":85704,
+			"byteLength":74952,
+			"byteOffset":80112,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":53696,
-			"byteOffset":166248,
+			"byteLength":49968,
+			"byteOffset":155064,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":53696,
-			"byteOffset":219944,
+			"byteLength":49968,
+			"byteOffset":205032,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":32448,
-			"byteOffset":273640,
+			"byteLength":25872,
+			"byteOffset":255000,
 			"target":34963
 		}
 	],
@@ -246,7 +246,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":306088,
+			"byteLength":280872,
 			"uri":"Rod.bin"
 		}
 	]

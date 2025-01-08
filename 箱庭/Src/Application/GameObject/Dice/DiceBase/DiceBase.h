@@ -30,7 +30,7 @@ public:
 		m_wpCamera = _camera;
 	}
 
-	virtual void Shake(const int _number,const Math::Vector3& _pos, const Math::Vector3& _moveDir,const float _speed,const Math::Vector3& _rotDir){}
+	virtual void Shake(const int _number, const Math::Vector3& _pos, const Math::Vector3& _moveDir, const float _speed, const Math::Vector3& _rotDir = {}) {}
 	
 protected:
 

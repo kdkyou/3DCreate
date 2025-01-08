@@ -27,10 +27,13 @@ void LaserObject::Update()
 		m_coolTime = 0;
 		m_isShot = false;
 		m_spTrail->ClearPoints();
+		m_spTrail->SetEnable(false);
 		return;
 	}
 	Math::Matrix trailMat;
-	if (m_coolTime % 2 == 0)
+	KdRandomGenerator randGen;
+	int rand = randGen.GetInt(0, 1);
+	if (rand == 0)
 	{
 		trailMat = m_mNpMat;
 	}
@@ -90,7 +93,9 @@ void LaserObject::PostUpdate()
 	m_mlocalCamera = Math::Matrix::CreateTranslation(m_pos);
 	m_isShot = true;
 	m_isOnes = false;
-	m_coolTime = COOL_TIME;
+	m_coolTime = COOL_TIME/2;
+	if (!m_spTrail)return;
+	m_spTrail->SetEnable(true);
 }
 
 void LaserObject::GenerateDepthMapFromLight()
@@ -104,8 +109,8 @@ void LaserObject::DrawLit()
 	if (!m_spModel)return;
 
 	KdShaderManager::Instance().m_StandardShader.SetLimLightEnable(true);
-	Math::Vector3 colr = { 0.21f,0.31f,0.21f };
-	KdShaderManager::Instance().m_StandardShader.SetLimlightParam(colr, 0.5f);
+	Math::Vector3 colr = { 0.61f,0.71f,0.61f };
+	KdShaderManager::Instance().m_StandardShader.SetLimlightParam(colr, 0.6f);
 
 
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);

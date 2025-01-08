@@ -13,8 +13,7 @@ public:
 
 	virtual void GenerateDepthMapFromLight()override;
 	virtual void DrawLit()override;
-	//void DrawBright()override;
-
+	
 	void OnBright()override;
 
 protected:
