@@ -19,7 +19,6 @@ void Noise::Update()
 		{
 			KdAudioManager::Instance().StopAllSound();
 			KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav", true);
-			KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav", true);
 		}
 	}
 

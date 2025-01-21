@@ -104,6 +104,7 @@ void GameScene::Init()
 	//_gate->SetTarget(_character);
 	//AddObject(_gate);
 
+
 	//===================================================================
 	// カメラ初期化
 	//===================================================================
@@ -124,13 +125,8 @@ void GameScene::Init()
 	_fade->SetFade(Fade::FadeIn, 40, false);
 	m_objList.push_back(_fade);
 
-	m_tex = std::make_shared<KdTexture>();
-	m_tex->Load("Asset/Textures/GameObject/Apotheosis/Nyalrat1.png");
+	m_tex=KdAssets::Instance().m_textures.GetData("Asset/Textures/GameObject/Apotheosis/Nyalrat1.png");
 
-
-	std::shared_ptr<Noise> noise = std::make_shared<Noise>();
-	noise->SetParam(m_tex, 60, 15, kWhiteColor, false);
-	SceneManager::Instance().AddNoise(noise);
 
 	DiceManager::GetInstance().SetCamera(_camera);
 

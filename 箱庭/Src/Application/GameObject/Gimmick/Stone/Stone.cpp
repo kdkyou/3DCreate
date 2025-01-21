@@ -5,18 +5,13 @@
 
 void Stone::Init()
 {
-//	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
+	m_spModel = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Stone/Stone.gltf");
+	m_pCollider = std::make_unique<KdCollider>();
+	m_pCollider->RegisterCollisionShape("Stone", m_spModel, KdCollider::TypeDamage);
 }
 
 void Stone::SetModel(const std::shared_ptr<KdModelData>& model)
 {
-	m_spModel = model;
-	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("Stone", m_spModel, KdCollider::TypeDamage);
-
-	/*m_trail = std::make_shared<KdTrailPolygon>();
-	m_trail->SetMaterial("Asset/Textures/GameObject/Trail/Babul.png");*/
-
 }
 
 void Stone::Update()
@@ -28,18 +23,14 @@ void Stone::Update()
 		{
 			Math::Matrix _mat;
 			_mat.Translation(m_pos);
-			if (m_trail)
-			{
-				m_trail->AddPoint(_mat);
-			}
+		
 		}
+
+		KdEffekseerManager::GetInstance().Play("Babul.efkefc", m_pos, 0.1f, 2.0f, nullptr, false);
 	}
 	else
 	{
-		if (m_trail)
-		{
-			m_trail->ClearPoints();
-		}
+
 		m_dissolveFlg = true;
 	}
 
@@ -51,7 +42,6 @@ void Stone::Update()
 			m_isExpired = true;
 		}
 	}
-	KdEffekseerManager::GetInstance().Play("Babul.efkefc", m_pos, 0.1f, 2.0f, nullptr, false);
 
 	m_mWorld = Math::Matrix::CreateTranslation(m_pos);
 }

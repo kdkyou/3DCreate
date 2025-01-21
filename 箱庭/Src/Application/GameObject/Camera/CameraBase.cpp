@@ -39,9 +39,10 @@ void CameraBase::UpdateRotateByMouse()
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 
 	// 実際にカメラを回転させる処理(0.15はただの補正値)
-	m_DegAng.x += _mouseMove.y * 0.15f;
-	m_DegAng.y += _mouseMove.x * 0.15f;
+	m_DegAng.x += _mouseMove.y * 0.10f;
+	m_DegAng.y += _mouseMove.x * 0.10f;
 
 	// 回転制御
 	m_DegAng.x = std::clamp(m_DegAng.x, -45.f, 45.f);
+//	m_DegAng.y = std::clamp(m_DegAng.y, -50.f, 50.f);
 }

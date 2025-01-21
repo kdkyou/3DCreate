@@ -1,9 +1,5 @@
 ﻿#include "PitFall.h"
 
-#include"../Stone/Stone.h"
-#include"../../../Scene/SceneManager.h"
-
-#include"../../../AssetRepository/AssetRepository.h"
 
 void PitFall::SetModel(const std::shared_ptr<KdModelWork>& model)
 {
@@ -13,8 +9,6 @@ void PitFall::SetModel(const std::shared_ptr<KdModelWork>& model)
 
 	m_spAnimator = std::make_shared<KdAnimator>();
 	m_spAnimator->SetAnimation(m_spWkModel->GetAnimation("Close"), false);
-
-	
 }
 
 void PitFall::Init()
@@ -22,7 +16,6 @@ void PitFall::Init()
 	m_type = OpenClose::None;
 	m_coolTime = 0;
 	m_coolFlg = false;
-	m_stoneCool = 0;
 }
 
 void PitFall::Update()
@@ -38,12 +31,6 @@ void PitFall::Update()
 	}
 	else if (m_type == OpenClose::Open)
 	{
-		m_stoneCool--;
-		if (m_stoneCool < 0)
-		{
-			CreateStone();
-			m_stoneCool = CREATE_CAST;
-		}
 		if (m_spAnimator->IsAnimationEnd())
 		{
 			m_spAnimator->SetAnimation(m_spWkModel->GetAnimation("Close"), false);
@@ -76,7 +63,7 @@ void PitFall::OnEncount()
 		if (m_spAnimator->IsAnimationEnd())
 		{
 			m_type = OpenClose::None;
-			m_coolTime = RECAST_TIME;
+			m_coolTime = COOL_TIME;
 		}
 		break;
 	default:
@@ -84,12 +71,3 @@ void PitFall::OnEncount()
 	}
 }
 
-void PitFall::CreateStone()
-{
-	std::shared_ptr<Stone> stone = std::make_shared<Stone>();
-	stone->SetModel(AssetRepository::Instance().GetModel("Stone"));
-	Math::Vector3 pos = Math::Vector3{ randGene.GetFloat(-3.0f,3.0f),0.0f,randGene.GetFloat(-3.0f,3.0f) };
-	Math::Matrix mat = Math::Matrix::CreateTranslation(pos) * m_mWorld;
-	stone->SetParam(mat, Math::Vector3::Down, randGene.GetFloat(0.05f, 0.3f));
-	SceneManager::Instance().AddObject(stone);
-}

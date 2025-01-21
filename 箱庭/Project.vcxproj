@@ -192,6 +192,7 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Turret\Turret.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\PuzzleObject.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\PitFall\PitStone\PitStone.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Relief\Relief.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\RotateBridge\RotateBridge.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.h" />
@@ -294,6 +295,7 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Qube\Qube.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Light\Turret\Turret.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\PitFall\PitFall.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\PitFall\PitStone\PitStone.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Relief\Relief.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\RotateBridge\RotateBridge.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\SlideDoor\SlideDoor.cpp" />

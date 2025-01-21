@@ -19,10 +19,15 @@
 #include"../GameObject/Gimmick/BreakWall/BreakWall.h"
 #include"../GameObject/Gimmick/ArrowBox/ArrowBox.h"
 #include"../GameObject/Gimmick/PitFall/PitFall.h"
+#include"../GameObject/Gimmick/PitFall/PitStone/PitStone.h"
 #include"../GameObject/Gimmick/SlideDoor/SlideDoor.h"
 #include"../GameObject/Gimmick/Relief/Relief.h"
 #include"../GameObject/Gimmick/Pazzle/Light/Turret/Turret.h"
 #include"../GameObject/Gimmick/Pazzle/Light/Laser/Laser.h"
+#include"../GameObject/Gimmick/Pazzle/Light/Qube/Qube.h"
+
+#include"../GameObject/Enemy/Cal/Cal.h"
+
 
 #include"json.hpp"
 #include"../main.h"
@@ -276,19 +281,6 @@ void SceneManager::AssetLoad()
 	KdEffekseerManager::GetInstance().Play("Babul.efkefc", pos, 0.0f, 5.0f, false);
 
 	KdAudioManager::Instance().Init();
-	KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/BGM/Carol.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Critical.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Success.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Fail.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Fumble.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Wall.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Nidle.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/AroundN.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Arm.wav");
-	KdAudioManager::Instance().Play("Asset/Sounds/SE/Reb.wav");
-	KdAudioManager::Instance().StopAllSound();
 }
 
 void SceneManager::AddMapObject(const std::shared_ptr<KdGameObject>& obj)
@@ -328,6 +320,7 @@ void SceneManager::ChangeScene(SceneType sceneType)
 
 void SceneManager::CreateObject()
 {
+	ImGui::Checkbox("HitDel", &m_hitDel);
 
 	if (ImGui::Button("Normal"))
 	{
@@ -391,6 +384,10 @@ void SceneManager::CreateObject()
 	{
 		CreateMapObject(SceneManager::ObjectName::OxtBox);
 	}
+	if (ImGui::Button("OxtaBox"))
+	{
+		CreateMapObject(SceneManager::ObjectName::OxtaBox);
+	}
 	if (ImGui::Button("Temple"))
 	{
 		CreateMapObject(SceneManager::ObjectName::Temple);
@@ -428,6 +425,9 @@ void SceneManager::CreateObject()
 
 void SceneManager::CreateMapObject(ObjectName name)
 {
+	if(m_hitDel)
+	{ 
+
 	std::shared_ptr<Terrain> test;
 	test = std::make_shared<Terrain>();
 	test->Init();
@@ -496,6 +496,10 @@ void SceneManager::CreateMapObject(ObjectName name)
 		_map->m_name = "OxtaTail";
 		break;
 	case SceneManager::ObjectName::OxtBox:
+		model = AssetRepository::Instance().GetModel("OxtBox");
+		_map->m_name = "OxtBox";
+		break;
+	case SceneManager::ObjectName::OxtaBox:
 		model = AssetRepository::Instance().GetModel("OxtaBox");
 		_map->m_name = "OxtaBox";
 		break;
@@ -540,6 +544,127 @@ void SceneManager::CreateMapObject(ObjectName name)
 	_map->m_obj = test;
 	m_mapList.push_back(_map);
 	m_spNow = test;
+	}
+	else
+	{
+		std::shared_ptr<Cal> test;
+		test = std::make_shared<Cal>();
+		test->Init();
+		std::shared_ptr<KdModelData> model;
+		model = std::make_shared<KdModelData>();
+
+		std::shared_ptr<MapObject> _map;
+		_map = std::make_shared<MapObject>();
+
+		switch (name)
+		{
+		case SceneManager::ObjectName::CathedralArch:
+			model = AssetRepository::Instance().GetModel("CatheArch");
+			_map->m_name = "CatheArch";
+			break;
+		case SceneManager::ObjectName::CathedralNormal:
+			model = AssetRepository::Instance().GetModel("CatheNormal");
+			_map->m_name = "CatheNormal";
+			break;
+		case SceneManager::ObjectName::CathedralRod:
+			model = AssetRepository::Instance().GetModel("CatheRod");
+			_map->m_name = "CatheRod";
+			break;
+		case SceneManager::ObjectName::CathedralSentral:
+			model = AssetRepository::Instance().GetModel("CatheSentral");
+			_map->m_name = "CatheSentral";
+			break;
+		case SceneManager::ObjectName::CathedralWall:
+			model = AssetRepository::Instance().GetModel("CatheWall");
+			_map->m_name = "CatheWall";
+			break;
+		case SceneManager::ObjectName::Bridge:
+			model = AssetRepository::Instance().GetModel("Bridge");
+			_map->m_name = "Bridge";
+			break;
+		case SceneManager::ObjectName::FenceNormal:
+			model = AssetRepository::Instance().GetModel("FenceNormal");
+			_map->m_name = "FenceNormal";
+			break;
+		case SceneManager::ObjectName::FenceOneBreak:
+			model = AssetRepository::Instance().GetModel("FenceOneBreak");
+			_map->m_name = "FenceOneBreak";
+			break;
+		case SceneManager::ObjectName::FenceBreaked:
+			model = AssetRepository::Instance().GetModel("FenceBreaked");
+			_map->m_name = "FenceBreaked";
+			break;
+		case SceneManager::ObjectName::Pillar:
+			model = AssetRepository::Instance().GetModel("Pillar");
+			_map->m_name = "Pillar";
+			break;
+		case SceneManager::ObjectName::Relief:
+			model = AssetRepository::Instance().GetModel("Relief");
+			_map->m_name = "Relief";
+			break;
+		case SceneManager::ObjectName::Stairs:
+			model = AssetRepository::Instance().GetModel("Stairs");
+			_map->m_name = "Stairs";
+			break;
+		case SceneManager::ObjectName::Tail:
+			model = AssetRepository::Instance().GetModel("Tail");
+			_map->m_name = "Tail";
+			break;
+		case SceneManager::ObjectName::OxtTail:
+			model = AssetRepository::Instance().GetModel("OxtaTail");
+			_map->m_name = "OxtaTail";
+			break;
+		case SceneManager::ObjectName::OxtBox:
+			model = AssetRepository::Instance().GetModel("OxtBox");
+			_map->m_name = "OxtBox";
+			break;
+		case SceneManager::ObjectName::OxtaBox:
+			model = AssetRepository::Instance().GetModel("OxtaBox");
+			_map->m_name = "OxtaBox";
+			break;
+		case SceneManager::ObjectName::Temple:
+			model = AssetRepository::Instance().GetModel("Temple");
+			_map->m_name = "Temple";
+			break;
+		case SceneManager::ObjectName::Box:
+			model = AssetRepository::Instance().GetModel("Box");
+			_map->m_name = "Box";
+			break;
+		case SceneManager::ObjectName::SepBox:
+			model = AssetRepository::Instance().GetModel("SepBox");
+			_map->m_name = "SepBox";
+			break;
+		case SceneManager::ObjectName::CorBox:
+			model = AssetRepository::Instance().GetModel("CorBox");
+			_map->m_name = "CorBox";
+			break;
+		case SceneManager::ObjectName::WallBox:
+			model = AssetRepository::Instance().GetModel("WallBox");
+			_map->m_name = "WallBox";
+			break;
+		case SceneManager::ObjectName::UpperBox:
+			model = AssetRepository::Instance().GetModel("UpperBox");
+			_map->m_name = "UpperBox";
+			break;
+		case SceneManager::ObjectName::BreakWall:
+			model = AssetRepository::Instance().GetModel("BreakWall");
+			_map->m_name = "BreakWall";
+			break;
+		case SceneManager::ObjectName::Cal:
+			model = AssetRepository::Instance().GetModel("Cal");
+			_map->m_name = "Cal";
+			break;
+		default:
+			break;
+		}
+		test->SetPos(m_pos);
+		test->SetModel(model);
+		AddMapObject(test);
+		_map->m_obj = test;
+		m_mapList.push_back(_map);
+		m_spNow = test;
+
+	}
 
 	m_scale = { 1,1,1 };
 	m_ang = {};
@@ -718,6 +843,27 @@ void SceneManager::CreateGimmick()
 		m_ang = {};
 	}
 
+	if (ImGui::Button("Stone")) 
+	{
+		std::shared_ptr<KdModelWork> _Model;
+		_Model = std::make_shared<KdModelWork>();
+		_Model->SetModelData("Asset/Models/Terrains/Gimmick/PitFall/PitFall.gltf");
+		std::shared_ptr<PitStone> _pit = std::make_shared<PitStone>();
+		_pit->Init();
+		_pit->SetPos(m_pos);
+		_pit->SetModel(_Model);
+		AddGimmick(_pit);
+		std::shared_ptr<MapObject> _map;
+		_map = std::make_shared<MapObject>();
+		_map->m_name = "Stone";
+		_map->m_obj = _pit;
+		m_gimmickList.push_back(_map);
+		m_spNow = _pit;
+
+		m_scale = { 1,1,1 };
+		m_ang = {};
+	}
+
 	if (ImGui::Button("Slide"))
 	{
 		std::shared_ptr<SlideDoor>_slide = std::make_shared<SlideDoor>();
@@ -743,9 +889,9 @@ void SceneManager::CreateGimmick()
 		AddGimmick(turret);
 		std::shared_ptr<MapObject> _map;
 		_map = std::make_shared<MapObject>();
-		_map->m_name = "Turret";
+		_map->m_name = "T";
 		_map->m_obj = turret;
-		m_gimmickList.push_back(_map);
+		m_layserList.push_back(_map);
 		m_spNow = turret;
 
 		m_scale = { 1,1,1 };
@@ -759,10 +905,25 @@ void SceneManager::CreateGimmick()
 		AddGimmick(rayser);
 		std::shared_ptr<MapObject> _map;
 		_map = std::make_shared<MapObject>();
-		_map->m_name = "Laser";
+		_map->m_name = "L";
 		_map->m_obj = rayser;
-		m_gimmickList.push_back(_map);
+		m_layserList.push_back(_map);
 		m_spNow = rayser;
+
+		m_scale = { 1,1,1 };
+		m_ang = {};
+	}
+	if (ImGui::Button("Qube"))
+	{
+		std::shared_ptr<Qube> qube = std::make_shared<Qube>();
+		qube->Init();
+		AddGimmick(qube);
+		std::shared_ptr<MapObject> _map;
+		_map = std::make_shared<MapObject>();
+		_map->m_name = "B";
+		_map->m_obj = qube;
+		m_layserList.push_back(_map);
+		m_spNow = qube;
 
 		m_scale = { 1,1,1 };
 		m_ang = {};
@@ -794,6 +955,10 @@ void SceneManager::Controll()
 	if (ImGui::Button("LoadGimmick"))
 	{
 		LoadGimmick();
+	}
+
+	if (ImGui::Button("SaveLaser")) {
+		SaveLayser();
 	}
 
 	if (ImGui::Button("Erase"))
@@ -854,9 +1019,6 @@ void SceneManager::Controll()
 	{
 		m_spNow->NowObject();
 	}
-
-
-	ImGui::SliderInt("NoiseLen", &length, 1, 120);
 }
 
 void SceneManager::Ambient()
@@ -1155,6 +1317,20 @@ void SceneManager::LoadGimmick()
 			_map->m_obj = _pit;
 			m_gimmickList.push_back(_map);
 		}
+		else if (_map->m_name == "Stone")
+		{
+			std::shared_ptr<KdModelWork> _Model;
+			std::shared_ptr<PitStone> _pit = std::make_shared<PitStone>();
+			_Model = std::make_shared<KdModelWork>();
+			_Model->SetModelData("Asset/Models/Terrains/Gimmick/PitFall/PitFall.gltf");
+			_pit->Init();
+			_pit->SetMatrix(_mat);
+			_pit->SetRot(rot);
+			_pit->SetModel(_Model);
+			AddGimmick(_pit);
+			_map->m_obj = _pit;
+			m_gimmickList.push_back(_map);
+			}
 		else if (_map->m_name == "Slide")
 		{
 			std::shared_ptr<SlideDoor>_slide = std::make_shared<SlideDoor>();
@@ -1169,6 +1345,44 @@ void SceneManager::LoadGimmick()
 
 	}
 	Application::Instance().m_log.AddLog("LoadGimmick\n");
+}
+
+void SceneManager::SaveLayser()
+{
+	static int num = 3;
+	nlohmann::json j;
+	std::string str = "Asset/Data/GameObject/Pazzle/Laser/Stage" +std::to_string(num)+ ".json";
+	std::ofstream outFile(str);
+	if (outFile.is_open()) {
+		outFile << "[";
+		for (size_t i = 0; i < m_layserList.size(); ++i)
+		{
+			auto it = m_layserList.begin();
+			std::advance(it, i);
+			if ((*it)->m_obj != nullptr)
+			{
+				j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
+					{"Y",(*it)->m_obj->GetPos().y},
+					{"Z",(*it)->m_obj->GetPos().z} };
+				j["scale"] = { { "X",(*it)->m_obj->GetScale().x },
+					{"Y",(*it)->m_obj->GetScale().y},
+					{"Z",(*it)->m_obj->GetScale().z} };
+				j["rot"] = { {"X", (*it)->m_obj->GetRotate().x},
+					{"Y", (*it)->m_obj->GetRotate().y },
+					{"Z", (*it)->m_obj->GetRotate().z } };
+				j["LTB"] = (*it)->m_name;
+				outFile << j.dump(4);
+				if (i < m_layserList.size() - 1)
+				{
+					outFile << ",";
+				}
+			}
+		}
+		outFile << "]";
+		outFile.close();
+		Application::Instance().m_log.AddLog("SaveLaser\n");
+		++num;
+	}
 }
 
 bool ItemGetter(void* data, int idx, const char** out_text)

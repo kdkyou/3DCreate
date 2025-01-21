@@ -118,6 +118,7 @@ private :
 		Stairs,
 		OxtTail,
 		OxtBox,
+		OxtaBox,
 		Tail,
 		Temple,
 		Box,
@@ -153,6 +154,7 @@ private :
 	void ClearMap();
 	void SaveGimmick();
 	void LoadGimmick();
+	void SaveLayser();
 
 	void List();
 	//
@@ -166,9 +168,10 @@ private :
 	std::list<std::shared_ptr<MapObject>> m_mapList;
 	bool m_isDrawMap = true;
 	std::list<std::shared_ptr<MapObject>> m_gimmickList;
+	std::list<std::shared_ptr<MapObject>> m_layserList;
 
-	int length = 1;
-
+	bool m_hitDel = false;
+	
 
 	
 	// シーン切り替え関数

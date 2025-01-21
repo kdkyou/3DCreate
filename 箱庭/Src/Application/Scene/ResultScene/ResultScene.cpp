@@ -44,7 +44,6 @@ void ResultScene::Init()
 
 	SceneManager::Instance().OffMapGimmick();
 	KdAudioManager::Instance().StopAllSound();
-	KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav", true);
 
 }
 

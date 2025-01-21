@@ -55,17 +55,6 @@ void MapScene::Init()
 	model = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Terrains/R'lyeh/OxtaTail/OxtaTail.gltf");
 	test->SetModel(model);
 	AddObject(test);
-
-	/*mat = Math::Matrix::CreateTranslation({ 10.f,0.5f,0.f });
-	_model = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Terrains/Gimmick/Grint/Grint.gltf");
-	_cal = std::make_shared<Cal>();
-	_cal->SetMatrix(mat);
-	_cal->SetModel(_model);
-	AddObject(_cal);*/
-
-
-
-
 	
 
 	//水面表現２　テクスチャを読み込む

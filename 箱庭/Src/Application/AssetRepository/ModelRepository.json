@@ -64,8 +64,12 @@
 		"Path": "Asset/Models/Terrains/R'lyeh/OxtaTail/OxtaTail.gltf"
 	},
 	{
-		"Name": "OxtaBox",
+		"Name": "OxtBox",
 		"Path": "Asset/Models/Terrains/R'lyeh/OxtaBox/OxtBox.gltf"
+	},
+	{
+		"Name": "OxtaBox",
+		"Path": "Asset/Models/Terrains/R'lyeh/OxtaBox/OxtaBox.gltf"
 	},
 	{
 		"Name": "Temple",

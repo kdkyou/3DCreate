@@ -20,10 +20,15 @@ void Character::Init()
 	if (!m_spModelWork)
 	{
 		m_spModelWork = std::make_shared<KdModelWork>();
-		m_spModelWork->SetModelData("Asset/Models/Probe/Probe.gltf");
+		m_spModelWork->SetModelData("Asset/Models/Player/Player.gltf");
+
+		//KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
 
 		m_spAnimetor = std::make_shared<KdAnimator>();
+		m_spAnimetor->SetAnimation(m_spModelWork->GetData()->GetAnimation("Idle"), true);
 	}
+
+	
 
 	m_gravity = 0;
 	m_pos = {};
@@ -45,11 +50,8 @@ void Character::Init()
 
 	m_nextType = SelectType::Push;
 
-	m_tex = std::make_shared<KdTexture>();
-	m_tex->Load("Asset/Textures/GameObject/Apotheosis/Nyarlathotep.png");
-
-	tex = std::make_shared<KdTexture>();
-	tex->Load("Asset/Textures/GameObject/Apotheosis/End.png");
+	m_tex=KdAssets::Instance().m_textures.GetData("Asset/Textures/GameObject/Apotheosis/Nyarlathotep.png");
+	tex=KdAssets::Instance().m_textures.GetData("Asset/Textures/GameObject/Apotheosis/End.png");
 
 	m_objName = "Player";
 
@@ -101,8 +103,8 @@ void Character::Update()
 		{
 			KdAudioManager::Instance().Play("Asset/Sounds/SE/Arm.wav");
 			m_spAnimetor->SetAnimation(m_spModelWork->GetData()->GetAnimation("Action"), false);
-			std::wstring str = L"Asset/Textures/GameObject/Gimmick/Arrangement1.png";
-			ScreenShot(KdDirect3D::Instance().WorkDev(), KdDirect3D::Instance().WorkDevContext(), SceneManager::Instance().GetRenderTargetTexture()->WorkResource(), str);
+			//std::wstring str = L"Asset/Textures/GameObject/Gimmick/Arrangement1.png";
+			//ScreenShot(KdDirect3D::Instance().WorkDev(), KdDirect3D::Instance().WorkDevContext(), SceneManager::Instance().GetRenderTargetTexture()->WorkResource(), str);
 			m_type = m_nextType;
 		}
 	}
@@ -147,9 +149,9 @@ void Character::Update()
 
 	KdShaderManager::Instance().WorkAmbientController().SetConeLight(
 		m_pos + Math::Vector3{ 0,1,0 },
-		m_mWorld.Backward(),
+		m_mWorld.Forward(),
 		10.0f,
-		DirectX::XMConvertToRadians(30),
+		DirectX::XMConvertToRadians(40),
 		Math::Vector3{ 1.5f,1.5f,2.0f } + m_color
 	);
 
@@ -159,7 +161,7 @@ void Character::Update()
 
 void Character::PostUpdate()
 {
-	m_spAnimetor->AdvanceTime(m_spModelWork->WorkNodes(),1.25f);
+	m_spAnimetor->AdvanceTime(m_spModelWork->WorkNodes(),1.0f);
 
 	m_wpRideObject.reset();
 
@@ -173,7 +175,7 @@ void Character::PostUpdate()
 	KdCollider::RayInfo ray;
 	//レイの発射位置(座標)を設定
 	ray.m_pos = m_pos;		//自分の足元
-	ray.m_pos.y -= m_ajustHeight;
+//	ray.m_pos.y -= m_ajustHeight;
 	//レイの発射方向を設定
 	ray.m_dir = Math::Vector3::Down;
 	//段差の許容範囲を設定
@@ -184,7 +186,7 @@ void Character::PostUpdate()
 	//当たり判定をしたいタイプを設定
 	ray.m_type = KdCollider::TypeGround;
 
-//	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range);
+	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range);
 
 	//マップリストのレイと当たり判定！！
 	for (auto& obj : SceneManager::Instance().GetMapObjList())
@@ -219,7 +221,7 @@ void Character::PostUpdate()
 	{
 		//地面に当たっている
 		m_pos = hitDir;
-		m_pos.y += m_ajustHeight;
+	//	m_pos.y += m_ajustHeight;
 		m_gravity = 0.0f;
 		SetPos(m_pos);
 
@@ -250,11 +252,11 @@ void Character::PostUpdate()
 	isHit = false;
 
 	//球判定
-	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.0f,0.3f,0.0f };
+	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.0f,0.5f,0.0f };
 	_sphereInfo.m_sphere.Radius = 0.3f;
 	_sphereInfo.m_type = KdCollider::TypeGround;
 
-//	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius);
+	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius);
 
 	//マップリストの地面との判定
 	for (auto& obj : SceneManager::Instance().GetMapObjList())
@@ -288,9 +290,12 @@ void Character::PostUpdate()
 		SetPos(m_pos);
 	}
 
+	//イベント関連
+	Judge();
+
 
 	//攻撃物との判定
-	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.f,0.5f,0.f };
+	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.f,0.6f,0.f };
 	_sphereInfo.m_sphere.Radius = 0.5;
 	_sphereInfo.m_type = KdCollider::TypeDamage;
 
@@ -302,19 +307,18 @@ void Character::PostUpdate()
 		}
 	}
 
-	/*for (auto& obj : SceneManager::Instance().GetObjList())
+	for (auto& obj : SceneManager::Instance().GetObjList())
 	{
 		if (obj->Intersects(_sphereInfo, nullptr))
 		{
 			OnHit();
 		}
-	}*/
+	}
 	if (m_pos.y < -2.0f)
 	{
 		OnHit();
 	}
 
-	Judge();
 
 
 	if (m_spAnimetor->IsAnimationEnd())
@@ -332,7 +336,7 @@ void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
 	if (srcMoveVec.LengthSquared() == 0.0f) { return; }
 
 	// キャラの正面方向のベクトル
-	Math::Vector3 _nowDir = GetMatrix().Backward();
+	Math::Vector3 _nowDir = GetMatrix().Forward();
 
 	// 移動方向のベクトル
 	Math::Vector3 _targetDir = srcMoveVec;

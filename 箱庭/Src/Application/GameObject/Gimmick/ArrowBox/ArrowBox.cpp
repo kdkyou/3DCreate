@@ -107,25 +107,25 @@ void ArrowBox::OnEncount()
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
-			_arrow->SetParam((one*m_mWorld ), one.Backward(), 0.1f);
+			_arrow->SetParam((one*m_mWorld ), one.Backward(), 0.15f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
-			_arrow->SetParam((two * m_mWorld), two.Backward(), 0.1f);
+			_arrow->SetParam((two * m_mWorld), two.Backward(), 0.15f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
-			_arrow->SetParam((three * m_mWorld ), three.Backward(), 0.1f);
+			_arrow->SetParam((three * m_mWorld ), three.Backward(), 0.13f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 		{
 			_arrow = std::make_shared<Arrow>();
 			_arrow->SetModel(KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Arrow/Arrow.gltf"));
-			_arrow->SetParam((four * m_mWorld), four.Backward(), 0.1f);
+			_arrow->SetParam((four * m_mWorld), four.Backward(), 0.12f);
 			SceneManager::Instance().AddObject(_arrow);
 		}
 

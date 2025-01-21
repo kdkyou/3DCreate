@@ -64,6 +64,10 @@
 		"Path": "Asset/Models/Terrains/R'lyeh/OxtaTail/OxtaTail.gltf"
 	},
 	{
+		"Name": "OxtBox",
+		"Path": "Asset/Models/Terrains/R'lyeh/OxtaBox/OxtBox.gltf"
+	},
+	{
 		"Name": "OxtaBox",
 		"Path": "Asset/Models/Terrains/R'lyeh/OxtaBox/OxtaBox.gltf"
 	},
@@ -121,7 +125,7 @@
 	},
 	{
 		"Name": "Stone",
-		"Path": "Asset/Models/Terrains/Gimmick/Stone/Stone.gltf"
+		"Path": "Asset/Models/Weapon/Stone/Stone.gltf"
 	}
 
 ]

@@ -12,7 +12,7 @@ void Axe::Update()
 
 		if (_spParent)
 		{
-			const KdModelWork::Node* _pNode = _spParent->GetModelWork()->FindWorkNode("AttachPoint");
+			const KdModelWork::Node* _pNode = _spParent->GetModelWork()->FindWorkNode("LightPoint");
 			if (_pNode)
 			{
 				m_parentAttachMat = _pNode->m_worldTransform;
@@ -64,19 +64,9 @@ void Axe::PostUpdate()
 
 		const CharacterBase::SelectType _type = _spParent->GetType();
 
-		if (_type==CharacterBase::SelectType::Break)
+	 if (_type == CharacterBase::SelectType::Push)
 		{
-			const KdModelWork::Node* _pNode = m_spWModel->FindWorkNode("BreakPoint");
-			if (_pNode)
-			{
-				_sphereInfo.m_sphere.Center =((_pNode->m_worldTransform* m_parentAttachMat)*m_parentMat).Translation();
-			}
-			_sphereInfo.m_type = KdCollider::TypeDamage;
-
-		}
-		else if (_type == CharacterBase::SelectType::Push)
-		{
-			const KdModelWork::Node* _pNode = m_spWModel->FindWorkNode("PushPoint");
+			const KdModelWork::Node* _pNode = m_spWModel->FindWorkNode("");
 			if (_pNode)
 			{
 				_sphereInfo.m_sphere.Center = ((_pNode->m_worldTransform * m_parentAttachMat)* m_parentMat).Translation();
@@ -119,7 +109,7 @@ void Axe::PostUpdate()
 void Axe::Init()
 {
 	m_spWModel = std::make_shared<KdModelWork>();
-	m_spWModel->SetModelData("Asset/Models/Weapon/Axe/arm.gltf");
+	m_spWModel->SetModelData("Asset/Models/Weapon/Axe/axe.gltf");
 
 
 	m_scaleSize = 0.3f;

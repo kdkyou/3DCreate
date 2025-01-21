@@ -63,7 +63,7 @@ protected:
 	std::shared_ptr<KdAnimator>		m_spAnimetor = nullptr;
 
 	std::shared_ptr<KdModelWork>	m_spModelWork = nullptr;
-
+	
 	std::weak_ptr<KdGameObject>m_wpRideObject;		//乗っているオブジェクト
 	Math::Matrix m_localMatFromRideObject;			//乗っているオブジェクトからのローカル行列
 

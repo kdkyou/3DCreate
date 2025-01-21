@@ -85,8 +85,8 @@
 	"images":[
 		{
 			"mimeType":"image/jpeg",
-			"name":"download",
-			"uri":"download.jpg"
+			"name":"stone3",
+			"uri":"stone3.jpg"
 		}
 	],
 	"accessors":[

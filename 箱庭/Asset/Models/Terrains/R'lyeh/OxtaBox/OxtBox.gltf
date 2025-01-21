@@ -96,15 +96,15 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":104,
+			"count":108,
 			"max":[
 				21.804903030395508,
-				18.633769989013672,
+				18.633771896362305,
 				21.804903030395508
 			],
 			"min":[
 				-21.804903030395508,
-				-0.5812200903892517,
+				-0.5812201499938965,
 				-21.804903030395508
 			],
 			"type":"VEC3"
@@ -112,13 +112,13 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":104,
+			"count":108,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":104,
+			"count":108,
 			"type":"VEC2"
 		},
 		{
@@ -132,14 +132,14 @@
 			"componentType":5126,
 			"count":16,
 			"max":[
-				-16.971370697021484,
-				4.164029598236084,
-				-4.499900817871094
+				-17.1500301361084,
+				3.680445909500122,
+				-4.897915840148926
 			],
 			"min":[
-				-19.887094497680664,
-				0.039322853088378906,
-				-10.918326377868652
+				-19.722230911254883,
+				0.0013930797576904297,
+				-10.487005233764648
 			],
 			"type":"VEC3"
 		},
@@ -165,50 +165,50 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1248,
+			"byteLength":1296,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1248,
-			"byteOffset":1248,
+			"byteLength":1296,
+			"byteOffset":1296,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":832,
-			"byteOffset":2496,
+			"byteLength":864,
+			"byteOffset":2592,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":408,
-			"byteOffset":3328,
+			"byteOffset":3456,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":192,
-			"byteOffset":3736,
+			"byteOffset":3864,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":192,
-			"byteOffset":3928,
+			"byteOffset":4056,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":128,
-			"byteOffset":4120,
+			"byteOffset":4248,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":48,
-			"byteOffset":4248,
+			"byteOffset":4376,
 			"target":34963
 		}
 	],
@@ -220,7 +220,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":4296,
+			"byteLength":4424,
 			"uri":"OxtBox.bin"
 		}
 	]

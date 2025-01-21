@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include"../GimmickBase/GimmickBase.h"
 
-#define RECAST_TIME  180 
-#define CREATE_CAST 10
 
 class PitFall :public GimmickBase
 {
@@ -26,16 +24,13 @@ public:
 
 	void OnEncount()override;
 
-private:
+protected:
 
-	void CreateStone();
 
 	OpenClose	m_type = OpenClose::None;
 
 	int		m_coolTime = 0;
-	int		m_stoneCool = 0;
 	bool	m_coolFlg = false;
 
-	KdRandomGenerator randGene;
 
 };

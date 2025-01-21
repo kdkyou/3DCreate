@@ -247,6 +247,9 @@
     <Filter Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem">
       <UniqueIdentifier>{f57b73e2-b0b2-498c-8c2c-b56068cf7196}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\PitFall\PitStone">
+      <UniqueIdentifier>{eb28f358-3dff-4bc4-aec9-556bcd877a83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -573,6 +576,9 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.h">
       <Filter>Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\PitFall\PitStone\PitStone.h">
+      <Filter>Src\Application\GameObject\Gimmick\PitFall\PitStone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -868,6 +874,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.cpp">
       <Filter>Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\PitFall\PitStone\PitStone.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\PitFall\PitStone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
