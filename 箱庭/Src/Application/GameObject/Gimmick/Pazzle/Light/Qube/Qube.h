@@ -20,4 +20,5 @@ private:
 	//ディゾルブ
 	float	m_dissolve = 0.0f;
 
+	std::weak_ptr<KdGameObject> _parent;
 };

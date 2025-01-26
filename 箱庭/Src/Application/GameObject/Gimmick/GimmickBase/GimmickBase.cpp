@@ -2,8 +2,6 @@
 
 void GimmickBase::GenerateDepthMapFromLight()
 {
-
-	
 	if (m_spModel)
 	{
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);

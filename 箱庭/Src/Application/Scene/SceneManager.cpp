@@ -150,7 +150,7 @@ void SceneManager::DrawSprite()
 
 void SceneManager::DrawDebug()
 {
-	if (m_isSetting)
+//	if (m_isSetting)
 	{
 
 		m_currentScene->DrawDebug();
@@ -279,6 +279,7 @@ void SceneManager::AssetLoad()
 	Math::Vector3 pos = {};
 	KdEffekseerManager::GetInstance().Play("Baios.efkefc", pos, 0.0f, 5.0f, false);
 	KdEffekseerManager::GetInstance().Play("Babul.efkefc", pos, 0.0f, 5.0f, false);
+	KdEffekseerManager::GetInstance().Play("Gate.efkefc", pos, 0.0f, 5.0f, false);
 
 	KdAudioManager::Instance().Init();
 }
@@ -891,7 +892,7 @@ void SceneManager::CreateGimmick()
 		_map = std::make_shared<MapObject>();
 		_map->m_name = "T";
 		_map->m_obj = turret;
-		m_layserList.push_back(_map);
+		m_gimmickList.push_back(_map);
 		m_spNow = turret;
 
 		m_scale = { 1,1,1 };
@@ -907,7 +908,7 @@ void SceneManager::CreateGimmick()
 		_map = std::make_shared<MapObject>();
 		_map->m_name = "L";
 		_map->m_obj = rayser;
-		m_layserList.push_back(_map);
+		m_gimmickList.push_back(_map);
 		m_spNow = rayser;
 
 		m_scale = { 1,1,1 };
@@ -922,7 +923,7 @@ void SceneManager::CreateGimmick()
 		_map = std::make_shared<MapObject>();
 		_map->m_name = "B";
 		_map->m_obj = qube;
-		m_layserList.push_back(_map);
+		m_gimmickList.push_back(_map);
 		m_spNow = qube;
 
 		m_scale = { 1,1,1 };
@@ -950,15 +951,11 @@ void SceneManager::Controll()
 	if (ImGui::Button("SaveGimmick"))
 	{
 		SaveGimmick();
-	}
+	} 
 
 	if (ImGui::Button("LoadGimmick"))
 	{
 		LoadGimmick();
-	}
-
-	if (ImGui::Button("SaveLaser")) {
-		SaveLayser();
 	}
 
 	if (ImGui::Button("Erase"))
@@ -1189,6 +1186,7 @@ void SceneManager::LoadGimmick()
 	std::shared_ptr<KdModelData> _model;
 	std::shared_ptr<KdModelWork> _Model;
 	std::shared_ptr<MapObject> _map;
+
 	for (auto& item : j)
 	{
 		_map = std::make_shared<MapObject>();
@@ -1342,48 +1340,40 @@ void SceneManager::LoadGimmick()
 			_map->m_obj = _slide;
 			m_gimmickList.push_back(_map);
 		}
+		else if (_map->m_name == "L")
+		{
+			std::shared_ptr<Laser> laser = std::make_shared<Laser>();
+			laser->SetMatrix(_mat);
+			laser->Init();
+			laser->SetRot(rot);
+			AddGimmick(laser);
+			_map->m_obj = laser;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "T")
+		{
+			std::shared_ptr<Turret> turret = std::make_shared<Turret>();
+			turret->SetMatrix(_mat);
+			turret->Init();
+			turret->SetRot(rot);
+			AddGimmick(turret);
+			_map->m_obj = turret;
+			m_gimmickList.push_back(_map);
+		}
+		else if (_map->m_name == "B")
+		{
+			std::shared_ptr<Qube> qube = std::make_shared<Qube>();
+			qube->Init();
+			AddGimmick(qube);
+			_map->m_obj = qube;
+			m_gimmickList.push_back(_map);	
+		}
 
+		int i = 0;
 	}
 	Application::Instance().m_log.AddLog("LoadGimmick\n");
 }
 
-void SceneManager::SaveLayser()
-{
-	static int num = 3;
-	nlohmann::json j;
-	std::string str = "Asset/Data/GameObject/Pazzle/Laser/Stage" +std::to_string(num)+ ".json";
-	std::ofstream outFile(str);
-	if (outFile.is_open()) {
-		outFile << "[";
-		for (size_t i = 0; i < m_layserList.size(); ++i)
-		{
-			auto it = m_layserList.begin();
-			std::advance(it, i);
-			if ((*it)->m_obj != nullptr)
-			{
-				j["pos"] = { {"X",(*it)->m_obj->GetPos().x },
-					{"Y",(*it)->m_obj->GetPos().y},
-					{"Z",(*it)->m_obj->GetPos().z} };
-				j["scale"] = { { "X",(*it)->m_obj->GetScale().x },
-					{"Y",(*it)->m_obj->GetScale().y},
-					{"Z",(*it)->m_obj->GetScale().z} };
-				j["rot"] = { {"X", (*it)->m_obj->GetRotate().x},
-					{"Y", (*it)->m_obj->GetRotate().y },
-					{"Z", (*it)->m_obj->GetRotate().z } };
-				j["LTB"] = (*it)->m_name;
-				outFile << j.dump(4);
-				if (i < m_layserList.size() - 1)
-				{
-					outFile << ",";
-				}
-			}
-		}
-		outFile << "]";
-		outFile.close();
-		Application::Instance().m_log.AddLog("SaveLaser\n");
-		++num;
-	}
-}
 
 bool ItemGetter(void* data, int idx, const char** out_text)
 {

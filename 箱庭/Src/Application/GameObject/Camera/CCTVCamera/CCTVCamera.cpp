@@ -9,7 +9,7 @@ void CCTVCamera::Init()
 	// 親クラスの初期化呼び出し
 	CameraBase::Init();
 
-	m_pos = { 0.0f,2.0f,-50.f };
+	m_pos = { 0.0f,2.0f,-30.f };
 	// 基準点(ターゲット)の目線
 	m_mLocalPos = Math::Matrix::CreateTranslation(m_pos);
 	// 一旦行列を確定させる
@@ -25,7 +25,7 @@ void CCTVCamera::Update()
 
 	if (m_flg)
 	{
-		m_pos += {0.0f, 0.f, 1.f};
+		m_pos += {0.0f, 0.f, 0.5f};
 		
 		if (m_pos.z >= 0)
 		{

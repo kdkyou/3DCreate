@@ -11,6 +11,9 @@ constexpr int TEN = 10;
 constexpr int CRITICAL_RANGE = 5;
 constexpr int FUMBLE_RANGE = 96;
 constexpr int PENALTH = 120;
+constexpr float HALFTIME = 0.5f;
+
+constexpr float GRAVITY = 0.01f;
 
 class Character : public CharacterBase
 {
@@ -30,19 +33,28 @@ public:
 
 	void OnHit()override;
 
+	void SetPlayer(const std::shared_ptr<Character>& character)
+	{
+		m_wpChara = character;
+	}
+
 private:
 
 	void CoolTime();
 
 	void Judge();
+	void Damage();
+	void HitJudge();
 
 	Math::Vector3 Accelerate(UINT srcMoveKey);
 
 	void UpdateRotate(const Math::Vector3& srcMoveVec);
 
+	void UpdateCollision();
 
 	
 	std::weak_ptr<CameraBase>			m_wpCamera;
+	std::weak_ptr<Character>			m_wpChara;
 
 	Math::Vector3						m_worldRot;
 	Math::Vector3						m_color;
@@ -74,9 +86,75 @@ private:
 	int									m_SAN = 0;
 	int									m_iniSAN = 0;
 
-
 	
 	KdRandomGenerator					m_randGen;
+
+	//ステートパターン管理系!
+private:
+
+	class ActionStateBase
+	{
+	public:
+		virtual ~ActionStateBase() {}
+
+		virtual void Enter(std::weak_ptr<Character>& character) {}
+		virtual void Update(std::weak_ptr<Character>& character) {}
+		virtual void Exit(std::weak_ptr<Character>& character) {}
+	};
+
+	class ActionIdle :public ActionStateBase
+	{
+	public:
+		virtual ~ActionIdle() {}
+
+		void Enter(std::weak_ptr<Character>& character) override;
+		void Update(std::weak_ptr<Character>& character)override;
+		void Exit(std::weak_ptr<Character>& character)override;
+	};
+
+	class ActionWalkStart :public ActionStateBase
+	{
+	public:
+		virtual ~ActionWalkStart() {}
+
+		void Enter(std::weak_ptr<Character>& character) override;
+		void Update(std::weak_ptr<Character>& character)override;
+		void Exit(std::weak_ptr<Character>& character)override;
+	};
+
+	class ActionWalk :public ActionStateBase
+	{
+	public:
+		virtual ~ActionWalk() {}
+
+		void Enter(std::weak_ptr<Character>& character) override;
+		void Update(std::weak_ptr<Character>& character)override;
+		void Exit(std::weak_ptr<Character>& character)override;
+	};
+
+	class ActionWalkEnd :public ActionStateBase
+	{
+	public:
+		virtual ~ActionWalkEnd() {}
+
+		void Enter(std::weak_ptr<Character>& character) override;
+		void Update(std::weak_ptr<Character>& character)override;
+		void Exit(std::weak_ptr<Character>& character)override;
+	};
+
+	class ActionTouch :public ActionStateBase
+	{
+	public:
+		virtual ~ActionTouch() {}
+
+		void Enter(std::weak_ptr<Character>& character) override;
+		void Update(std::weak_ptr<Character>& character)override;
+		void Exit(std::weak_ptr<Character>& character)override;
+	};
+
+	void ChangeActionState(std::shared_ptr<ActionStateBase> nextAction);
+	std::shared_ptr<ActionStateBase>		m_nowAction = nullptr;
+
 };
 
 #define	TEXTUREPASS "Asset/Textures/GameObject/CutIn/"

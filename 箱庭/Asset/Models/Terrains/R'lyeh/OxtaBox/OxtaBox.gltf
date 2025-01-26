@@ -57,24 +57,6 @@
 					},
 					"indices":3,
 					"material":0
-				},
-				{
-					"attributes":{
-						"POSITION":4,
-						"NORMAL":5,
-						"TEXCOORD_0":6
-					},
-					"indices":7,
-					"material":0
-				},
-				{
-					"attributes":{
-						"POSITION":8,
-						"NORMAL":9,
-						"TEXCOORD_0":10
-					},
-					"indices":11,
-					"material":0
 				}
 			]
 		}
@@ -105,7 +87,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":132,
+			"count":172,
 			"max":[
 				21.804903030395508,
 				18.63377571105957,
@@ -121,161 +103,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":132,
+			"count":172,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":132,
+			"count":172,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":312,
-			"type":"SCALAR"
-		},
-		{
-			"bufferView":4,
-			"componentType":5126,
-			"count":32,
-			"max":[
-				10.583620071411133,
-				3.679309368133545,
-				19.74845314025879
-			],
-			"min":[
-				-10.377140998840332,
-				0.07424318790435791,
-				-19.662927627563477
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":5,
-			"componentType":5126,
-			"count":32,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":6,
-			"componentType":5126,
-			"count":32,
-			"type":"VEC2"
-		},
-		{
-			"bufferView":7,
-			"componentType":5123,
-			"count":48,
-			"type":"SCALAR"
-		},
-		{
-			"bufferView":8,
-			"componentType":5126,
-			"count":32,
-			"max":[
-				19.690813064575195,
-				3.6804468631744385,
-				10.516295433044434
-			],
-			"min":[
-				-19.722230911254883,
-				0.0013930799905210733,
-				-10.487005233764648
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":9,
-			"componentType":5126,
-			"count":32,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":10,
-			"componentType":5126,
-			"count":32,
-			"type":"VEC2"
-		},
-		{
-			"bufferView":11,
-			"componentType":5123,
-			"count":48,
+			"count":348,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1584,
+			"byteLength":2064,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1584,
-			"byteOffset":1584,
+			"byteLength":2064,
+			"byteOffset":2064,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1056,
-			"byteOffset":3168,
+			"byteLength":1376,
+			"byteOffset":4128,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":624,
-			"byteOffset":4224,
-			"target":34963
-		},
-		{
-			"buffer":0,
-			"byteLength":384,
-			"byteOffset":4848,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":384,
-			"byteOffset":5232,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":256,
-			"byteOffset":5616,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":96,
-			"byteOffset":5872,
-			"target":34963
-		},
-		{
-			"buffer":0,
-			"byteLength":384,
-			"byteOffset":5968,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":384,
-			"byteOffset":6352,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":256,
-			"byteOffset":6736,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":96,
-			"byteOffset":6992,
+			"byteLength":696,
+			"byteOffset":5504,
 			"target":34963
 		}
 	],
@@ -287,7 +153,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":7088,
+			"byteLength":6200,
 			"uri":"OxtaBox.bin"
 		}
 	]

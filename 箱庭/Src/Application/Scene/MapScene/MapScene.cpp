@@ -50,12 +50,6 @@ void MapScene::Init()
 ////		m_mapList.push_back(_map);
 //	}
 
-	test = std::make_shared<Terrain>();
-	test->Init();
-	model = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Terrains/R'lyeh/OxtaTail/OxtaTail.gltf");
-	test->SetModel(model);
-	AddObject(test);
-	
 
 	//水面表現２　テクスチャを読み込む
 	m_spnormalTex = KdAssets::Instance().m_textures.GetData("Asset/Textures/GameObject/Shader/water.png");

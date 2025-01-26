@@ -4,7 +4,7 @@
 
 void Qube::Init()
 {
-	m_spModel = AssetRepository::Instance().GetModel("Stone");
+	m_spModel = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Weapon/Stone/Stone.gltf");
 	m_pCollider = std::make_unique<KdCollider>();
 	m_pCollider->RegisterCollisionShape("Qube", m_spModel, KdCollider::TypeEvent);
 
@@ -33,9 +33,12 @@ void Qube::DrawLit()
 
 	if (m_spModel)
 	{
-		KdShaderManager::Instance().m_StandardShader.SetLimLightEnable(true);
-		Math::Vector3 colr = { 0.61f,0.59f,0.6f };
-		KdShaderManager::Instance().m_StandardShader.SetLimlightParam(colr, 0.2f);
+		if (!m_isOnes)
+		{
+			KdShaderManager::Instance().m_StandardShader.SetLimLightEnable(true);
+			Math::Vector3 colr = { 0.61f,0.59f,0.6f };
+			KdShaderManager::Instance().m_StandardShader.SetLimlightParam(colr, 0.2f);
+		}
 
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spModel, m_mWorld);
 		KdShaderManager::Instance().m_StandardShader.SetLimLightEnable(false);

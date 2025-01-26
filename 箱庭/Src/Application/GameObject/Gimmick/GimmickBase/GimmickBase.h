@@ -2,6 +2,8 @@
 
 #define COOL_TIME 120
 
+#define ONE_AROUND 360
+
 class GimmickBase :public KdGameObject
 {
 public:

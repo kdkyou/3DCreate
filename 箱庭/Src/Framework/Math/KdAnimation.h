@@ -65,6 +65,8 @@ public:
 		return false;
 	}
 
+	const float AnimationTime()const { return m_time; }
+
 
 	// アニメーションの更新
 	void AdvanceTime(std::vector<KdModelWork::Node>& rNodes, float speed = 1.0f);

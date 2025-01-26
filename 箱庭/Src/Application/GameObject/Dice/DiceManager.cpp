@@ -11,26 +11,36 @@
 
 void DiceManager::Update()
 {
-	m_drawTime--;
-	if (m_drawTime < 0)
-	{
-		m_drawTime = 0;
-		m_spBlueD = nullptr;
-		m_spRedD = nullptr;
-	}
+	
 }
 
 void DiceManager::DrawUnLit()
 {
-	if (m_spBlueD)
+	if (m_keyType ^ Bit::Blue)
 	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spBlueD,m_mBlueD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spBlueD, m_mBlueD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spBlueD, m_mBlue);
 	}
-	if (m_spRedD)
+	if (m_keyType ^ Bit::Red)
 	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spRedD,m_mRedD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spRedD, m_mRedD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spRedD, m_mRed);
 	}
 
+}
+
+void DiceManager::DrawBright()
+{
+	if (m_keyType & Bit::Blue)
+	{
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spBlueD, m_mBlueD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spBlueD, m_mBlue);
+	}
+	if (m_keyType & Bit::Red)
+	{
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spRedD, m_mRedD);
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spRedD, m_mRed);
+	}
 }
 
 const bool DiceManager::Dice(const int _judgeNum)
@@ -90,29 +100,31 @@ const bool DiceManager::Dice(const int _judgeNum)
 	return ONOFF;
 }
 
+const bool DiceManager::ReadKey() const
+{
+	if (m_keyType == (Bit::Blue + Bit::Red))
+	{
+	return true;
+	}
+	return false;
+}
+
 void DiceManager::Ready(const Math::Matrix& _mat)
 {
-	m_spBlueD = AssetRepository::Instance().GetModel("BlueDice");
-	m_spRedD = AssetRepository::Instance().GetModel("RedDice");
-	m_drawTime = DRAW_TIME;
-	m_mBlueD = Math::Matrix::CreateScale(0.4f) * Math::Matrix::CreateTranslation({ -2.f,1.5f,2.f }) * _mat;
-	m_mRedD = Math::Matrix::CreateScale(0.4f) * Math::Matrix::CreateTranslation({ -2.f,1.5f,-0.f }) * _mat;
 }
 
-void DiceManager::DrawSprite()
-{
-	if (m_drawTime <= 0)return;
-
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_tex, 0, 0);
-}
 
 void DiceManager::Init()
 {
-	if (!m_tex)
-	{
-		m_tex = std::make_shared<KdTexture>();
-		m_tex->Load("Asset/Textures/GameObject/Relief/F.png");
-	}
+	m_spBlueD = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Dice/BlueDice/blueDice.gltf");
+	m_spRedD = KdAssets::Instance().m_modeldatas.GetData("Asset/Models/Dice/RedDice/redDice.gltf");
+
+	m_mBlueD = Math::Matrix::CreateTranslation({ 6.0f,5.0f,-25.0f });
+	m_mBlue = Math::Matrix::CreateTranslation({ 25.0f,7.5f,0.0f });
+	m_mRedD = Math::Matrix::CreateTranslation({ -6.0f,5.0f,-25.0f });
+	m_mRed = Math::Matrix::CreateTranslation({-25.0f,7.5f,0.0f});
+
+
 }
 
 

@@ -44,7 +44,6 @@ void LaserObject::Update()
 
 	m_spTrail->AddPoint(trailMat);
 
-	
 }
 
 void LaserObject::PostUpdate()
@@ -57,21 +56,19 @@ void LaserObject::PostUpdate()
 	rayInfo.m_pos = m_mNpMat.Translation();
 	rayInfo.m_dir = m_mNpMat.Backward();
 	rayInfo.m_range = 10.0f;
-	rayInfo.m_type = KdCollider::TypeGround | KdCollider::TypeEvent;
+	rayInfo.m_type = KdCollider::TypeEvent;
 
 	rayInfo.m_dir.Normalize();
 
 	std::list<KdCollider::CollisionResult> results;
 
-	for (auto& obj : SceneManager::Instance().GetMapObjList())
-	{
-		obj->Intersects(rayInfo, &results);
-	}
+	std::list<std::weak_ptr<KdGameObject>> _obj;
+	
 	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
 	{
 		if (obj->Intersects(rayInfo, &results))
 		{
-			obj->OnBright();
+			_obj.push_back(obj);
 		}
 	}
 
@@ -80,17 +77,34 @@ void LaserObject::PostUpdate()
 
 	pos = rayInfo.m_pos + Math::Vector3(rayInfo.m_dir * rayInfo.m_range);
 
+	//リスト内のオブジェクトをうごかす用イテレータ
+	std::list<std::weak_ptr<KdGameObject>>::iterator it;
+	//最終的に動かすオブジェクト
+	std::weak_ptr<KdGameObject> ltObj;
+
+	it = _obj.begin();
+
 	for (auto& retList : results)
 	{
+		
 		if (maxOverLap < retList.m_overlapDistance)
 		{
 			maxOverLap = retList.m_overlapDistance;
 			pos = retList.m_hitPos;
+			ltObj = it->lock();
 		}
+		++it;
 	}
+	_obj.clear();
 
+	const std::shared_ptr<KdGameObject>t= ltObj.lock();
+	if (t)
+	{
+		t->OnBright();
+	}
 	m_pos = pos;
 	m_mlocalCamera = Math::Matrix::CreateTranslation(m_pos);
+	
 	m_isShot = true;
 	m_isOnes = false;
 	m_coolTime = COOL_TIME/2;

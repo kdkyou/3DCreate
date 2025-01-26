@@ -151,9 +151,6 @@
     <Filter Include="Src\Application\GameObject\Weapon">
       <UniqueIdentifier>{99a17dfd-8fee-4dab-ab56-bae1ba45600e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Weapon\Axe">
-      <UniqueIdentifier>{dd28cf0d-f217-4c49-9cad-d431c26c0a20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\GameObject\Weapon\WeaponBase">
       <UniqueIdentifier>{fca6c9a7-dff9-41c2-ad62-1f8e7a6245b9}</UniqueIdentifier>
     </Filter>
@@ -249,6 +246,15 @@
     </Filter>
     <Filter Include="Src\Application\GameObject\Gimmick\PitFall\PitStone">
       <UniqueIdentifier>{eb28f358-3dff-4bc4-aec9-556bcd877a83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Weapon\Light">
+      <UniqueIdentifier>{c790dd2a-a738-4757-8b3b-54ebc7a58438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Granite">
+      <UniqueIdentifier>{4262bb18-a7cd-494b-a3b8-4618a8e47f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Gimmick\Dice">
+      <UniqueIdentifier>{edb6891c-8ad2-4dc7-92a9-b363056cffeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -486,9 +492,6 @@
     <ClInclude Include="Src\Application\Scene\NoiseScene\NoiseScene.h">
       <Filter>Src\Application\Scene\NoiseScene</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Weapon\Axe\Axe.h">
-      <Filter>Src\Application\GameObject\Weapon\Axe</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h">
       <Filter>Src\Application\GameObject\Weapon\WeaponBase</Filter>
     </ClInclude>
@@ -578,6 +581,15 @@
     </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Gimmick\PitFall\PitStone\PitStone.h">
       <Filter>Src\Application\GameObject\Gimmick\PitFall\PitStone</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Weapon\Light\Light.h">
+      <Filter>Src\Application\GameObject\Weapon\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Granite\Granite.h">
+      <Filter>Src\Application\GameObject\Gimmick\Granite</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Dice\Dice.h">
+      <Filter>Src\Application\GameObject\Gimmick\Dice</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -788,9 +800,6 @@
     <ClCompile Include="Src\Application\Scene\NoiseScene\NoiseScene.cpp">
       <Filter>Src\Application\Scene\NoiseScene</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Weapon\Axe\Axe.cpp">
-      <Filter>Src\Application\GameObject\Weapon\Axe</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp">
       <Filter>Src\Application\GameObject\Weapon\WeaponBase</Filter>
     </ClCompile>
@@ -877,6 +886,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Gimmick\PitFall\PitStone\PitStone.cpp">
       <Filter>Src\Application\GameObject\Gimmick\PitFall\PitStone</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Weapon\Light\Light.cpp">
+      <Filter>Src\Application\GameObject\Weapon\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Granite\Granite.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Granite</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Dice\Dice.cpp">
+      <Filter>Src\Application\GameObject\Gimmick\Dice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

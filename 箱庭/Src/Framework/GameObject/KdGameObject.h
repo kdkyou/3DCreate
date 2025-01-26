@@ -83,7 +83,7 @@ public:
 	void NotMoving() { m_isMoving= false; }
 
 	//カメラ用のローカル行列を返す
-	const Math::Matrix GetCameraMatrix() const { return m_mlocalCamera * m_mWorld; }
+	const Math::Matrix GetCameraMatrix() const { return m_mlocalCamera; }
 
 	//オブジェクト名を返す
 	const std::string& GetObjName()const { return m_objName; }

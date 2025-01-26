@@ -179,9 +179,11 @@
     <ClInclude Include="Src\Application\GameObject\Gimmick\ArrowBox\ArrowBox.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\BreakWall\BreakWall.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Close\Close.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Dice\Dice.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\FallPillar\FallPillar.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Gate\Gate.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.h" />
+    <ClInclude Include="Src\Application\GameObject\Gimmick\Granite\Granite.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject\DirectionObject.h" />
     <ClInclude Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.h" />
@@ -203,7 +205,7 @@
     <ClInclude Include="Src\Application\GameObject\Terrain\Terrain.h" />
     <ClInclude Include="Src\Application\GameObject\Texture\Texture.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\Arrow\Arrow.h" />
-    <ClInclude Include="Src\Application\GameObject\Weapon\Axe\Axe.h" />
+    <ClInclude Include="Src\Application\GameObject\Weapon\Light\Light.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h" />
@@ -283,9 +285,11 @@
     <ClCompile Include="Src\Application\GameObject\Gimmick\ArrowBox\ArrowBox.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\BreakWall\BreakWall.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Close\Close.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Dice\Dice.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\FallPillar\Fallpillar.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Gate\Gate.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\GimmickBase\GimmickBase.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Gimmick\Granite\Granite.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Nidle\Nidle.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionObject\DirectionObject.cpp" />
     <ClCompile Include="Src\Application\GameObject\Gimmick\Pazzle\Direction\DirectionSystem\DirectionSystem.cpp" />
@@ -306,7 +310,7 @@
     <ClCompile Include="Src\Application\GameObject\Terrain\Terrain.cpp" />
     <ClCompile Include="Src\Application\GameObject\Texture\Texture.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\Arrow\Arrow.cpp" />
-    <ClCompile Include="Src\Application\GameObject\Weapon\Axe\Axe.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Weapon\Light\Light.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\Scene\BaseScene\BaseScene.cpp" />

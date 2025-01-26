@@ -17,7 +17,7 @@ void Gate::Init()
 
 	m_objName = "Gate";
 
-	Math::Vector3 pos = { 52.0f,8.0f,90.0f };
+	Math::Vector3 pos = { 0.0f,0.0f,-40.0f };
 
 	SetPos(pos);
 

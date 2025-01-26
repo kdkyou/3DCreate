@@ -22,8 +22,7 @@ void Character::Init()
 		m_spModelWork = std::make_shared<KdModelWork>();
 		m_spModelWork->SetModelData("Asset/Models/Player/Player.gltf");
 
-		//KdShaderManager::Instance().ChangeRasterizerState(KdRasterizerState::CullNone);
-
+	
 		m_spAnimetor = std::make_shared<KdAnimator>();
 		m_spAnimetor->SetAnimation(m_spModelWork->GetData()->GetAnimation("Idle"), true);
 	}
@@ -32,13 +31,12 @@ void Character::Init()
 
 	m_gravity = 0;
 	m_pos = {};
-	m_pos.y += m_ajustHeight;
 
 
 	Math::Matrix _scale = Math::Matrix::CreateScale(1.0f);
 	Math::Matrix _rotY = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0));
 	m_mWorld = _scale * _rotY * Math::Matrix::CreateTranslation(m_pos);
-	m_worldRot.y = 90;
+	m_worldRot.y = 0;
 
 	m_sphereRadius = 5.0f;
 
@@ -61,6 +59,8 @@ void Character::Init()
 	Math::Matrix _transMat = Math::Matrix::CreateTranslation({ 0.0f,3.0f,-3.0f });
 	Math::Matrix _rotMat = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(45));
 	m_mlocalCamera = _rotMat * _transMat;
+
+	ChangeActionState(std::make_shared<ActionIdle>());
 }
 
 void Character::Update()
@@ -80,80 +80,27 @@ void Character::Update()
 	}
 	m_pos = m_mWorld.Translation();
 
-	Math::Vector3 _moveVec = Math::Vector3::Zero;
-	UINT key = KeyType::Flat;
-
-	if (GetAsyncKeyState('D') & 0x8000) {
-		key = key | KeyType::Right;
-	}
-	if (GetAsyncKeyState('A') & 0x8000) {
-		key = key | KeyType::Left;
-	}
-	if (GetAsyncKeyState('W') & 0x8000) {
-		key = key | KeyType::Forward;
-	}
-	if (GetAsyncKeyState('S') & 0x8000) {
-		key = key | KeyType::Backward;
-	}
-
-
-
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) {
-		if (m_type == SelectType::None)
-		{
-			KdAudioManager::Instance().Play("Asset/Sounds/SE/Arm.wav");
-			m_spAnimetor->SetAnimation(m_spModelWork->GetData()->GetAnimation("Action"), false);
-			//std::wstring str = L"Asset/Textures/GameObject/Gimmick/Arrangement1.png";
-			//ScreenShot(KdDirect3D::Instance().WorkDev(), KdDirect3D::Instance().WorkDevContext(), SceneManager::Instance().GetRenderTargetTexture()->WorkResource(), str);
-			m_type = m_nextType;
-		}
-	}
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
-	{
-		if (!m_controlKey)
-		{
-			if (m_nextType == SelectType::Break)
-			{
-				m_controlKey = true;
-				m_nextType = SelectType::Push;
-			}
-			else
-			{
-				m_controlKey = true;
-				m_nextType = SelectType::Break;
-			}
-		}
-
-	}
-	else
-	{
-		m_controlKey = false;
-	}
-
-	Math::Vector3 moveSpd = Math::Vector3::Zero;
-	moveSpd = Accelerate(key);
-
-
-	m_pos += moveSpd;
-
+	
+	m_gravity += GRAVITY;
 	m_pos.y -= m_gravity;
-	m_gravity += 0.001f;
 
-	// キャラクターの回転行列を創る
-	UpdateRotate(m_moveVec);
+	//各種「状態に応じた」更新処理を実行する
+	if (m_nowAction)
+	{
+		m_nowAction->Update(m_wpChara);
+	}
+
+	UpdateCollision();
 
 
-	// キャラクターのワールド行列を創る処理;
-	Math::Matrix _rotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_worldRot.y));
-	m_mWorld = _rotation * Math::Matrix::CreateTranslation(m_pos);
+	const KdModelWork::Node* _pNode = GetModelWork()->FindWorkNode("CameraPoint");
+	if (_pNode)
+	{
+		m_mlocalCamera = _pNode->m_worldTransform;
+	}
 
-	KdShaderManager::Instance().WorkAmbientController().SetConeLight(
-		m_pos + Math::Vector3{ 0,1,0 },
-		m_mWorld.Forward(),
-		10.0f,
-		DirectX::XMConvertToRadians(40),
-		Math::Vector3{ 1.5f,1.5f,2.0f } + m_color
-	);
+
+	
 
 	
 //	KdAudioManager::Instance().SetListnerMatrix(m_mWorld);
@@ -161,170 +108,9 @@ void Character::Update()
 
 void Character::PostUpdate()
 {
-	m_spAnimetor->AdvanceTime(m_spModelWork->WorkNodes(),1.0f);
+	m_spAnimetor->AdvanceTime(m_spModelWork->WorkNodes());
 
-	m_wpRideObject.reset();
-
-	KdCollider::SphereInfo _sphereInfo;
-	std::list<KdCollider::CollisionResult> retList;
-	float maxOverLap = 0;	//	はみ出た球の長さ
-	Math::Vector3 hitDir = {};	//当たった方向
-	bool isHit = false;		//	当たっていたらtrue
-
-	//レイ判定用に変数を作成
-	KdCollider::RayInfo ray;
-	//レイの発射位置(座標)を設定
-	ray.m_pos = m_pos;		//自分の足元
-//	ray.m_pos.y -= m_ajustHeight;
-	//レイの発射方向を設定
-	ray.m_dir = Math::Vector3::Down;
-	//段差の許容範囲を設定
-	float enableStepHigh = 1.0f;
-	ray.m_pos.y += enableStepHigh;
-	//レイの長さを設定
-	ray.m_range = m_gravity + enableStepHigh;
-	//当たり判定をしたいタイプを設定
-	ray.m_type = KdCollider::TypeGround;
-
-	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range);
-
-	//マップリストのレイと当たり判定！！
-	for (auto& obj : SceneManager::Instance().GetMapObjList())
-	{
-		obj->Intersects(ray, &retList);
-	}
-
-	int i = 0;
-	//ギミックリストのレイと判定
-	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
-	{
-		if (obj->Intersects(ray, &retList))
-		{
-			if (obj->IsRideable())
-			{
-				m_wpRideObject = obj;
-			}
-		}
-	}
-	//レイに当たったリストから一番近いオブジェクトを検出
-	for (auto& ret : retList)
-	{
-		//レイを遮断し、オーバーした長さが一番長いものを探す
-		if (maxOverLap < ret.m_overlapDistance)
-		{
-			maxOverLap = ret.m_overlapDistance;
-			hitDir = ret.m_hitPos;
-			isHit = true;
-		}
-	}
-	if (isHit)
-	{
-		//地面に当たっている
-		m_pos = hitDir;
-	//	m_pos.y += m_ajustHeight;
-		m_gravity = 0.0f;
-		SetPos(m_pos);
-
-		//プレイヤーが何かに乗っていれば
-		//乗り物から見たプレイヤーのローカル行列を保存
-
-		//ex 逆行列の取得方法	※プレイヤーの場合
-		// 
-		//乗り物の逆行列の取得
-		const std::shared_ptr<const KdGameObject> _spParent = m_wpRideObject.lock();
-		Math::Matrix _parentInvertMat = Math::Matrix::Identity;
-		if (_spParent)
-		{
-			_parentInvertMat = _spParent->GetMatrix().Invert();
-
-			m_worldRot.y += _spParent->GetAddNumber();
-		}
-
-
-		//乗り物から見たプレイヤーのローカル行列作成
-		m_localMatFromRideObject = m_mWorld * _parentInvertMat;
-	}
-
-	//初期化
-	retList.clear();
-	maxOverLap = 0.f;
-	hitDir = {};
-	isHit = false;
-
-	//球判定
-	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.0f,0.5f,0.0f };
-	_sphereInfo.m_sphere.Radius = 0.3f;
-	_sphereInfo.m_type = KdCollider::TypeGround;
-
-	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius);
-
-	//マップリストの地面との判定
-	for (auto& obj : SceneManager::Instance().GetMapObjList())
-	{
-		obj->Intersects(_sphereInfo, &retList);
-	}
-	//ギミックリストの地面判定
-	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
-	{
-		obj->Intersects(_sphereInfo, &retList);
-	}
-	//　球に当たったリストから一番近いオブジェクトを検出
-	for (auto& ret : retList)
-	{
-		//球にめり込んで、オーバーした長さが一番長いものを探す
-		if (maxOverLap < ret.m_overlapDistance)
-		{
-			maxOverLap = ret.m_overlapDistance;
-			hitDir = ret.m_hitDir;
-			isHit = true;
-		}
-	}
-	if (isHit)
-	{
-
-		//	正規化(長さを1にする)
-		//	方向は絶対長さ1
-		hitDir.Normalize();
-		//	地面に当たっている
-		m_pos += hitDir * maxOverLap;
-		SetPos(m_pos);
-	}
-
-	//イベント関連
-	Judge();
-
-
-	//攻撃物との判定
-	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.f,0.6f,0.f };
-	_sphereInfo.m_sphere.Radius = 0.5;
-	_sphereInfo.m_type = KdCollider::TypeDamage;
-
-	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
-	{
-		if (obj->Intersects(_sphereInfo, nullptr))
-		{
-			OnHit();
-		}
-	}
-
-	for (auto& obj : SceneManager::Instance().GetObjList())
-	{
-		if (obj->Intersects(_sphereInfo, nullptr))
-		{
-			OnHit();
-		}
-	}
-	if (m_pos.y < -2.0f)
-	{
-		OnHit();
-	}
-
-
-
-	if (m_spAnimetor->IsAnimationEnd())
-	{
-		m_type = SelectType::None;
-	}
+	m_spModelWork->CalcNodeMatrices();
 
 }
 
@@ -365,11 +151,143 @@ void Character::UpdateRotate(const Math::Vector3& srcMoveVec)
 
 	float rotateAng = std::clamp(_betweenAng, -8.0f, 8.0f);
 	m_worldRot.y += rotateAng;
-
-
+	
 }
 
+void Character::UpdateCollision()
+{
+	m_wpRideObject.reset();
 
+	KdCollider::SphereInfo _sphereInfo;
+	std::list<KdCollider::CollisionResult> retList;
+	float maxOverLap = 0;	//	はみ出た球の長さ
+	Math::Vector3 hitDir = {};	//当たった方向
+	bool isHit = false;		//	当たっていたらtrue
+
+	//レイ判定用に変数を作成
+	KdCollider::RayInfo ray;
+	//レイの発射位置(座標)を設定
+	ray.m_pos = GetPos();		//自分の足元
+		//レイの発射方向を設定
+	ray.m_dir = Math::Vector3::Down;
+	//段差の許容範囲を設定
+	float enableStepHigh = 1.0f;
+	ray.m_pos.y += enableStepHigh;
+	//レイの長さを設定
+	ray.m_range = m_gravity + enableStepHigh;
+	//当たり判定をしたいタイプを設定
+	ray.m_type = KdCollider::TypeGround;
+
+//	m_pDebugWire->AddDebugLine(ray.m_pos, ray.m_dir, ray.m_range);
+
+	//マップリストのレイと当たり判定！！
+	for (auto& obj : SceneManager::Instance().GetMapObjList())
+	{
+		obj->Intersects(ray, &retList);
+	}
+
+	int i = 0;
+	//ギミックリストのレイと判定
+	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
+	{
+		if (obj->Intersects(ray, &retList))
+		{
+			if (obj->IsRideable())
+			{
+				m_wpRideObject = obj;
+			}
+		}
+	}
+	//レイに当たったリストから一番近いオブジェクトを検出
+	for (auto& ret : retList)
+	{
+		//レイを遮断し、オーバーした長さが一番長いものを探す
+		if (maxOverLap < ret.m_overlapDistance)
+		{
+			maxOverLap = ret.m_overlapDistance;
+			hitDir = ret.m_hitPos;
+			isHit = true;
+		}
+	}
+	if (isHit)
+	{
+		//地面に当たっている
+		m_pos = hitDir;
+		m_gravity = 0.0f;
+		SetPos(m_pos);
+
+		//プレイヤーが何かに乗っていれば
+		//乗り物から見たプレイヤーのローカル行列を保存
+
+		//ex 逆行列の取得方法	※プレイヤーの場合
+		// 
+		//乗り物の逆行列の取得
+		const std::shared_ptr<const KdGameObject> _spParent = m_wpRideObject.lock();
+		Math::Matrix _parentInvertMat = Math::Matrix::Identity;
+		if (_spParent)
+		{
+			_parentInvertMat = _spParent->GetMatrix().Invert();
+
+			m_worldRot.y += _spParent->GetAddNumber();
+		}
+
+
+		//乗り物から見たプレイヤーのローカル行列作成
+		m_localMatFromRideObject = m_mWorld * _parentInvertMat;
+	}
+
+	//初期化
+	retList.clear();
+	maxOverLap = 0.f;
+	hitDir = {};
+	isHit = false;
+
+	//球判定
+	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.0f,1.0f,0.0f };
+	_sphereInfo.m_sphere.Radius = 0.4f;
+	_sphereInfo.m_type = KdCollider::TypeGround;
+
+//	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius);
+
+	//マップリストの地面との判定
+	for (auto& obj : SceneManager::Instance().GetMapObjList())
+	{
+		obj->Intersects(_sphereInfo, &retList);
+	}
+	//ギミックリストの地面判定
+	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
+	{
+		obj->Intersects(_sphereInfo, &retList);
+	}
+	//　球に当たったリストから一番近いオブジェクトを検出
+	for (auto& ret : retList)
+	{
+		//球にめり込んで、オーバーした長さが一番長いものを探す
+		if (maxOverLap < ret.m_overlapDistance)
+		{
+			maxOverLap = ret.m_overlapDistance;
+			hitDir = ret.m_hitDir;
+			isHit = true;
+		}
+	}
+	if (isHit)
+	{
+
+		//	正規化(長さを1にする)
+		//	方向は絶対長さ1
+		hitDir.Normalize();
+		//	地面に当たっている
+		m_pos += hitDir * maxOverLap;
+		SetPos(m_pos);
+	}
+
+	//イベント関連
+	Judge();
+
+	//攻撃物関連
+	Damage();
+
+}
 
 void Character::OnHit()
 {
@@ -409,8 +327,7 @@ void Character::Judge()
 {
 
 	KdCollider::SphereInfo _sphereInfo;
-	std::list<KdCollider::CollisionResult> retList;
-
+	
 	//イベント物との判定
 	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.f,0.5f,0.f };
 	_sphereInfo.m_sphere.Radius = 6.0f;
@@ -423,6 +340,65 @@ void Character::Judge()
 		}
 	}
 
+}
+
+void Character::Damage()
+{
+	KdCollider::SphereInfo _sphereInfo;
+	//攻撃物との判定
+	_sphereInfo.m_sphere.Center = m_pos + Math::Vector3{ 0.f,0.6f,0.f };
+	_sphereInfo.m_sphere.Radius = 0.5;
+	_sphereInfo.m_type = KdCollider::TypeDamage;
+
+	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
+	{
+		if (obj->Intersects(_sphereInfo, nullptr))
+		{
+			OnHit();
+		}
+	}
+
+	for (auto& obj : SceneManager::Instance().GetObjList())
+	{
+		if (obj->Intersects(_sphereInfo, nullptr))
+		{
+			OnHit();
+		}
+	}
+	if (m_pos.y < -2.0f)
+	{
+		OnHit();
+	}
+}
+
+void Character::HitJudge()
+{
+
+	KdCollider::SphereInfo _sphereInfo;
+	std::list<KdCollider::CollisionResult> retList;
+
+	Math::Matrix nodeMat = Math::Matrix::Identity;
+
+	const KdModelWork::Node* _pNode = GetModelWork()->FindWorkNode("RightPoint");
+	if (_pNode)
+	{
+		nodeMat = _pNode->m_worldTransform;
+	}
+	Math::Matrix mat = nodeMat * m_mWorld;
+
+	//イベント物との判定
+	_sphereInfo.m_sphere.Center = mat.Translation();
+	_sphereInfo.m_sphere.Radius = 0.4f;
+	_sphereInfo.m_type = KdCollider::TypeEvent;
+
+//	m_pDebugWire->AddDebugSphere(_sphereInfo.m_sphere.Center, _sphereInfo.m_sphere.Radius, kRedColor);
+
+	for (auto& obj : SceneManager::Instance().GetGimmickObjList())
+	{
+		if (obj->Intersects(_sphereInfo, nullptr)) {
+			obj->OnHit();
+		}
+	}
 }
 
 Math::Vector3 Character::Accelerate(UINT srcMoveKey)
@@ -548,6 +524,27 @@ Math::Vector3 Character::Accelerate(UINT srcMoveKey)
 	return spd;
 
 }
+
+//void Character::UpdateRotateByMouse()
+//{
+//	// マウスでカメラを回転させる処理
+//	POINT _nowPos;
+//	GetCursorPos(&_nowPos);
+//
+//	POINT _mouseMove{};
+//	_mouseMove.x = _nowPos.x - m_FixMousePos.x;
+//	_mouseMove.y = _nowPos.y - m_FixMousePos.y;
+//
+//	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
+//
+//	// 実際にカメラを回転させる処理(0.15はただの補正値)
+//	m_DegAng.x += _mouseMove.y * 0.10f;
+//	m_DegAng.y += _mouseMove.x * 0.10f;
+//
+//	// 回転制御
+//	m_DegAng.x = std::clamp(m_DegAng.x, -45.f, 45.f);
+////	m_DegAng.y = std::clamp(m_DegAng.y, -50.f, 50.f);
+//}
 
 /*void Character::DiceSkill()
 {
@@ -853,3 +850,213 @@ default:
 
 }
 */
+
+//ここからステートパターン関係
+void Character::ChangeActionState(std::shared_ptr<ActionStateBase> nextAction)
+{
+	if (m_nowAction)m_nowAction->Exit(m_wpChara);
+	m_nowAction = nextAction;
+	m_nowAction->Enter(m_wpChara);
+}
+
+void Character::ActionIdle::Enter(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->SetAnimation(spCharacter->m_spModelWork->GetData()->GetAnimation("Idle"));
+}
+
+void Character::ActionIdle::Update(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+
+	bool isMove = false;
+
+	if (GetAsyncKeyState('W') ||
+		GetAsyncKeyState('A') ||
+		GetAsyncKeyState('S') ||
+		GetAsyncKeyState('D')) {
+		isMove = true;
+	}
+	if (isMove) {
+		spCharacter->ChangeActionState(std::make_shared<ActionWalk>());
+		return;
+	}
+
+	bool isTouch = false;
+
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		isTouch = true;
+	}
+
+	if (isTouch) {
+		spCharacter->ChangeActionState(std::make_shared<ActionTouch>());
+		return;
+	}
+
+	// キャラクターのワールド行列を創る処理;
+	Math::Matrix _rotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(spCharacter->m_worldRot.y));
+	spCharacter->m_mWorld = _rotation * Math::Matrix::CreateTranslation(spCharacter->m_pos);
+}
+
+void Character::ActionIdle::Exit(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->IsAnimationEnd();
+}
+
+void Character::ActionWalk::Enter(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->SetAnimation(spCharacter->m_spModelWork->GetData()->GetAnimation("Walk"));
+}
+
+void Character::ActionWalk::Update(std::weak_ptr<Character>& character)
+{
+	Math::Vector3 _moveVec = Math::Vector3::Zero;
+	UINT key = KeyType::Flat;
+	const std::shared_ptr<Character>spCharacter = character.lock();
+
+	if (!spCharacter)return;
+	Math::Vector3 _nowPos = spCharacter->m_pos;
+	Math::Vector3 moveSpd = Math::Vector3::Zero;
+
+
+	if (GetAsyncKeyState('D') & 0x8000) {
+		key = key | KeyType::Right;
+	}
+	if (GetAsyncKeyState('A') & 0x8000) {
+		key = key | KeyType::Left;
+	}
+	if (GetAsyncKeyState('W') & 0x8000) {
+		key = key | KeyType::Forward;
+	}
+	if (GetAsyncKeyState('S') & 0x8000) {
+		key = key | KeyType::Backward;
+	}
+
+	bool isTouch = false;
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		isTouch = true;
+	}
+
+	if (isTouch)
+	{
+		spCharacter->ChangeActionState(std::make_shared<ActionTouch>());
+	}
+
+	//移動中に何も入力がなければ待機に移行
+	if (key == Flat) {
+		spCharacter->ChangeActionState(std::make_shared<ActionWalkEnd>());
+		return;
+	}
+	else
+	{
+		moveSpd = spCharacter->Accelerate(key);
+		_nowPos += moveSpd;
+	}
+
+	spCharacter->UpdateRotate(moveSpd);
+
+	// キャラクターのワールド行列を創る処理;
+	Math::Matrix _rotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(spCharacter->m_worldRot.y));
+	spCharacter->m_mWorld = _rotation * Math::Matrix::CreateTranslation(_nowPos);
+}
+
+void Character::ActionWalk::Exit(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->IsAnimationEnd();
+}
+
+void Character::ActionTouch::Enter(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->SetAnimation(spCharacter->m_spModelWork->GetData()->GetAnimation("Touch"),false);
+}
+
+void Character::ActionTouch::Update(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	{
+		spCharacter->HitJudge();
+	}
+
+	if (spCharacter->m_spAnimetor->IsAnimationEnd())
+	{
+		spCharacter->ChangeActionState(std::make_shared<ActionIdle>());
+		return;
+	}
+
+	// キャラクターのワールド行列を創る処理;
+	Math::Matrix _rotation = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(spCharacter->m_worldRot.y));
+	spCharacter->m_mWorld = _rotation * Math::Matrix::CreateTranslation(spCharacter->m_pos);
+
+}
+
+void Character::ActionTouch::Exit(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->IsAnimationEnd();
+}
+
+void Character::ActionWalkEnd::Enter(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->SetAnimation(spCharacter->m_spModelWork->GetData()->GetAnimation("Idle"));
+}
+
+void Character::ActionWalkEnd::Update(std::weak_ptr<Character>& character)
+{
+	UINT key = KeyType::Flat;
+	const std::shared_ptr<Character>spCharacter = character.lock();
+
+	if (!spCharacter)return;
+
+	if (GetAsyncKeyState('D') & 0x8000) {
+		key = key | KeyType::Right;
+	}
+	if (GetAsyncKeyState('A') & 0x8000) {
+		key = key | KeyType::Left;
+	}
+	if (GetAsyncKeyState('W') & 0x8000) {
+		key = key | KeyType::Forward;
+	}
+	if (GetAsyncKeyState('S') & 0x8000) {
+		key = key | KeyType::Backward;
+	}
+
+	bool isTouch = false;
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		isTouch = true;
+	}
+
+	if (isTouch)
+	{
+		spCharacter->ChangeActionState(std::make_shared<ActionTouch>());
+	}
+
+	//移動中に何も入力がなければ待機に移行
+	if (key == Flat) {
+		spCharacter->ChangeActionState(std::make_shared<ActionIdle>());
+		return;
+	}
+}
+
+void Character::ActionWalkEnd::Exit(std::weak_ptr<Character>& character)
+{
+	const std::shared_ptr<Character>spCharacter = character.lock();
+	if (!spCharacter)return;
+	spCharacter->m_spAnimetor->IsAnimationEnd();
+}

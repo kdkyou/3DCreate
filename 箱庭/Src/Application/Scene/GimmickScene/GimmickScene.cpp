@@ -14,6 +14,8 @@
 #include"../../GameObject/Gimmick/Pazzle/Light/Turret/Turret.h"
 #include"../../GameObject/Gimmick/Pazzle/Light/LaserSystem/LaserSystem.h"
 #include"../../GameObject/Gimmick/Pazzle/Direction/DirectionSystem/DirectionSystem.h"
+#include"../../GameObject/Gimmick/Dice/Dice.h"
+
 
 
 #include"../../Scene/SceneManager.h"
@@ -158,6 +160,12 @@ void GimmickScene::Init()
 	//std::shared_ptr<DirectionSystem> disystem = std::make_shared<DirectionSystem>();
 	//disystem->Init();
 	//AddObject(disystem);
+
+std::shared_ptr<Dice> dice = std::make_shared<Dice>();
+std::string str = "Asset/Models/Dice/BlueDice/blueDice.gltf";
+dice->SetMaterial(str, true);
+AddObject(dice);
+
 
 
 	m_count = 0;

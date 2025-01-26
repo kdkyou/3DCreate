@@ -3,14 +3,17 @@
 
 #include "../../GameObject/Character/Player/Character.h"
 
+#include"../../GameObject/Gimmick/SlideDoor/SlideDoor.h"
+
 #include "../../GameObject/Camera/FPSCamera/FPSCamera.h"
 #include "../../GameObject/Camera/TPSCamera/TPSCamera.h"
 #include "../../GameObject/Camera/CCTVCamera/CCTVCamera.h"
 #include"../../GameObject/Camera/AnimationCamera/AnimationCamera.h"
 
 #include"../../GameObject/Gimmick/Gate/Gate.h"
+#include"../../GameObject/Gimmick/Granite/Granite.h"
 
-#include"../../GameObject/Weapon/Axe/Axe.h"
+#include"../../GameObject/Weapon/Light/Light.h"
 
 #include"../../AssetRepository/AssetRepository.h"
 
@@ -87,28 +90,33 @@ void GameScene::Init()
 	// キャラクター初期化
 	//===================================================================
 	std::shared_ptr<Character> _character = std::make_shared<Character>();
+	_character->SetPlayer(_character);
 	_character->Init();
 	AddObject(_character);
 
 	//===================================================================	
 	// 持ち物初期化
 	//===================================================================
-	std::shared_ptr<Axe> _axe = std::make_shared<Axe>();
+	std::shared_ptr<Light> _axe = std::make_shared<Light>();
 	_axe->Init();
 	_axe->SetParent(_character);
 	AddObject(_axe);
 
+	std::shared_ptr<Granite> gra = std::make_shared<Granite>();
+	gra->Init();
+	AddObject(gra);
+	
 
-	//std::shared_ptr<Gate> _gate = std::make_shared<Gate>();
-	//_gate->Init();
-	//_gate->SetTarget(_character);
-	//AddObject(_gate);
+	//ゴール
+	std::shared_ptr<Gate> _gate = std::make_shared<Gate>();
+	_gate->Init();
+	AddObject(_gate);
 
 
 	//===================================================================
 	// カメラ初期化
 	//===================================================================
-	//std::shared_ptr<TPSCamera>		_camera = std::make_shared<TPSCamera>();
+//	std::shared_ptr<TPSCamera>		_camera = std::make_shared<TPSCamera>();
 	std::shared_ptr<FPSCamera>			_camera = std::make_shared<FPSCamera>();
 	_camera->Init();
 	_camera->SetTarget(_character);
@@ -116,6 +124,7 @@ void GameScene::Init()
 	AddObject(_camera);
 
 	m_wpCamera = _camera;
+
 
 	ChangeCameraTarget();
 
@@ -129,11 +138,8 @@ void GameScene::Init()
 
 
 	DiceManager::GetInstance().SetCamera(_camera);
-
 	
-
 	KdAudioManager::Instance().Play("Asset/Sounds/BGM/R'lyeh.wav", true);
-//	KdAudioManager::Instance().Play("Asset/Sounds/BGM/babul.wav", true);
 }
 
 

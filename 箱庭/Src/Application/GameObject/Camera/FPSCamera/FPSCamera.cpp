@@ -6,7 +6,7 @@ void FPSCamera::Init()
 	CameraBase::Init();
 
 	// 基準点(ターゲット)の目線
-	m_mLocalPos = Math::Matrix::CreateTranslation(0.0f, 1.8f, 0.0f);
+	m_mLocalPos = Math::Matrix::CreateTranslation(0.0f, 1.4f, 0.0f);
 
 	SetCursorPos(m_FixMousePos.x, m_FixMousePos.y);
 
@@ -26,7 +26,8 @@ void FPSCamera::PostUpdate()
 	const std::shared_ptr<const KdGameObject>	_spTarget	= m_wpTarget.lock();	
 	if (_spTarget)
 	{
-		_targetMat = Math::Matrix::CreateTranslation(_spTarget->GetPos());
+		_targetMat =Math::Matrix::CreateTranslation(_spTarget->GetMatrix().Translation());
+		m_mLocalPos =Math::Matrix::CreateTranslation(_spTarget->GetCameraMatrix().Translation());
 	}
 
 	// カメラの回転
